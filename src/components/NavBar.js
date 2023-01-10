@@ -6,10 +6,14 @@ import { useUserContext } from "../context/UserContext";
 
 const NavBar = () => {
   // const navigate = useNavigate();
-  const { setShowSignUpModal } = useUserContext();
+  const { setShowSignUpModal, setShowLogInModal } = useUserContext();
+
+  const handleSignUpClick = () => {
+    setShowSignUpModal(true)
+  }
 
   const handleLoginClick = () => {
-    setShowSignUpModal(true)
+    setShowLogInModal(true)
   }
 
   let activeStyle = {
@@ -41,10 +45,10 @@ const NavBar = () => {
           </li>
           <div className="alignRight">
             <li>
-              <Button onClick={handleLoginClick}>SignUp</Button>
+              <Button onClick={handleSignUpClick}>SignUp</Button>
             </li>
             <li>
-              <Button>Login</Button>
+              <Button onClick={handleLoginClick}>Login</Button>
             </li>
           </div>
         </ul>

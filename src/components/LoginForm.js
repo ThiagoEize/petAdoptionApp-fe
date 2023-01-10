@@ -1,60 +1,78 @@
 import { useState } from "react";
-import { Button } from "react-bootstrap"
-import './NoteForm.css'
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
+import Form from 'react-bootstrap/Form';
+import axios from 'axios';
+import { useNavigate, Link } from 'react-router-dom';
 
-function NoteForm({ note = {}, onSubmit }) {
-    const [text, setText] = useState(note.text);
-    const [title, setTitle] = useState(note.title);
-    const [isSubmitted, setIsSubmitted] = useState(false);
+const LogInForm = ({ onClose }) => {
+    const navigate = useNavigate()
 
-    const resetForm = () => {
-        setText('');
-        setTitle('');
-        setIsSubmitted(false);
-    }
-
-    const handleClick = () => {
-        setIsSubmitted(true);
-
-        const noteObj = {
-            text,
-            title,
-            date: note.date ? note.date : new Date(),
-            updatedAt: note.id ? new Date() : null,
-            id: note.id || Math.random() + new Date()
-        };
-
-        if (text) {
-            onSubmit(noteObj);
-            resetForm();
+    const handleLogIn = async (e) => {
+        try {
+            e.preventDefault();
+            const res = await axios.post('http://localhost:8080/users/login', formData)
+            // const res = await axios.post('http://localhost:8080/users/login', formData, { withCredentials: true });
+            if (res.data.token) {
+                localStorage.setItem('token', JSON.stringify(res.data.token));
+                navigate("/");
+                onClose();
+            }
+            if (res.data.ok) {
+                // setCurrentUser(res.data.userId)
+                navigate("/")
+            }
+        } catch (err) {
+            console.log(err);
         }
-    }
+    };
+
+
+    const [formData, setFormData] = useState({
+        email: '',
+        password: '',
+    });
+
+    const handleChange = (event) => {
+        const { name, value } = event.target;
+        setFormData({ ...formData, [name]: value });
+    };
 
     return (
         <div className="note-form-container">
             <form>
-                <div>
-                    <input type="text"
-                        placeholder="Title"
-                        value={title}
-                        onChange={e => setTitle(e.target.value)}
+                <Modal.Header>
+                    <h3>Log In</h3>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form.Label>Email</Form.Label>
+                    <Form.Control
+                        type="email"
+                        placeholder="Email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
                     />
-                </div>
-                <div>
-                    <textarea placeholder={'Note text...'} value={text} onChange={e => setText(e.target.value)} />
-                    {(!text && isSubmitted) && <span>You must write text</span>}
-                </div>
-                <Button onClick={handleClick}>
-                    {
-                        note.id ?
-                            'Update Note'
-                            :
-                            'Add Note'
-                    }
-                </Button>
+                    <Form.Label>Password</Form.Label>
+                    <Form.Control
+                        type="password"
+                        placeholder="Password"
+                        name="password"
+                        value={formData.password}
+                        onChange={handleChange}
+                    />
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={onClose}>
+                        Close
+                    </Button>
+                    <Button variant="primary" onClick={handleLogIn}>
+                        Log In
+                    </Button>
+                </Modal.Footer>
             </form>
         </div>
-    )
-}
+    );
+};
 
-export default NoteForm;
+export default LogInForm;

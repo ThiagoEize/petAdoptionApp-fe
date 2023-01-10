@@ -1,5 +1,6 @@
 import { createContext, useContext, useState } from "react";
 import SignUpModal from "../components/SignUpModal";
+import LogInModal from "../components/LogInModal";
 
 export const UserContext = createContext();
 
@@ -8,6 +9,10 @@ export function useUserContext() {
 }
 
 export default function UserContextProvider({ children }) {
+    const [token, setToken] = useState(localStorage.getItem('token') || '')
+
+
+
     const [currentUserName, setCurrentUserName] = useState(() => {
         const newLocalUser = localStorage.getItem('currentUserName');
         return newLocalUser ? newLocalUser : 'Thiago'
@@ -19,20 +24,28 @@ export default function UserContextProvider({ children }) {
         setCurrentUserName(newUserName)
     }
 
-    const [showSignUpModal, setShowSignUpModal] = useState(true);
+    const [showSignUpModal, setShowSignUpModal] = useState(false);
+
+    const [showLogInModal, setShowLogInModal] = useState(false);
 
     return (
         <UserContext.Provider value={{
             currentUserName,
             handleUserName,
             showSignUpModal,
-            setShowSignUpModal
+            setShowSignUpModal,
+            showLogInModal,
+            setShowLogInModal
         }}>
             <SignUpModal
                 visible={showSignUpModal}
-                // data={selectedNote}
                 onClose={() => setShowSignUpModal(false)}
-            // onSubmit={onUpdate}
+            />
+            <LogInModal
+                visible={showLogInModal}
+                onClose={() => setShowLogInModal(false)}
+                token={token}
+                setToken={() => setToken(localStorage.getItem('token'))}
             />
             {children}
         </UserContext.Provider>

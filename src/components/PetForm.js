@@ -1,25 +1,25 @@
 import { useState } from "react";
 import { nanoid } from 'nanoid';
-import { useTweetContext } from "../context/TweetContext";
+import { usePetContext } from "../context/PetContext";
 import { useUserContext } from "../context/UserContext";
 
-const TweetForm = ({ tweet = {} }) => {
+const PetForm = ({ pet = {} }) => {
   const { currentUserName } = useUserContext();
 
-  const { isLoading } = useTweetContext();
-  const { handleSubmit } = useTweetContext();
-  const { errorsFromServer } = useTweetContext();
+  const { isLoading } = usePetContext();
+  const { handleSubmit } = usePetContext();
+  const { errorsFromServer } = usePetContext();
 
   const maxCharacters = 140;
 
   const [isAboveLimit, setIsAboveLimit] = useState(false);
 
-  const [tweetContent, setTweetContent] = useState(tweet.content ? tweet.content : '');
+  const [petContent, setPetContent] = useState(pet.content ? pet.content : '');
   // const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const changeTweetContent = (e) => {
+  const changePetContent = (e) => {
     if (maxCharacters - e.target.value.length >= 0) {
-      setTweetContent(e.target.value)
+      setPetContent(e.target.value)
       setIsAboveLimit(false);
     } else {
       setIsAboveLimit(true);
@@ -27,7 +27,7 @@ const TweetForm = ({ tweet = {} }) => {
   }
 
   const resetForm = () => {
-    setTweetContent('');
+    setPetContent('');
     // setIsSubmitted(false);
   }
 
@@ -35,40 +35,40 @@ const TweetForm = ({ tweet = {} }) => {
     const date = new Date();
     const formatedDate = date.toISOString();
     // setIsSubmitted(true);
-    const tweetObj = {
-      content: tweetContent,
+    const petObj = {
+      content: petContent,
       userName: currentUserName,
-      date: tweet.date ? tweet.date : formatedDate,
-      id: tweet.id || nanoid(),
+      date: pet.date ? pet.date : formatedDate,
+      id: pet.id || nanoid(),
     };
-    if (tweetContent) {
-      console.log(tweetObj);
-      handleSubmit(tweetObj);
+    if (petContent) {
+      console.log(petObj);
+      handleSubmit(petObj);
       resetForm();
     }
   }
 
   return (
     <>
-      <div className="create-tweet">
-        <div className="create-tweet-border">
+      <div className="create-pet">
+        <div className="create-pet-border">
           <textarea
-            className="tweet-textarea"
+            className="pet-textarea"
             placeholder="What do you have in mind..."
-            value={tweetContent}
-            onChange={changeTweetContent}
+            value={petContent}
+            onChange={changePetContent}
           ></textarea>
-          <div className="create-tweet-footer">
+          <div className="create-pet-footer">
 
-            <div className="create-tweet-message-box">
-              <small>{maxCharacters - tweetContent.length}</small>
+            <div className="create-pet-message-box">
+              <small>{maxCharacters - petContent.length}</small>
               {isLoading && <span className="loader"></span>}
               {isAboveLimit
                 &&
                 <span
                   className="warning-span"
                 >
-                  This tweet cannot contain more than {maxCharacters} characters
+                  This pet cannot contain more than {maxCharacters} characters
                 </span>
               }
               {errorsFromServer
@@ -81,17 +81,17 @@ const TweetForm = ({ tweet = {} }) => {
               }
             </div>
 
-            <div className="tweet-button-area">
+            <div className="pet-button-area">
               <button
-                className="tweet-button"
+                className="pet-button"
                 disabled={isAboveLimit}
                 onClick={handleClick}
               >
                 {
-                  tweet.id ?
-                    'Update tweet'
+                  pet.id ?
+                    'Update pet'
                     :
-                    'Create tweet'
+                    'Create pet'
                 }
               </button>
             </div>
@@ -102,4 +102,4 @@ const TweetForm = ({ tweet = {} }) => {
   );
 };
 
-export default TweetForm;
+export default PetForm;

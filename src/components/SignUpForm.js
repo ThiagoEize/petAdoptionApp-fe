@@ -10,14 +10,15 @@ const SignUpForm = ({ onClose }) => {
     const handleSignUp = async (e) => {
         // e.preventDefault();
         try {
-            setFormData({ ...formData, permissionId: Number(formData?.permissionId) });
-            console.log(formData);
+            // setFormData({ ...formData, permissionId: null });
+            // console.log(formData);
 
             const res = await axios.post('http://localhost:8080/users/signup', formData)
             if (res.data.ok) {
                 // navigate('/')
-                console.log('ok')
+                console.log(res)
             }
+            onClose();
         } catch (err) {
             console.log(err);
         }

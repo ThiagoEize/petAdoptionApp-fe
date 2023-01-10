@@ -1,34 +1,34 @@
 import { createContext, useContext, useState } from "react";
 import Axios from "axios";
 
-export const TweetContext = createContext();
+export const PetContext = createContext();
 
-export function useTweetContext() {
-    return useContext(TweetContext);
+export function usePetContext() {
+    return useContext(PetContext);
 }
 
-export default function TweetContextProvider({ children }) {
-    const [tweetsList, setTweetsList] = useState([])
+export default function PetContextProvider({ children }) {
+    const [petsList, setPetsList] = useState([])
     const [isLoading, setIsLoading] = useState(false);
     const [errorsFromServer, setErrorsFromServer] = useState({})
-    const serverUrl = 'https://micro-blogging-dot-full-stack-course-services.ew.r.appspot.com/tweet';
-    // const serverUrl = 'http://localhost:8080/pets';
+    // const serverUrl = 'https://micro-blogging-dot-full-stack-course-services.ew.r.appspot.com/pet';
+    const serverUrl = 'http://localhost:8080/pets';
     const getDataFromServer = async () => {
         try {
             const res = await Axios.get(serverUrl);
-            console.log(res);
-            setTweetsList(res.data.tweets ? res.data.tweets : [])
+            console.log('context', res.data.data);
+            setPetsList(res.data.data ? res.data.data : [])
             // console.log(res);
         } catch (err) {
             console.log(err.response.data)
         }
     }
 
-    const handleSubmit = async (tweet) => {
+    const handleSubmit = async (pet) => {
         setIsLoading(true);
         try {
-            await Axios.post(serverUrl, tweet)
-            setTweetsList((prevTweetList) => [tweet, ...prevTweetList])
+            await Axios.post(serverUrl, pet)
+            setPetsList((prevPetList) => [pet, ...prevPetList])
         } catch (err) {
             setErrorsFromServer(err.response.data);
         } finally {
@@ -37,14 +37,14 @@ export default function TweetContextProvider({ children }) {
     }
 
     return (
-        <TweetContext.Provider value={{
+        <PetContext.Provider value={{
             isLoading,
             handleSubmit,
             errorsFromServer,
-            tweetsList,
+            petsList,
             getDataFromServer
         }}>
             {children}
-        </TweetContext.Provider>
+        </PetContext.Provider>
     );
 }

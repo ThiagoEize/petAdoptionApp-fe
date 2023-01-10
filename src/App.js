@@ -1,6 +1,6 @@
 import NavBar from "./components/NavBar";
-// import TweetForm from "./components/TweetForm";
-// import TweetList from "./components/TweetList";
+// import PetForm from "./components/PetForm";
+// import PetList from "./components/PetList";
 import Profile from "./components/Profile";
 import Home from "./components/Home";
 import { useEffect, useState } from 'react';
@@ -9,13 +9,13 @@ import {
   Route,
   Routes
 } from "react-router-dom";
-import TweetContextProvider from "./context/TweetContext";
+import PetContextProvider from "./context/PetContext";
 import UserContextProvider from "./context/UserContext";
 import PrivateRoute from './components/PrivateRoute';
 
 function App() {
   return (
-    <TweetContextProvider>
+    <PetContextProvider>
       <UserContextProvider>
         <div className="container">
           <NavBar />
@@ -39,7 +39,7 @@ function App() {
           </Routes>
         </div>
       </UserContextProvider>
-    </TweetContextProvider>
+    </PetContextProvider>
 
   );
 }

@@ -1,14 +1,14 @@
-import TweetForm from "./TweetForm";
-import TweetList from "./TweetList";
+import PetForm from "./PetForm";
+import PetList from "./PetList";
 // import SignupModal from "./SignupModal";
 import { useEffect, useState } from 'react';
 
 // import Axios from "axios";
-import { useTweetContext } from "../context/TweetContext";
+import { usePetContext } from "../context/PetContext";
 
 // import { NavLink } from "react-router-dom";
 const Home = () => {
-    const { getDataFromServer } = useTweetContext();
+    const { getDataFromServer } = usePetContext();
 
     // const [showModal, setShowModal] = useState(true);
 
@@ -22,8 +22,8 @@ const Home = () => {
 
     return (
         <>
-            <TweetForm />
-            <TweetList />
+            <PetForm />
+            <PetList />
             {/* <SignupModal
                 visible={showModal}
                 // note={selectedNote}
