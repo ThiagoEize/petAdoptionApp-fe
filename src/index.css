@@ -302,3 +302,8 @@ li {
   margin-left: auto;
   justify-items: right;
 }
+
+.pet-picture-half {
+  width: 100%;
+  height: 50%;
+}

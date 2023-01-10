@@ -1,10 +1,9 @@
 import * as moment from 'moment';
-
 const Pet = ({ pet }) => {
   return (
     <>
-      <div id={pet.id} className="pet-card" style={{ backgroundImage: `url(${pet.picture})`, backgroundSize: 'cover' }}>
-        {/* <img src={pet.picture} alt={pet.petName} className="pet-picture" /> */}
+      <div id={pet.id} className="pet-card">
+        <img src={pet.picture} alt={pet.petName} className="pet-picture pet-picture-half" />
         <div className="pet-info">
           <h2 className="pet-name">{pet.petName}</h2>
           <div className="pet-details">

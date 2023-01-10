@@ -27,7 +27,6 @@ const LogInForm = ({ onClose }) => {
         }
     };
 
-
     const [formData, setFormData] = useState({
         email: '',
         password: '',
