@@ -6,10 +6,13 @@ import { useUserContext } from "../context/UserContext";
 
 const NavBar = () => {
   // const navigate = useNavigate();
-  const { setShowSignUpModal, setShowLogInModal } = useUserContext();
+  const { setShowSignUpModal, setShowLogInModal, setShowPetModal } = useUserContext();
 
   const handleSignUpClick = () => {
     setShowSignUpModal(true)
+  }
+  const handlePetClick = () => {
+    setShowPetModal(true)
   }
 
   const handleLoginClick = () => {
@@ -43,7 +46,10 @@ const NavBar = () => {
               Profile
             </NavLink>
           </li>
-          <div className="alignRight">
+          <div className="align-right">
+            <li>
+              <Button onClick={handlePetClick}>Add Pet</Button>
+            </li>
             <li>
               <Button onClick={handleSignUpClick}>SignUp</Button>
             </li>

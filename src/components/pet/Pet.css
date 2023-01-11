@@ -1,0 +1,139 @@
+.pet-card {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    background-color: white;
+    border-radius: 10px;
+    margin: 10px;
+    padding: 10px;
+    box-shadow: 1px 1px 5px gray;
+}
+
+/* Pet picture */
+.pet-picture {
+    width: 250px;
+    height: auto;
+    margin-right: 10px;
+    border-radius: 10px;
+}
+
+/* Pet information */
+.pet-info {
+    flex: 1;
+}
+
+/* Pet name */
+.pet-name {
+    color: brown;
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+/* Pet details */
+.pet-details {
+    color: gray;
+    font-size: 0.9em;
+    margin-bottom: 10px;
+}
+
+/* Pet footer */
+.pet-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: gray;
+    font-size: 0.9em;
+    margin-top: 10px;
+}
+
+/* Pet status */
+.pet-status {
+    color: red;
+}
+
+/* Pet user */
+.pet-user {
+    color: green;
+}
+
+/* Buttons */
+.pet-button {
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin: 5px;
+    font-size: 0.9em;
+    background-color: white;
+    color: gray;
+}
+
+.edit-button {
+    border: 1px solid gray;
+}
+
+.adopt-button {
+    border: 1px solid green;
+    color: green;
+}
+
+.delete-button {
+    border: 1px solid red;
+    color: red;
+}
+
+/* Hover states for buttons */
+.pet-button:hover {
+    background-color: lightgray;
+    cursor: pointer;
+}
+
+.pet-card.available {
+    background-color: lightblue;
+}
+
+/* Adopted pet */
+.pet-card.adopted {
+    background-color: lightblue;
+}
+
+/* Status */
+.pet-status.available {
+    color: green;
+}
+
+.pet-status.adopted {
+    color: black;
+}
+
+.pet-card {
+    /* Harmonious color palette */
+    background-color: #B3E5FC;
+    /* light blue */
+    border: 1px solid #01579B;
+    /* dark blue */
+    color: #01579B;
+    /* dark blue */
+}
+
+.pet-picture {
+    border: 1px solid #01579B;
+    /* dark blue */
+}
+
+.edit-button,
+.adopt-button,
+.delete-button {
+    background-color: #FB8C00;
+    /* orange */
+    border-color: #FB8C00;
+    /* orange */
+    color: #fff;
+}
+
+.edit-button:hover,
+.adopt-button:hover,
+.delete-button:hover {
+    background-color: #F57F17;
+    /* dark orange */
+    border-color: #F57F17;
+    /* dark orange */
+}

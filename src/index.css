@@ -159,23 +159,6 @@ li {
   /* width: 50%; */
 }
 
-.pet-card {
-  background-color: #353a40;
-  border-radius: 5px;
-  /* height: 270px; */
-  padding: 1rem;
-  word-break: break-all;
-}
-
-.upper-footer {
-  display: flex;
-  justify-content: space-between;
-  color: #9b9d9f;
-}
-
-.pet-body {
-  display: flex;
-}
 
 .profile-container {
   display: flex;
@@ -296,14 +279,9 @@ li {
   color: black
 }
 
-.alignRight {
+.align-right {
   display: flex;
   flex-direction: row;
   margin-left: auto;
   justify-items: right;
-}
-
-.pet-picture-half {
-  width: 100%;
-  height: 50%;
 }

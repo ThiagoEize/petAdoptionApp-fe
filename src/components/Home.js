@@ -23,6 +23,7 @@ const Home = () => {
     return (
         <>
             <PetForm />
+
             <PetList />
             {/* <SignupModal
                 visible={showModal}
