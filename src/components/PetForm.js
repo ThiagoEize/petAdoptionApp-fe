@@ -1,104 +1,135 @@
 import { useState } from "react";
-import { nanoid } from 'nanoid';
-import { usePetContext } from "../context/PetContext";
-import { useUserContext } from "../context/UserContext";
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
+import Form from 'react-bootstrap/Form';
+import axios from 'axios';
 
-const PetForm = ({ pet = {} }) => {
-  const { currentUserName } = useUserContext();
+const PetForm = ({ onClose, breeds = [], users = [], initialData = {} }) => {
+  const [formData, setFormData] = useState({
+    breedId: initialData.breedId || '',
+    userId: initialData.userId || '',
+    petName: initialData.petName || '',
+    adoptionStatus: initialData.adoptionStatus || '',
+    picture: initialData.picture || '',
+    petAge: initialData.petAge || '',
+    height: initialData.height || '',
+    weight: initialData.weight || '',
+    color: initialData.color || '',
+  });
+  const handleSubmit = async (e) => {
+    try {
+      e.preventDefault();
+      let res;
+      if (initialData.id) {
+        // Make a put request to your server to update the pet in the database
+        res = await axios.put(`http://localhost:8080/pets/${initialData.id}`, formData);
+      } else {
+        // Make a post request to your server to add the pet to the database
+        res = await axios.post('http://localhost:8080/pets', formData);
+      }
 
-  const { isLoading } = usePetContext();
-  const { handleSubmit } = usePetContext();
-  const { errorsFromServer } = usePetContext();
-
-  const maxCharacters = 140;
-
-  const [isAboveLimit, setIsAboveLimit] = useState(false);
-
-  const [petContent, setPetContent] = useState(pet.content ? pet.content : '');
-  // const [isSubmitted, setIsSubmitted] = useState(false);
-
-  const changePetContent = (e) => {
-    if (maxCharacters - e.target.value.length >= 0) {
-      setPetContent(e.target.value)
-      setIsAboveLimit(false);
-    } else {
-      setIsAboveLimit(true);
+      if (res.data.ok) {
+        // The pet was successfully added or updated
+        onClose();
+      }
+    } catch (err) {
+      console.log(err);
     }
-  }
+  };
 
-  const resetForm = () => {
-    setPetContent('');
-    // setIsSubmitted(false);
-  }
-
-  const handleClick = () => {
-    const date = new Date();
-    const formatedDate = date.toISOString();
-    // setIsSubmitted(true);
-    const petObj = {
-      content: petContent,
-      userName: currentUserName,
-      date: pet.date ? pet.date : formatedDate,
-      id: pet.id || nanoid(),
-    };
-    if (petContent) {
-      console.log(petObj);
-      handleSubmit(petObj);
-      resetForm();
-    }
-  }
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData({ ...formData, [name]: value });
+  };
 
   return (
-    <>
-      <div className="create-pet">
-        <div className="create-pet-border">
-          <textarea
-            className="pet-textarea"
-            placeholder="What do you have in mind..."
-            value={petContent}
-            onChange={changePetContent}
-          ></textarea>
-          <div className="create-pet-footer">
-
-            <div className="create-pet-message-box">
-              <small>{maxCharacters - petContent.length}</small>
-              {isLoading && <span className="loader"></span>}
-              {isAboveLimit
-                &&
-                <span
-                  className="warning-span"
-                >
-                  This pet cannot contain more than {maxCharacters} characters
-                </span>
-              }
-              {errorsFromServer
-                &&
-                <span
-                  className="warning-span"
-                >
-                  {errorsFromServer.statusCode && 'Error Status ' + errorsFromServer.statusCode + ': ' + errorsFromServer.message}
-                </span>
-              }
-            </div>
-
-            <div className="pet-button-area">
-              <button
-                className="pet-button"
-                disabled={isAboveLimit}
-                onClick={handleClick}
-              >
-                {
-                  pet.id ?
-                    'Update pet'
-                    :
-                    'Create pet'
-                }
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </>
+    <div className="pet-form-container">
+      <form>
+        <Modal.Header>
+          <h3>{initialData.id ? 'Edit Pet' : 'Add Pet'}</h3>
+        </Modal.Header>
+        <Modal.Body>
+          <Form.Label>Breed Name</Form.Label>
+          <Form.Control as="select" name="breedId" value={formData.breedId} onChange={handleChange}>
+            {breeds.map((breed) => (
+              <option key={breed.id} value={breed.id}>
+                {breed.breedName}
+              </option>
+            ))}
+          </Form.Control>
+          <Form.Label>Pet Name</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Pet Name"
+            name="petName"
+            value={formData.petName}
+            onChange={handleChange}
+          />
+          <Form.Label>Pet Owner</Form.Label>
+          <Form.Control as="select" name="userId" value={formData.userId} onChange={handleChange}>
+            {users.map((user) => (
+              <option key={user.id} value={user.id}>
+                {user.name}
+              </option>
+            ))}
+          </Form.Control>
+          <Form.Label>Adoption Status</Form.Label>
+          <Form.Control as="select" name="adoptionStatus" value={formData.adoptionStatus} onChange={handleChange}>
+            <option value="Adopted">Adopted</option>
+            <option value="Fostered">Fostered</option>
+            <option value="Available">Available</option>
+          </Form.Control>
+          <Form.Label>Picture</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="URL of pet picture"
+            name="picture"
+            value={formData.picture}
+            onChange={handleChange}
+          />
+          <Form.Label>Pet Age</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Pet age"
+            name="petAge"
+            value={formData.petAge}
+            onChange={handleChange}
+          />
+          <Form.Label>Height</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Height"
+            name="height"
+            value={formData.height}
+            onChange={handleChange}
+          />
+          <Form.Label>Weight</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Weight"
+            name="weight"
+            value={formData.weight}
+            onChange={handleChange}
+          />
+          <Form.Label>Color</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Color"
+            name="color"
+            value={formData.color}
+            onChange={handleChange}
+          />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={onClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleSubmit}>
+            {initialData.id ? 'Save Changes' : 'Add Pet'}
+          </Button>
+        </Modal.Footer>
+      </form>
+    </div>
   );
 };
 

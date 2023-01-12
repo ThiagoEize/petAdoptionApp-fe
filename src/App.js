@@ -1,4 +1,4 @@
-import NavBar from "./components/NavBar";
+import NavBar from "./components/navBar/NavBar";
 // import PetForm from "./components/PetForm";
 // import PetList from "./components/PetList";
 import Profile from "./components/Profile";
@@ -13,11 +13,13 @@ import PetContextProvider from "./context/PetContext";
 import UserContextProvider from "./context/UserContext";
 import PrivateRoute from './components/PrivateRoute';
 
+import './index.css';
+
 function App() {
   return (
-    <PetContextProvider>
-      <UserContextProvider>
-        <div className="container">
+    <UserContextProvider>
+      <PetContextProvider>
+        <div className="container-css">
           <NavBar />
           <Routes>
             <Route
@@ -38,8 +40,8 @@ function App() {
             ></Route>
           </Routes>
         </div>
-      </UserContextProvider>
-    </PetContextProvider>
+      </PetContextProvider>
+    </UserContextProvider>
 
   );
 }

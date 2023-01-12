@@ -45,21 +45,12 @@ textarea::placeholder {
   color: #9b9d9f;
 }
 
-.container {
+.container-css {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.nav-bar {
-  display: flex;
-  flex-direction: row;
-  width: 70%;
-  border-radius: 5px;
-  background-color: #353a3f;
-  margin-bottom: 20px;
-  top: 0;
-  position: sticky
+  margin: 0 auto 0 auto;
+  width: 90%;
 }
 
 ul {
@@ -102,7 +93,7 @@ li {
 .pet-textarea {
   background-color: #17202b;
   display: flex;
-  width: 99%;
+  /* width: 99%; */
   color: #ffffff;
 }
 
@@ -126,28 +117,19 @@ li {
   padding: 7px;
 }
 
-.pet-button:hover {
-  background-color: #3579f6;
-  color: #ffffff;
-  border: none;
-  border-radius: 5px;
-  padding: 7px;
-  transform: translateY(-1px);
-  cursor: pointer;
-}
 
 .pet-button:active {
-  background-color: #3579f6;
+  /* background-color: #3579f6; */
   color: #ffffff;
   border: none;
   border-radius: 5px;
   padding: 7px;
-  transform: translateY(2px);
+  /* transform: translateY(2px); */
 }
 
 .pet-list {
   /* display: flex; */
-  gap: 1rem;
+  gap: .5rem;
   /* margin-bottom: 10px; */
   /* width: 50%; */
 }
@@ -204,7 +186,7 @@ li {
   border: none;
   border-radius: 5px;
   padding: 7px;
-  transform: translateY(-1px);
+  /* transform: translateY(-1px); */
   cursor: pointer;
   padding-left: 1rem;
   padding-right: 1rem;
@@ -216,7 +198,7 @@ li {
   border: none;
   border-radius: 5px;
   padding: 7px;
-  transform: translateY(2px);
+  /* transform: translateY(2px); */
   padding-left: 1rem;
   padding-right: 1rem;
 }

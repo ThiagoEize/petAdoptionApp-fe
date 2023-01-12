@@ -51,14 +51,6 @@ const SpeciesForm = ({ onClose, initialData = {} }) => {
                         value={formData.specieName}
                         onChange={handleChange}
                     />
-                    <Form.Label>Date Created</Form.Label>
-                    <Form.Control
-                        type="text"
-                        placeholder="Date Created"
-                        name="dateCreated"
-                        value={formData.dateCreated}
-                        onChange={handleChange}
-                    />
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={onClose}>

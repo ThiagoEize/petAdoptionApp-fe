@@ -73,7 +73,8 @@ export default function UserContextProvider({ children }) {
             setShowPermissionModal,
             initialData,
             setInitialData,
-            token
+            token,
+            setToken
         }}>
             <SpecieModal
                 visible={showSpecieModal}
@@ -105,7 +106,7 @@ export default function UserContextProvider({ children }) {
                 visible={showLogInModal}
                 onClose={() => setShowLogInModal(false)}
                 token={token}
-                setToken={() => setToken(localStorage.getItem('token'))}
+                setToken={setToken}
             />
             {children}
         </UserContext.Provider>

@@ -5,7 +5,7 @@ import Form from 'react-bootstrap/Form';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 
-const LogInForm = ({ onClose }) => {
+const LogInForm = ({ onClose, setToken }) => {
     const navigate = useNavigate()
 
     const handleLogIn = async (e) => {
@@ -14,7 +14,8 @@ const LogInForm = ({ onClose }) => {
             const res = await axios.post('http://localhost:8080/users/login', formData)
             // const res = await axios.post('http://localhost:8080/users/login', formData, { withCredentials: true });
             if (res.data.token) {
-                localStorage.setItem('token', JSON.stringify(res.data.token));
+                localStorage.setItem('token', res.data.token);
+                setToken(res.data.token);
                 navigate("/");
                 onClose();
             }

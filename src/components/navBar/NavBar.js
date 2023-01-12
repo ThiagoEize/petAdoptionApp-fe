@@ -2,22 +2,18 @@
 import { NavLink } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
 // import { createContext, useContext, useState } from "react";
-import { useUserContext } from "../context/UserContext";
+import { useUserContext } from "../../context/UserContext";
+
+import './NavBar.css';
 
 const NavBar = () => {
   // const navigate = useNavigate();
-  const { setShowSignUpModal, setShowLogInModal, setShowPetModal } = useUserContext();
-
-  const handleSignUpClick = () => {
-    setShowSignUpModal(true)
-  }
-  const handlePetClick = () => {
-    setShowPetModal(true)
-  }
-
-  const handleLoginClick = () => {
-    setShowLogInModal(true)
-  }
+  const { setShowSignUpModal,
+    setShowLogInModal,
+    setShowSpecieModal,
+    setShowBreedModal,
+    setShowPetModal
+  } = useUserContext();
 
   let activeStyle = {
     fontWeight: 'bold',
@@ -48,14 +44,21 @@ const NavBar = () => {
           </li>
           <div className="align-right">
             <li>
-              <Button onClick={handlePetClick}>Add Pet</Button>
+              <Button onClick={setShowSpecieModal}>Add Specie</Button>
             </li>
             <li>
-              <Button onClick={handleSignUpClick}>SignUp</Button>
+              <Button onClick={setShowBreedModal}>Add Breed</Button>
             </li>
             <li>
-              <Button onClick={handleLoginClick}>Login</Button>
+              <Button onClick={setShowPetModal}>Add Pet</Button>
             </li>
+            <li>
+              <Button onClick={setShowSignUpModal}>SignUp</Button>
+            </li>
+            <li>
+              <Button onClick={setShowLogInModal}>Login</Button>
+            </li>
+
           </div>
         </ul>
       </div>

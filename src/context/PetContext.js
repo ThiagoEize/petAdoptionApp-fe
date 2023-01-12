@@ -1,4 +1,5 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
+import { useUserContext } from "./UserContext";
 import Axios from "axios";
 
 export const PetContext = createContext();
@@ -8,6 +9,13 @@ export function usePetContext() {
 }
 
 export default function PetContextProvider({ children }) {
+    const { token } = useUserContext();
+
+    console.log('petContextProv', token);
+
+    useEffect(() => {
+        getDataFromServer();
+    }, [token])
     const [petsList, setPetsList] = useState([])
     const [isLoading, setIsLoading] = useState(false);
     const [errorsFromServer, setErrorsFromServer] = useState({})
@@ -15,7 +23,7 @@ export default function PetContextProvider({ children }) {
     const serverUrl = 'http://localhost:8080/pets';
     const getDataFromServer = async () => {
         try {
-            const res = await Axios.get(serverUrl);
+            const res = await Axios.get(serverUrl, { headers: { Authorization: `Bearer ${token}` } });
             console.log('context', res.data.data);
             setPetsList(res.data.data ? res.data.data : [])
             // console.log(res);

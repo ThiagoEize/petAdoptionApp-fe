@@ -4,14 +4,14 @@
     align-items: flex-start;
     background-color: white;
     border-radius: 10px;
-    margin: 10px;
+    /* margin: 2px; */
     padding: 10px;
     box-shadow: 1px 1px 5px gray;
 }
 
 /* Pet picture */
 .pet-picture {
-    width: 250px;
+    width: 180px;
     height: auto;
     margin-right: 10px;
     border-radius: 10px;
@@ -77,14 +77,22 @@
 
 .delete-button {
     border: 1px solid red;
-    color: red;
+    background-color: red;
+    color: #fff;
 }
 
-/* Hover states for buttons */
+
 .pet-button:hover {
-    background-color: lightgray;
+    /* background-color: #3579f6; */
+    color: #ffffff;
+    /* border: none; */
+    /* border-radius: 5px; */
+    /* padding: 10px; */
+    /* transform: translateY(-1px); */
     cursor: pointer;
+    font-weight: bolder;
 }
+
 
 .pet-card.available {
     background-color: lightblue;
@@ -120,20 +128,10 @@
 }
 
 .edit-button,
-.adopt-button,
-.delete-button {
+.adopt-button {
     background-color: #FB8C00;
     /* orange */
     border-color: #FB8C00;
     /* orange */
     color: #fff;
-}
-
-.edit-button:hover,
-.adopt-button:hover,
-.delete-button:hover {
-    background-color: #F57F17;
-    /* dark orange */
-    border-color: #F57F17;
-    /* dark orange */
 }
