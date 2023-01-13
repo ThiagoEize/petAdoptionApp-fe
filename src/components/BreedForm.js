@@ -3,8 +3,11 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import axios from 'axios';
+import { useUserContext } from "../context/UserContext";
 
-const BreedForm = ({ onClose, species = [], initialData = {} }) => {
+const BreedForm = ({ onClose, speciesList, initialData = {} }) => {
+    const { token } = useUserContext();
+
     const [formData, setFormData] = useState({
         specieId: initialData.specieId || '',
         breedName: initialData.breedName || '',
@@ -50,7 +53,7 @@ const BreedForm = ({ onClose, species = [], initialData = {} }) => {
                 <Modal.Body>
                     <Form.Label>Specie Name</Form.Label>
                     <Form.Control as="select" name="specieId" value={formData.specieId} onChange={handleChange}>
-                        {species.map((specie) => (
+                        {speciesList.map((specie) => (
                             <option key={specie.id} value={specie.id}>
                                 {specie.specieName}
                             </option>

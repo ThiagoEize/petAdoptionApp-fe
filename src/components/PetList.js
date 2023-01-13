@@ -4,7 +4,7 @@ import { Col, Row } from 'react-bootstrap';
 
 const PetList = () => {
   const { petsList } = usePetContext();
-  console.log('petsListComponent', petsList);
+  // console.log('petsListComponent', petsList);
   return (
     <div className="pet-list">
       <Row>

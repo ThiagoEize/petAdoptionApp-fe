@@ -3,8 +3,11 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import axios from 'axios';
+import { useUserContext } from "../context/UserContext";
 
 const SpeciesForm = ({ onClose, initialData = {} }) => {
+    const { token } = useUserContext();
+
     const [formData, setFormData] = useState({
         specieName: initialData.specieName || '',
         dateCreated: initialData.dateCreated || '',
@@ -16,10 +19,10 @@ const SpeciesForm = ({ onClose, initialData = {} }) => {
             let res;
             if (initialData.id) {
                 // Make a put request to your server to update the species in the database
-                res = await axios.put(`http://localhost:8080/species/${initialData.id}`, formData);
+                res = await axios.put(`http://localhost:8080/species/${initialData.id}`, formData, { headers: { Authorization: `Bearer ${token}` } });
             } else {
                 // Make a post request to your server to add the species to the database
-                res = await axios.post('http://localhost:8080/species', formData);
+                res = await axios.post('http://localhost:8080/species', formData, { headers: { Authorization: `Bearer ${token}` } });
             }
 
             if (res.data.ok) {

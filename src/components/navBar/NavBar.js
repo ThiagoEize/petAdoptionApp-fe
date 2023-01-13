@@ -8,9 +8,11 @@ import './NavBar.css';
 
 const NavBar = () => {
   // const navigate = useNavigate();
-  const { setShowSignUpModal,
+  const {
+    setShowSignUpModal,
     setShowLogInModal,
     setShowSpecieModal,
+    setShowPermissionModal,
     setShowBreedModal,
     setShowPetModal
   } = useUserContext();
@@ -48,6 +50,9 @@ const NavBar = () => {
             </li>
             <li>
               <Button onClick={setShowBreedModal}>Add Breed</Button>
+            </li>
+            <li>
+              <Button onClick={setShowPermissionModal}>Add Permission</Button>
             </li>
             <li>
               <Button onClick={setShowPetModal}>Add Pet</Button>

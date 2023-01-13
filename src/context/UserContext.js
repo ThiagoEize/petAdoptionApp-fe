@@ -22,7 +22,6 @@ export default function UserContextProvider({ children }) {
     });
 
     const handleUserName = (newUserName) => {
-        console.log(newUserName)
         localStorage.setItem("currentUserName", newUserName);
         setCurrentUserName(newUserName)
     }
@@ -42,18 +41,17 @@ export default function UserContextProvider({ children }) {
     const getSpeciesList = async () => {
         try {
             const res = await axios.get('http://localhost:8080/species', { headers: { Authorization: `Bearer ${token}` } });
-            console.log(res.data);
-            // setSpeciesList(res.data);
+            setSpeciesList(res.data.data);
         } catch (err) {
             console.log(err);
         }
     };
 
     useEffect(() => {
-        if (showBreedModal === true) {
+        if (showBreedModal) {
             getSpeciesList()
         }
-    }, showBreedModal)
+    }, [showBreedModal])
 
     return (
         <UserContext.Provider value={{

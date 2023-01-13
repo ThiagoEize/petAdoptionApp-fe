@@ -3,8 +3,11 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import axios from 'axios';
+import { useUserContext } from "../context/UserContext";
 
 const PetForm = ({ onClose, breeds = [], users = [], initialData = {} }) => {
+  const { token } = useUserContext();
+
   const [formData, setFormData] = useState({
     breedId: initialData.breedId || '',
     userId: initialData.userId || '',
@@ -16,16 +19,23 @@ const PetForm = ({ onClose, breeds = [], users = [], initialData = {} }) => {
     weight: initialData.weight || '',
     color: initialData.color || '',
   });
+  const [pictureFile, setPictureFile] = useState(null);
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
       let res;
       if (initialData.id) {
         // Make a put request to your server to update the pet in the database
-        res = await axios.put(`http://localhost:8080/pets/${initialData.id}`, formData);
+        res = await axios.put(`http://localhost:8080/pets/${initialData.id}`, {
+          ...formData,
+          pictureFile
+        });
       } else {
         // Make a post request to your server to add the pet to the database
-        res = await axios.post('http://localhost:8080/pets', formData);
+        res = await axios.post('http://localhost:8080/pets', {
+          ...formData,
+          pictureFile
+        });
       }
 
       if (res.data.ok) {
@@ -42,6 +52,10 @@ const PetForm = ({ onClose, breeds = [], users = [], initialData = {} }) => {
     setFormData({ ...formData, [name]: value });
   };
 
+  const handleFileChange = (event) => {
+    setPictureFile(event.target.files[0]);
+  }
+
   return (
     <div className="pet-form-container">
       <form>
@@ -49,6 +63,21 @@ const PetForm = ({ onClose, breeds = [], users = [], initialData = {} }) => {
           <h3>{initialData.id ? 'Edit Pet' : 'Add Pet'}</h3>
         </Modal.Header>
         <Modal.Body>
+          <Form.Group>
+            {/* <Form.Label>Picture</Form.Label> */}
+            {/* <Form.Control
+              type="text"
+              placeholder="URL of pet picture"
+              name="picture"
+              value={formData.picture}
+              onChange={handleChange}
+            /> */}
+            <Button variant="secondary" onClick={() => document.getElementById("picture-input").click()}>Select a image</Button>
+            <input type="file" id="picture-input" style={{ display: "none" }} onChange={handleFileChange} />
+            <div>
+              {pictureFile && <img src={URL.createObjectURL(pictureFile)} alt="Selected" width="200" height="200" style={{ marginTop: '10px' }} />}
+            </div>
+          </Form.Group>
           <Form.Label>Breed Name</Form.Label>
           <Form.Control as="select" name="breedId" value={formData.breedId} onChange={handleChange}>
             {breeds.map((breed) => (
@@ -79,14 +108,6 @@ const PetForm = ({ onClose, breeds = [], users = [], initialData = {} }) => {
             <option value="Fostered">Fostered</option>
             <option value="Available">Available</option>
           </Form.Control>
-          <Form.Label>Picture</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="URL of pet picture"
-            name="picture"
-            value={formData.picture}
-            onChange={handleChange}
-          />
           <Form.Label>Pet Age</Form.Label>
           <Form.Control
             type="text"
@@ -125,7 +146,7 @@ const PetForm = ({ onClose, breeds = [], users = [], initialData = {} }) => {
             Close
           </Button>
           <Button variant="primary" onClick={handleSubmit}>
-            {initialData.id ? 'Save Changes' : 'Add Pet'}
+            Save Changes
           </Button>
         </Modal.Footer>
       </form>

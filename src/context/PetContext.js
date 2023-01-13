@@ -11,7 +11,6 @@ export function usePetContext() {
 export default function PetContextProvider({ children }) {
     const { token } = useUserContext();
 
-    console.log('petContextProv', token);
 
     useEffect(() => {
         getDataFromServer();

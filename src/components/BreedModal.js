@@ -8,6 +8,7 @@ function BreedModal({ visible, onClose, initialData, speciesList }) {
     //     // onSubmit(Breed);
     //     onClose();
     // }
+    console.log('Modal species list', speciesList)
 
     return (
         <Modal show={visible} onHide={onClose}>
