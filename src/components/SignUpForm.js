@@ -14,8 +14,7 @@ const SignUpForm = ({ onClose }) => {
             // console.log(formData);
 
             const res = await axios.post('http://localhost:8080/users/signup', formData)
-            if (res.data.ok) {
-                // navigate('/')
+            if (res.data.success) {
                 console.log(res)
             }
             onClose();

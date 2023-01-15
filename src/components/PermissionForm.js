@@ -30,7 +30,7 @@ const PermissionsForm = ({ onClose, initialData = {} }) => {
                 res = await axios.post('http://localhost:8080/permissions', formData, { headers: { Authorization: `Bearer ${token}` } });
             }
 
-            if (res.data.ok) {
+            if (res.data.success) {
                 // The permission was successfully added or updated
                 onClose();
             }

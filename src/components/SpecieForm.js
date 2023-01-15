@@ -9,8 +9,7 @@ const SpeciesForm = ({ onClose, initialData = {} }) => {
     const { token } = useUserContext();
 
     const [formData, setFormData] = useState({
-        specieName: initialData.specieName || '',
-        dateCreated: initialData.dateCreated || '',
+        specieName: initialData.specieName || ''
     });
 
     const handleSubmit = async (e) => {
@@ -25,8 +24,7 @@ const SpeciesForm = ({ onClose, initialData = {} }) => {
                 res = await axios.post('http://localhost:8080/species', formData, { headers: { Authorization: `Bearer ${token}` } });
             }
 
-            if (res.data.ok) {
-                // The species was successfully added or updated
+            if (res.data.success) {
                 onClose();
             }
         } catch (err) {
