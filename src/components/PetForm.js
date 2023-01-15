@@ -11,6 +11,7 @@ const PetForm = ({ onClose, initialData = {} }) => {
   const [speciesList, setSpeciesList] = useState([]);
 
   const [breedsList, setBreedsList] = useState([]);
+  const [filteredBreedsList, setFilteredBreedsList] = useState([]);
 
   const getSpeciesList = async () => {
     try {
@@ -27,6 +28,7 @@ const PetForm = ({ onClose, initialData = {} }) => {
       const res = await axios.get('http://localhost:8080/breeds', { headers: { Authorization: `Bearer ${token}` } });
       const breeds = [{ id: '', breedName: 'Select a breed...' }, ...res.data.data]
       setBreedsList(breeds);
+      setFilteredBreedsList(breeds);
     } catch (err) {
       console.log(err);
     }
@@ -40,8 +42,7 @@ const PetForm = ({ onClose, initialData = {} }) => {
   const [formData, setFormData] = useState({
     breedId: initialData.breedId || '',
     petName: initialData.petName || '',
-    adoptionStatus: initialData.adoptionStatus || '',
-    // picture: initialData.picture || '',
+    adoptionStatus: initialData.adoptionStatus || 'Available',
     petAge: initialData.petAge || '',
     height: initialData.height || '',
     weight: initialData.weight || '',
@@ -64,12 +65,12 @@ const PetForm = ({ onClose, initialData = {} }) => {
         // Make a post request to your server to add the pet to the database
         const form = new FormData();
         form.append('picture', picture);
-        form.append('breedId', parseInt(formData.breedId));
+        form.append('breedId', formData.breedId);
         form.append('petName', formData.petName);
         form.append('adoptionStatus', formData.adoptionStatus);
-        form.append('petAge', Number(formData.petAge));
-        form.append('height', Number(formData.height));
-        form.append('weight', Number(formData.weight));
+        form.append('petAge', formData.petAge);
+        form.append('height', formData.height);
+        form.append('weight', formData.weight);
         form.append('color', formData.color);
         form.append('foodRestrictions', formData.foodRestrictions);
         form.append('petBio', formData.petBio);
@@ -96,12 +97,12 @@ const PetForm = ({ onClose, initialData = {} }) => {
   const handleChange = (event) => {
     const { name, value } = event.target;
     let newValue = value;
-    // if (name === "breedId") {
-    //   newValue = event.target.value
-    // }
-    if (name === "petAge" || name === "petHeight" || name === "petWeight") {
-      newValue = parseInt(value)
+    if (name === 'specieId') {
+      console.log(name, value, newValue);
+      const newBreedList = breedsList.filter(breed => breed.specieId === parseInt(newValue) || !breed.specieId)
+      setFilteredBreedsList(newBreedList);
     }
+
     setFormData({ ...formData, [name]: newValue });
   };
 
@@ -133,7 +134,7 @@ const PetForm = ({ onClose, initialData = {} }) => {
           </Form.Control>
           <Form.Label>Breed Name</Form.Label>
           <Form.Control as="select" name="breedId" value={formData.breedId} onChange={handleChange}>
-            {breedsList.map((breed) => (
+            {filteredBreedsList.map((breed) => (
               <option key={breed.id} value={breed.id}>
                 {breed.breedName}
               </option>
@@ -149,9 +150,9 @@ const PetForm = ({ onClose, initialData = {} }) => {
           />
           <Form.Label>Adoption Status</Form.Label>
           <Form.Control as="select" name="adoptionStatus" value={formData.adoptionStatus} onChange={handleChange}>
+            <option value="Available">Available</option>
             <option value="Adopted">Adopted</option>
             <option value="Fostered">Fostered</option>
-            <option value="Available">Available</option>
           </Form.Control>
           <Form.Label>Pet Age</Form.Label>
           <Form.Control
