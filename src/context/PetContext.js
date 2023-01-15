@@ -9,17 +9,8 @@ export function usePetContext() {
 }
 
 export default function PetContextProvider({ children }) {
-    const { token } = useUserContext();
+    const { token, permissions } = useUserContext();
 
-
-    useEffect(() => {
-        getDataFromServer();
-    }, [token])
-    const [petsList, setPetsList] = useState([])
-    const [isLoading, setIsLoading] = useState(false);
-    const [errorsFromServer, setErrorsFromServer] = useState({})
-    // const serverUrl = 'https://micro-blogging-dot-full-stack-course-services.ew.r.appspot.com/pet';
-    const serverUrl = 'http://localhost:8080/pets';
     const getDataFromServer = async () => {
         try {
             const res = await Axios.get(serverUrl, { headers: { Authorization: `Bearer ${token}` } });
@@ -31,24 +22,35 @@ export default function PetContextProvider({ children }) {
         }
     }
 
-    const handleSubmit = async (pet) => {
-        setIsLoading(true);
-        try {
-            await Axios.post(serverUrl, pet)
-            setPetsList((prevPetList) => [pet, ...prevPetList])
-        } catch (err) {
-            setErrorsFromServer(err.response.data);
-        } finally {
-            setIsLoading(false)
-        }
-    }
+    useEffect(() => {
+        getDataFromServer();
+    }, [token])
+
+    const [petsList, setPetsList] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [errorsFromServer, setErrorsFromServer] = useState({})
+    // const serverUrl = 'https://micro-blogging-dot-full-stack-course-services.ew.r.appspot.com/pet';
+    const serverUrl = 'http://localhost:8080/pets';
+
+    // const handleSubmit = async (pet) => {
+    //     setIsLoading(true);
+    //     try {
+    //         await Axios.post(serverUrl, pet)
+    //         setPetsList((prevPetList) => [pet, ...prevPetList])
+    //     } catch (err) {
+    //         setErrorsFromServer(err.response.data);
+    //     } finally {
+    //         setIsLoading(false)
+    //     }
+    // }
 
     return (
         <PetContext.Provider value={{
             isLoading,
-            handleSubmit,
+            // handleSubmit,
             errorsFromServer,
             petsList,
+            setPetsList,
             getDataFromServer
         }}>
             {children}

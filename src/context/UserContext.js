@@ -1,10 +1,4 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import SignUpModal from "../components/SignUpModal";
-import LogInModal from "../components/LogInModal";
-import BreedModal from "../components/BreedModal";
-import SpecieModal from "../components/SpecieModal";
-import PetModal from "../components/PetModal";
-import PermissionModal from "../components/PermissionModal";
 import axios from "axios";
 
 export const UserContext = createContext();
@@ -18,6 +12,8 @@ export default function UserContextProvider({ children }) {
 
     const [userId, setUserId] = useState(localStorage.getItem('userId') || '')
 
+    const [permissions, setPermissions] = useState({})
+
     const [currentUserName, setCurrentUserName] = useState(() => {
         const newLocalUser = localStorage.getItem('currentUserName');
         return newLocalUser ? newLocalUser : 'Thiago'
@@ -27,6 +23,20 @@ export default function UserContextProvider({ children }) {
         localStorage.setItem("currentUserName", newUserName);
         setCurrentUserName(newUserName)
     }
+
+    const getUserPermissions = async () => {
+        try {
+            const res = await axios.get(`http://localhost:8080/permissions/user/${userId}`, { headers: { Authorization: `Bearer ${token}` } });
+            setPermissions(res.data.data || '');
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    useEffect(() => {
+        getUserPermissions()
+        console.log('permissions:', permissions);
+    }, [userId])
 
     const [showSignUpModal, setShowSignUpModal] = useState(false);
     const [showLogInModal, setShowLogInModal] = useState(false);
@@ -95,9 +105,10 @@ export default function UserContextProvider({ children }) {
             // breedsList,
             token,
             userId,
+            permissions,
             setToken
         }}>
-            <SpecieModal
+            {/* <SpecieModal
                 visible={showSpecieModal}
                 onClose={() => setShowSpecieModal(false)}
             // initialData={initialData}
@@ -127,7 +138,7 @@ export default function UserContextProvider({ children }) {
                 token={token}
                 setToken={setToken}
                 setUserId={setUserId}
-            />
+            /> */}
             {children}
         </UserContext.Provider>
     );

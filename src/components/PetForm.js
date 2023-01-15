@@ -4,9 +4,11 @@ import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import axios from 'axios';
 import { useUserContext } from "../context/UserContext";
+import { usePetContext } from "../context/PetContext";
 
 const PetForm = ({ onClose, initialData = {} }) => {
   const { token } = useUserContext();
+  const { petsList, setPetsList } = usePetContext();
 
   const [speciesList, setSpeciesList] = useState([]);
 
@@ -87,6 +89,7 @@ const PetForm = ({ onClose, initialData = {} }) => {
       }
 
       if (res.data.success) {
+        setPetsList((prevPetList) => [...prevPetList, res.data.data])
         onClose();
       }
     } catch (err) {

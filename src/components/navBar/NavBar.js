@@ -4,17 +4,34 @@ import Button from 'react-bootstrap/Button';
 // import { createContext, useContext, useState } from "react";
 import { useUserContext } from "../../context/UserContext";
 
+import SignUpModal from "../SignUpModal";
+import LogInModal from "../LogInModal";
+import BreedModal from "../BreedModal";
+import SpecieModal from "../SpecieModal";
+import PetModal from "../PetModal";
+import PermissionModal from "../PermissionModal";
+
 import './NavBar.css';
 
 const NavBar = () => {
   // const navigate = useNavigate();
   const {
+    showSignUpModal,
+    showLogInModal,
+    showSpecieModal,
+    showPermissionModal,
+    showBreedModal,
+    showPetModal,
     setShowSignUpModal,
     setShowLogInModal,
     setShowSpecieModal,
     setShowPermissionModal,
     setShowBreedModal,
-    setShowPetModal
+    setShowPetModal,
+    permissions,
+    setToken,
+    setUserId,
+    token
   } = useUserContext();
 
   let activeStyle = {
@@ -67,6 +84,37 @@ const NavBar = () => {
           </div>
         </ul>
       </div>
+      <SpecieModal
+        visible={showSpecieModal}
+        onClose={() => setShowSpecieModal(false)}
+      // initialData={initialData}
+      />
+      <BreedModal
+        visible={showBreedModal}
+        onClose={() => setShowBreedModal(false)}
+      // setSpeciesList={setSpeciesList}
+      />
+      <PetModal
+        visible={showPetModal}
+        onClose={() => setShowPetModal(false)}
+      // initialData={initialData}
+      />
+      <PermissionModal
+        visible={showPermissionModal}
+        onClose={() => setShowPermissionModal(false)}
+      // initialData={initialData}
+      />
+      <SignUpModal
+        visible={showSignUpModal}
+        onClose={() => setShowSignUpModal(false)}
+      />
+      <LogInModal
+        visible={showLogInModal}
+        onClose={() => setShowLogInModal(false)}
+        token={token}
+        setToken={setToken}
+        setUserId={setUserId}
+      />
     </>
 
   );
