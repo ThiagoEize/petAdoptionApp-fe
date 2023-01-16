@@ -1,0 +1,60 @@
+.search-pets-container {
+    display: flex;
+    flex-direction: row;
+    padding: 20px;
+    background-color: orange;
+    border-radius: 10px;
+    margin: 1rem;
+    align-items: baseline;
+    align-self: baseline;
+}
+
+.iconsInputs {
+    display: flex;
+    flex-direction: row;
+}
+
+.specie {
+    width: 9rem;
+    margin-right: .5rem;
+}
+
+.breed {
+    width: 9rem;
+    margin-right: .5rem;
+}
+
+.name {
+    width: 9rem;
+    margin-right: .5rem;
+}
+
+.status {
+    width: 8rem;
+    margin-right: .5rem;
+}
+
+.age {
+    width: 6rem;
+    margin-right: .5rem;
+}
+
+.height {
+    width: 6rem;
+    margin-right: .5rem;
+}
+
+.weight {
+    width: 6rem;
+    margin-right: .5rem;
+}
+
+.color {
+    width: 8rem;
+    margin-right: .5rem;
+}
+
+.searchButton {
+    margin-top: auto;
+    align-self: baseline;
+}

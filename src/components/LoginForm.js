@@ -1,12 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
+import Alert from 'react-bootstrap/Alert';
+
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
+import { useUserContext } from "../context/UserContext";
 
 const LogInForm = ({ onClose, setToken, setUserId }) => {
     const navigate = useNavigate()
+
+    const { errorsFromServer, setErrorsFromServer } = useUserContext();
 
     const handleLogIn = async (e) => {
         try {
@@ -26,9 +31,18 @@ const LogInForm = ({ onClose, setToken, setUserId }) => {
                 navigate("/")
             }
         } catch (err) {
-            console.log(err);
+            console.log('This is the error message', err.response.data);
+            setErrorsFromServer(err.response.data)
         }
     };
+
+    useEffect(() => {
+
+        setTimeout(() => {
+            console.log('iteration');
+            setErrorsFromServer('')
+        }, 2000)
+    }, [errorsFromServer])
 
     const [formData, setFormData] = useState({
         email: '',
@@ -43,6 +57,7 @@ const LogInForm = ({ onClose, setToken, setUserId }) => {
     return (
         <div className="note-form-container">
             <form>
+
                 <Modal.Header>
                     <h3>Log In</h3>
                 </Modal.Header>
@@ -63,6 +78,11 @@ const LogInForm = ({ onClose, setToken, setUserId }) => {
                         value={formData.password}
                         onChange={handleChange}
                     />
+                    {errorsFromServer &&
+                        <Alert variant="danger">
+                            {errorsFromServer}
+                        </Alert>
+                    }
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={onClose}>

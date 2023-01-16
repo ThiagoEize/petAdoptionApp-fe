@@ -14,6 +14,8 @@ export default function UserContextProvider({ children }) {
 
     const [permissions, setPermissions] = useState({})
 
+    const [errorsFromServer, setErrorsFromServer] = useState('');
+
     const [currentUserName, setCurrentUserName] = useState(() => {
         const newLocalUser = localStorage.getItem('currentUserName');
         return newLocalUser ? newLocalUser : 'Thiago'
@@ -99,6 +101,8 @@ export default function UserContextProvider({ children }) {
             setShowPetModal,
             showPermissionModal,
             setShowPermissionModal,
+            errorsFromServer,
+            setErrorsFromServer,
             // initialData,
             // setInitialData,
             // speciesList,

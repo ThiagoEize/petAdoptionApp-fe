@@ -1,4 +1,4 @@
-import PetForm from "./PetForm";
+import PetSearch from "./petSearch/PetSearch";
 import PetList from "./PetList";
 // import SignupModal from "./SignupModal";
 import { useEffect, useState } from 'react';
@@ -12,18 +12,10 @@ const Home = () => {
 
     // const [showModal, setShowModal] = useState(true);
 
-    useEffect(() => {
-        getDataFromServer();
-        const interval = setInterval(() => {
-            getDataFromServer();
-        }, 180000);
-        return () => clearInterval(interval);
-    }, []);
-
     return (
         <>
             {/* <PetForm /> */}
-
+            <PetSearch />
             <PetList />
             {/* <SignupModal
                 visible={showModal}
