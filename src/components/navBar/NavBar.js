@@ -12,6 +12,7 @@ import PetModal from "../PetModal";
 import PermissionModal from "../PermissionModal";
 
 import './NavBar.css';
+import { useEffect, useState } from "react";
 
 const NavBar = () => {
   // const navigate = useNavigate();
@@ -38,6 +39,27 @@ const NavBar = () => {
     fontWeight: 'bold',
     color: 'black'
   };
+
+  const [logedIn, setLogedIn] = useState(token ? true : false)
+
+  useEffect(() => {
+    setLogedIn(token ? true : false)
+    console.log(logedIn);
+  }, [token])
+
+
+  const handleLogOut = () => {
+
+    // setUserId(false);
+    // setToken(false);
+    localStorage.removeItem('token');
+    localStorage.removeItem('userId');
+    // setShowLogInModal(false)
+  }
+
+  const handleLogIn = () => {
+    setShowLogInModal(true)
+  }
 
   return (
     <>
@@ -74,11 +96,14 @@ const NavBar = () => {
             <li>
               <Button onClick={setShowPetModal}>Add Pet</Button>
             </li>
+            {logedIn &&
+              <li>
+                <Button onClick={setShowSignUpModal}>SignUp</Button>
+              </li>
+            }
+
             <li>
-              <Button onClick={setShowSignUpModal}>SignUp</Button>
-            </li>
-            <li>
-              <Button onClick={setShowLogInModal}>Login</Button>
+              <Button onClick={logedIn ? handleLogOut : handleLogIn}>{logedIn ? 'LogOut' : 'LogIn'}</Button>
             </li>
 
           </div>

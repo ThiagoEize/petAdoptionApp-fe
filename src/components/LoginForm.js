@@ -9,30 +9,31 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useUserContext } from "../context/UserContext";
 
 const LogInForm = ({ onClose, setToken, setUserId }) => {
-    const navigate = useNavigate()
-
+    const navigate = useNavigate();
     const { errorsFromServer, setErrorsFromServer } = useUserContext();
-
     const handleLogIn = async (e) => {
         try {
             e.preventDefault();
             const res = await axios.post('http://localhost:8080/users/login', formData)
             // const res = await axios.post('http://localhost:8080/users/login', formData, { withCredentials: true });
             if (res.data.token) {
+                console.log(setUserId);
                 localStorage.setItem('token', res.data.token);
                 setToken(res.data.token);
                 localStorage.setItem('userId', res.data.id);
                 setUserId(res.data.id);
                 navigate("/");
-                onClose();
             }
             if (res.data.success) {
-                // setCurrentUser(res.data.userId)
-                navigate("/")
+                console.log('8kljkljkl');
+                navigate("/");
+                onClose();
             }
         } catch (err) {
-            console.log('This is the error message', err.response.data);
-            setErrorsFromServer(err.response.data)
+            console.log('This is the error message', err);
+            if (err.response.data) {
+                setErrorsFromServer(err.response.data)
+            }
         }
     };
 

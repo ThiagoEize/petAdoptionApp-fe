@@ -11,20 +11,20 @@ export function usePetContext() {
 export default function PetContextProvider({ children }) {
     const { token, permissions } = useUserContext();
 
-    const getDataFromServer = async () => {
-        try {
-            const res = await Axios.get(serverUrl, { headers: { Authorization: `Bearer ${token}` } });
-            console.log('context', res.data.data);
-            setPetsList(res.data.data ? res.data.data : [])
-            // console.log(res);
-        } catch (err) {
-            console.log(err.response.data)
-        }
-    }
+    // const getDataFromServer = async () => {
+    //     try {
+    //         const res = await Axios.get(serverUrl, { headers: { Authorization: `Bearer ${token}` } });
+    //         console.log('context', res.data.data);
+    //         setPetsList(res.data.data ? res.data.data : [])
+    //         // console.log(res);
+    //     } catch (err) {
+    //         console.log(err.response.data)
+    //     }
+    // }
 
-    useEffect(() => {
-        getDataFromServer();
-    }, [token])
+    // useEffect(() => {
+    //     getDataFromServer();
+    // }, [token])
 
     const [petsList, setPetsList] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -50,8 +50,7 @@ export default function PetContextProvider({ children }) {
             // handleSubmit,
             errorsFromServer,
             petsList,
-            setPetsList,
-            getDataFromServer
+            setPetsList
         }}>
             {children}
         </PetContext.Provider>

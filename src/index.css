@@ -180,6 +180,17 @@ li {
   padding-right: 1rem;
 }
 
+.buttonsLogout {
+  background-color: #3579f6;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  padding: 7px;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  margin-right: 1rem;
+}
+
 .save-profile-button:hover {
   background-color: #3579f6;
   color: #ffffff;
@@ -266,4 +277,8 @@ li {
   flex-direction: row;
   margin-left: auto;
   justify-items: right;
+}
+
+.text-center {
+  background-color: black;
 }

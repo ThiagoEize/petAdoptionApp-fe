@@ -4,12 +4,9 @@ import PetList from "./PetList";
 import { useEffect, useState } from 'react';
 
 // import Axios from "axios";
-import { usePetContext } from "../context/PetContext";
 
 // import { NavLink } from "react-router-dom";
 const Home = () => {
-    const { getDataFromServer } = usePetContext();
-
     // const [showModal, setShowModal] = useState(true);
 
     return (

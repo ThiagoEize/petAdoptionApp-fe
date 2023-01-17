@@ -28,6 +28,7 @@ export default function UserContextProvider({ children }) {
 
     const getUserPermissions = async () => {
         try {
+            console.log('this is my token in get permissions', token);
             const res = await axios.get(`http://localhost:8080/permissions/user/${userId}`, { headers: { Authorization: `Bearer ${token}` } });
             setPermissions(res.data.data || '');
         } catch (err) {
@@ -36,9 +37,11 @@ export default function UserContextProvider({ children }) {
     };
 
     useEffect(() => {
-        getUserPermissions()
-        console.log('permissions:', permissions);
-    }, [userId])
+        if (token !== '') {
+            getUserPermissions()
+        }
+        // console.log('permissions:', permissions);
+    }, [token])
 
     const [showSignUpModal, setShowSignUpModal] = useState(false);
     const [showLogInModal, setShowLogInModal] = useState(false);
@@ -109,6 +112,7 @@ export default function UserContextProvider({ children }) {
             // breedsList,
             token,
             userId,
+            setUserId,
             permissions,
             setToken
         }}>
