@@ -116,22 +116,22 @@ const NavBar = () => {
       <SpecieModal
         visible={showSpecieModal}
         onClose={() => setShowSpecieModal(false)}
-      // initialData={initialData}
+        initialData={{}}
       />
       <BreedModal
         visible={showBreedModal}
         onClose={() => setShowBreedModal(false)}
-      // setSpeciesList={setSpeciesList}
+        initialData={{}}
       />
       <PetModal
         visible={showPetModal}
         onClose={() => setShowPetModal(false)}
-      // initialData={initialData}
+        initialData={{}}
       />
       <PermissionModal
         visible={showPermissionModal}
         onClose={() => setShowPermissionModal(false)}
-      // initialData={initialData}
+        initialData={{}}
       />
       <SignUpModal
         visible={showSignUpModal}

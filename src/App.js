@@ -3,6 +3,7 @@ import NavBar from "./components/navBar/NavBar";
 // import PetList from "./components/PetList";
 import Profile from "./components/Profile";
 import Home from "./components/Home";
+import PetShow from "./components/petShow/PetShow";
 import HomeLogedOut from "./components/HomeLogedOut";
 import { useEffect, useState } from 'react';
 // import Axios from "axios";
@@ -36,6 +37,14 @@ function App() {
               element={
                 <PrivateRoute>
                   <Home />
+                </PrivateRoute>
+              }
+            ></Route>
+            <Route
+              path="/petShow/:petId"
+              element={
+                <PrivateRoute>
+                  <PetShow />
                 </PrivateRoute>
               }
             ></Route>

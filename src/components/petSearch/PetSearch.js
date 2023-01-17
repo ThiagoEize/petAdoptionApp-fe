@@ -117,6 +117,7 @@ function SearchPets() {
 
     return (
         <div className="search-pets-container">
+
             <div className='specie'>
                 <Form.Label>Specie</Form.Label>
                 <Form.Control as="select" name="specieId" value={searchFormData.specieId} onChange={handleChange}>

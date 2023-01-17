@@ -1,5 +1,5 @@
 import PetSearch from "./petSearch/PetSearch";
-import PetList from "./PetList";
+import PetList from "./petList/PetList";
 // import SignupModal from "./SignupModal";
 import { useEffect, useState } from 'react';
 

@@ -1,9 +1,16 @@
 import * as moment from 'moment';
+import { useNavigate } from 'react-router-dom';
+
+import { useUserContext } from "../../context/UserContext";
+import PetModal from "../PetModal";
+
 import './Pet.css';
 
 const Pet = ({ pet }) => {
-  const handleShowPet = () => {
+  const navigate = useNavigate();
 
+  const handleShowPet = () => {
+    navigate(`petShow/${pet.id}`)
   }
 
   const handleEditPet = () => {

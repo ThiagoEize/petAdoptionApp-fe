@@ -30,8 +30,6 @@ const BreedForm = ({ onClose, initialData = {} }) => {
         isHypoallergenic: initialData.isHypoallergenic || false,
     });
 
-
-
     const handleSubmit = async (e) => {
         try {
             e.preventDefault();

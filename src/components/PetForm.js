@@ -2,12 +2,13 @@ import { useState, useEffect } from "react";
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
+import Alert from 'react-bootstrap/Alert';
 import axios from 'axios';
 import { useUserContext } from "../context/UserContext";
 import { usePetContext } from "../context/PetContext";
 
-const PetForm = ({ onClose, initialData = {} }) => {
-  const { token } = useUserContext();
+const PetForm = ({ onClose, initialData }) => {
+  const { token, errorsFromServer, setErrorsFromServer } = useUserContext();
   const { petsList, setPetsList } = usePetContext();
 
   const [speciesList, setSpeciesList] = useState([]);
@@ -21,6 +22,7 @@ const PetForm = ({ onClose, initialData = {} }) => {
       const species = [{ id: '', specieName: 'Select a specie...' }, ...res.data.data]
       setSpeciesList(species);
     } catch (err) {
+
       console.log(err);
     }
   };
@@ -58,11 +60,28 @@ const PetForm = ({ onClose, initialData = {} }) => {
       e.preventDefault();
       let res;
       if (initialData.id) {
-        // Make a put request to your server to update the pet in the database
-        res = await axios.put(`http://localhost:8080/pets/${initialData.id}`, {
-          ...formData,
-          picture
+        const form = new FormData();
+        form.append('picture', picture);
+        form.append('breedId', formData.breedId);
+        form.append('petName', formData.petName);
+        form.append('adoptionStatus', formData.adoptionStatus);
+        form.append('petAge', formData.petAge);
+        form.append('height', formData.height);
+        form.append('weight', formData.weight);
+        form.append('color', formData.color);
+        form.append('foodRestrictions', formData.foodRestrictions);
+        form.append('petBio', formData.petBio);
+
+        res = await axios({
+          method: 'PUT',
+          url: 'http://localhost:8080/pets',
+          data: form,
+          headers: {
+            'Content-Type': `multipart/form-data`,
+            'Authorization': `Bearer ${token}`
+          },
         });
+
       } else {
         // Make a post request to your server to add the pet to the database
         const form = new FormData();
@@ -89,10 +108,11 @@ const PetForm = ({ onClose, initialData = {} }) => {
       }
 
       if (res.data.success) {
-        setPetsList((prevPetList) => [...prevPetList, res.data.data])
+        // setPetsList((prevPetList) => [...prevPetList, res.data.data])
         onClose();
       }
     } catch (err) {
+      setErrorsFromServer(err.response.data)
       console.log(err);
     }
   };
@@ -213,7 +233,13 @@ const PetForm = ({ onClose, initialData = {} }) => {
           <Button variant="primary" onClick={handleSubmit}>
             Save Changes
           </Button>
+
         </Modal.Footer>
+        {errorsFromServer &&
+          <Alert variant="danger">
+            {errorsFromServer}
+          </Alert>
+        }
       </form>
     </div>
   );
