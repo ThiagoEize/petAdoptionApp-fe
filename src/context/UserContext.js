@@ -43,6 +43,13 @@ export default function UserContextProvider({ children }) {
         // console.log('permissions:', permissions);
     }, [token])
 
+    useEffect(() => {
+        setTimeout(() => {
+            console.log('iteration');
+            setErrorsFromServer('')
+        }, 2000)
+    }, [errorsFromServer])
+
     const [showSignUpModal, setShowSignUpModal] = useState(false);
     const [showLogInModal, setShowLogInModal] = useState(false);
     const [showSpecieModal, setShowSpecieModal] = useState(false);

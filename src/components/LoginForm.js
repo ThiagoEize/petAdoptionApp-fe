@@ -25,7 +25,6 @@ const LogInForm = ({ onClose, setToken, setUserId }) => {
                 navigate("/");
             }
             if (res.data.success) {
-                console.log('8kljkljkl');
                 navigate("/");
                 onClose();
             }
@@ -37,13 +36,12 @@ const LogInForm = ({ onClose, setToken, setUserId }) => {
         }
     };
 
-    useEffect(() => {
-
-        setTimeout(() => {
-            console.log('iteration');
-            setErrorsFromServer('')
-        }, 2000)
-    }, [errorsFromServer])
+    // useEffect(() => {
+    //     setTimeout(() => {
+    //         console.log('iteration');
+    //         setErrorsFromServer('')
+    //     }, 2000)
+    // }, [errorsFromServer])
 
     const [formData, setFormData] = useState({
         email: '',

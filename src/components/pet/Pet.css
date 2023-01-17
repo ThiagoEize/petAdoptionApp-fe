@@ -10,7 +10,8 @@
 
 .pet-picture {
     width: 220px;
-    height: auto;
+    max-height: 270px;
+    min-height: 240px;
     margin-right: 10px;
     border-radius: 10px;
 }
@@ -44,9 +45,20 @@
     margin-top: 10px;
 }
 
-/* Pet status */
-.pet-status {
-    color: red;
+.buttonsDiv {
+    margin: 0 auto 0 auto;
+}
+
+.Fostered {
+    color: black;
+}
+
+.Available {
+    color: green;
+}
+
+.Adopted {
+    color: red
 }
 
 /* Pet user */
@@ -125,8 +137,10 @@
     /* dark blue */
 }
 
+.show-button,
 .edit-button,
-.adopt-button {
+.adopt-button,
+.foster-button {
     background-color: #FB8C00;
     /* orange */
     border-color: #FB8C00;

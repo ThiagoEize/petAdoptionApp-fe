@@ -10,12 +10,13 @@ import BreedModal from "../BreedModal";
 import SpecieModal from "../SpecieModal";
 import PetModal from "../PetModal";
 import PermissionModal from "../PermissionModal";
+import { useNavigate } from 'react-router-dom';
 
 import './NavBar.css';
 import { useEffect, useState } from "react";
 
 const NavBar = () => {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const {
     showSignUpModal,
     showLogInModal,
@@ -54,6 +55,10 @@ const NavBar = () => {
     // setToken(false);
     localStorage.removeItem('token');
     localStorage.removeItem('userId');
+    setToken('');
+    setUserId('');
+    setLogedIn(false)
+    navigate("/logedOut");
     // setShowLogInModal(false)
   }
 
@@ -101,7 +106,6 @@ const NavBar = () => {
                 <Button onClick={setShowSignUpModal}>SignUp</Button>
               </li>
             }
-
             <li>
               <Button onClick={logedIn ? handleLogOut : handleLogIn}>{logedIn ? 'LogOut' : 'LogIn'}</Button>
             </li>
