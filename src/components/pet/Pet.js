@@ -22,7 +22,6 @@ const Pet = ({ pet }) => {
   }
 
   const handleEditPet = () => {
-    console.log(pet);
     setInitialData(pet)
     setShowPetModal(true)
   }

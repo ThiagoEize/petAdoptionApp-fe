@@ -28,6 +28,8 @@ export default function PetContextProvider({ children }) {
 
     const [petsList, setPetsList] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [pet, setPet] = useState({});
+
     const [errorsFromServer, setErrorsFromServer] = useState({})
     // const serverUrl = 'https://micro-blogging-dot-full-stack-course-services.ew.r.appspot.com/pet';
     const serverUrl = 'http://localhost:8080/pets';
@@ -49,6 +51,8 @@ export default function PetContextProvider({ children }) {
             isLoading,
             // handleSubmit,
             errorsFromServer,
+            pet,
+            setPet,
             petsList,
             setPetsList
         }}>

@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useUserContext } from "../../context/UserContext";
+import { usePetContext } from "../../context/PetContext";
 import { useNavigate } from 'react-router-dom';
 import PetModal from "../PetModal";
 import './PetShow.css';
@@ -9,11 +10,20 @@ import './PetShow.css';
 const PetShow = () => {
     const navigate = useNavigate();
 
-    const { token } = useUserContext();
+    const {
+        setShowPetModal,
+        permissions,
+        initialData,
+        setInitialData,
+        token
+    } = useUserContext();
+
+    const {
+        pet,
+        setPet
+    } = usePetContext();
 
     const { petId } = useParams();
-
-    const [pet, setPet] = useState({});
 
     const getPetData = async () => {
         const res = await axios.get(`http://localhost:8080/pets/${petId}`, { headers: { Authorization: `Bearer ${token}` } });
@@ -27,7 +37,8 @@ const PetShow = () => {
     }, [])
 
     const handleEditPet = () => {
-
+        setInitialData(pet)
+        setShowPetModal(true)
     }
 
     const handleAdoptPet = () => {

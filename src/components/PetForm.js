@@ -9,7 +9,7 @@ import { usePetContext } from "../context/PetContext";
 
 const PetForm = ({ onClose }) => {
   const { token, errorsFromServer, setErrorsFromServer, initialData, setInitialData } = useUserContext();
-  const { petsList, setPetsList } = usePetContext();
+  const { pet, setPet, petsList, setPetsList } = usePetContext();
 
   const [speciesList, setSpeciesList] = useState([]);
 
@@ -83,26 +83,30 @@ const PetForm = ({ onClose }) => {
         console.log('picture', picture);
         console.log('pictureUrl', pictureUrl);
 
-        form.append('picture', picture || pictureUrl);
-        form.append('breedId', formData.breedId);
-        form.append('petName', formData.petName);
-        form.append('adoptionStatus', formData.adoptionStatus);
-        form.append('petAge', formData.petAge);
-        form.append('height', formData.height);
-        form.append('weight', formData.weight);
-        form.append('color', formData.color);
-        form.append('foodRestrictions', formData.foodRestrictions);
-        form.append('petBio', formData.petBio);
+        if (picture) {
+          form.append('picture', picture);
+          form.append('breedId', formData.breedId);
+          form.append('petName', formData.petName);
+          form.append('adoptionStatus', formData.adoptionStatus);
+          form.append('petAge', formData.petAge);
+          form.append('height', formData.height);
+          form.append('weight', formData.weight);
+          form.append('color', formData.color);
+          form.append('foodRestrictions', formData.foodRestrictions);
+          form.append('petBio', formData.petBio);
 
-        res = await axios({
-          method: 'PUT',
-          url: `http://localhost:8080/pets/${initialData.id}`,
-          data: form,
-          headers: {
-            'Content-Type': `multipart/form-data`,
-            'Authorization': `Bearer ${token}`
-          },
-        });
+          res = await axios({
+            method: 'PUT',
+            url: `http://localhost:8080/pets/${initialData.id}`,
+            data: form,
+            headers: {
+              'Content-Type': `multipart/form-data`,
+              'Authorization': `Bearer ${token}`
+            },
+          });
+        } else {
+          res = await axios.put(`http://localhost:8080/pets/${initialData.id}`, formData, { headers: { Authorization: `Bearer ${token}` } });
+        }
 
         const updatedPetIndex = petsList.findIndex(pet => pet.id === initialData.id)
 
@@ -111,6 +115,8 @@ const PetForm = ({ onClose }) => {
         console.log(res.data.data);
 
         currentPets[updatedPetIndex] = res.data.data;
+
+        setPet(res.data.data)
 
         setPetsList(currentPets)
 
