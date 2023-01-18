@@ -31,6 +31,7 @@ const NavBar = () => {
     setShowBreedModal,
     setShowPetModal,
     permissions,
+    setInitialData,
     setToken,
     setUserId,
     token
@@ -66,6 +67,26 @@ const NavBar = () => {
     setShowLogInModal(true)
   }
 
+  const handleShowSpecieModal = () => {
+    setShowSpecieModal(true);
+    setInitialData({})
+  }
+
+  const handleShowBreedModal = () => {
+    setShowBreedModal(true);
+    setInitialData({})
+  }
+
+  const handleShowPermissionModal = () => {
+    setShowPermissionModal(true);
+    setInitialData({})
+  }
+
+  const handleShowPetModal = () => {
+    setShowPetModal(true);
+    setInitialData({})
+  }
+
   return (
     <>
       <div className="nav-bar">
@@ -90,18 +111,18 @@ const NavBar = () => {
           </li>
           <div className="align-right">
             <li>
-              <Button onClick={setShowSpecieModal}>Add Specie</Button>
+              <Button onClick={handleShowSpecieModal}>Add Specie</Button>
             </li>
             <li>
-              <Button onClick={setShowBreedModal}>Add Breed</Button>
+              <Button onClick={handleShowBreedModal}>Add Breed</Button>
             </li>
             <li>
-              <Button onClick={setShowPermissionModal}>Add Permission</Button>
+              <Button onClick={handleShowPermissionModal}>Add Permission</Button>
             </li>
             <li>
-              <Button onClick={setShowPetModal}>Add Pet</Button>
+              <Button onClick={handleShowPetModal}>Add Pet</Button>
             </li>
-            {logedIn &&
+            {!logedIn &&
               <li>
                 <Button onClick={setShowSignUpModal}>SignUp</Button>
               </li>
@@ -116,22 +137,22 @@ const NavBar = () => {
       <SpecieModal
         visible={showSpecieModal}
         onClose={() => setShowSpecieModal(false)}
-        initialData={{}}
+      // initialData={{}}
       />
       <BreedModal
         visible={showBreedModal}
         onClose={() => setShowBreedModal(false)}
-        initialData={{}}
+      // initialData={{}}
       />
       <PetModal
         visible={showPetModal}
         onClose={() => setShowPetModal(false)}
-        initialData={{}}
+      // initialData={{}}
       />
       <PermissionModal
         visible={showPermissionModal}
         onClose={() => setShowPermissionModal(false)}
-        initialData={{}}
+      // initialData={{}}
       />
       <SignUpModal
         visible={showSignUpModal}

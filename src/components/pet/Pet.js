@@ -9,12 +9,22 @@ import './Pet.css';
 const Pet = ({ pet }) => {
   const navigate = useNavigate();
 
+  const {
+    setShowPetModal,
+    permissions,
+    initialData,
+    setInitialData,
+    token
+  } = useUserContext();
+
   const handleShowPet = () => {
     navigate(`petShow/${pet.id}`)
   }
 
   const handleEditPet = () => {
-    // code to handle editing the pet would go here
+    console.log(pet);
+    setInitialData(pet)
+    setShowPetModal(true)
   }
 
   const handleAdoptPet = () => {

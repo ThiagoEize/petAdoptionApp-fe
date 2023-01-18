@@ -3,7 +3,7 @@ import { Modal } from "react-bootstrap";
 import PetForm from "./PetForm";
 // import { useState } from "react";
 
-function PetModal({ visible, onClose, initialData }) {
+function PetModal({ visible, onClose }) {
     // const handleSubmit = (Pet) => {
     //     // onSubmit(Pet);
     //     onClose();
@@ -13,7 +13,7 @@ function PetModal({ visible, onClose, initialData }) {
         <Modal show={visible} onHide={onClose}>
             <Modal.Body>
                 {/* <PetForm Pet={Pet} onSubmit={(Pet) => handleSubmit(Pet)} /> */}
-                <PetForm onClose={onClose} initialData={initialData} />
+                <PetForm onClose={onClose} />
             </Modal.Body>
         </Modal>
     )

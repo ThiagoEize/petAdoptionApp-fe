@@ -7,8 +7,8 @@ import axios from 'axios';
 import { useUserContext } from "../context/UserContext";
 import { usePetContext } from "../context/PetContext";
 
-const PetForm = ({ onClose, initialData }) => {
-  const { token, errorsFromServer, setErrorsFromServer } = useUserContext();
+const PetForm = ({ onClose }) => {
+  const { token, errorsFromServer, setErrorsFromServer, initialData, setInitialData } = useUserContext();
   const { petsList, setPetsList } = usePetContext();
 
   const [speciesList, setSpeciesList] = useState([]);
@@ -54,14 +54,36 @@ const PetForm = ({ onClose, initialData }) => {
     foodRestrictions: initialData.foodRestrictions || '',
     petBio: initialData.petBio || ''
   });
+
   const [picture, setPicture] = useState(null);
+
+  // useEffect(() => {
+  //   setPicture(initialData.picture)
+  // }, [])
+
+  const [pictureUrl, setPictureUrl] = useState(null);
+
+  useEffect(() => {
+    if (initialData.picture instanceof Blob) {
+      setPictureUrl(URL.createObjectURL(initialData.picture));
+    } else if (typeof initialData.picture === 'string') {
+      setPictureUrl(initialData.picture);
+    }
+    console.log(pictureUrl);
+  }, [initialData])
+
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
       let res;
       if (initialData.id) {
         const form = new FormData();
-        form.append('picture', picture);
+
+        // form.append('picture', picture);
+        console.log('picture', picture);
+        console.log('pictureUrl', pictureUrl);
+
+        form.append('picture', picture || pictureUrl);
         form.append('breedId', formData.breedId);
         form.append('petName', formData.petName);
         form.append('adoptionStatus', formData.adoptionStatus);
@@ -74,7 +96,7 @@ const PetForm = ({ onClose, initialData }) => {
 
         res = await axios({
           method: 'PUT',
-          url: 'http://localhost:8080/pets',
+          url: `http://localhost:8080/pets/${initialData.id}`,
           data: form,
           headers: {
             'Content-Type': `multipart/form-data`,
@@ -82,9 +104,20 @@ const PetForm = ({ onClose, initialData }) => {
           },
         });
 
+        const updatedPetIndex = petsList.findIndex(pet => pet.id === initialData.id)
+
+        const currentPets = petsList
+
+        console.log(res.data.data);
+
+        currentPets[updatedPetIndex] = res.data.data;
+
+        setPetsList(currentPets)
+
       } else {
         // Make a post request to your server to add the pet to the database
         const form = new FormData();
+        // console.log(picture);
         form.append('picture', picture);
         form.append('breedId', formData.breedId);
         form.append('petName', formData.petName);
@@ -133,6 +166,15 @@ const PetForm = ({ onClose, initialData }) => {
     setPicture(event.target.files[0]);
   }
 
+  const handleClose = () => {
+    setInitialData({});
+    onClose();
+  }
+
+
+
+
+
   return (
     <div className="pet-form-container">
       <form>
@@ -145,6 +187,7 @@ const PetForm = ({ onClose, initialData }) => {
             <input type="file" id="picture-input" style={{ display: "none" }} onChange={handleFileChange} />
             <div>
               {picture && <img src={URL.createObjectURL(picture)} alt="Selected" width="200" height="200" style={{ marginTop: '10px' }} />}
+              {!picture && pictureUrl && <img src={pictureUrl} alt="Selected" width="200" height="200" style={{ marginTop: '10px' }} />}
             </div>
           </Form.Group>
           <Form.Label>Specie Name</Form.Label>
@@ -227,7 +270,7 @@ const PetForm = ({ onClose, initialData }) => {
           />
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={onClose}>
+          <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
           <Button variant="primary" onClick={handleSubmit}>
