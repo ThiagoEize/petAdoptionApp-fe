@@ -1,8 +1,8 @@
 import * as moment from 'moment';
+import { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
-
 import { useUserContext } from "../../context/UserContext";
-import PetModal from "../PetModal";
+import RequestModal from "../RequestModal";
 
 import './Pet.css';
 
@@ -12,8 +12,12 @@ const Pet = ({ pet }) => {
   const {
     setShowPetModal,
     permissions,
-    initialData,
     setInitialData,
+    showRequestModal,
+    setShowRequestModal,
+    setRequestType,
+    setPetId,
+    userId,
     token
   } = useUserContext();
 
@@ -27,7 +31,12 @@ const Pet = ({ pet }) => {
   }
 
   const handleAdoptPet = () => {
-    // code to handle adopting the pet would go here
+    setShowRequestModal(true)
+    console.log(showRequestModal);
+  }
+
+  const handleReturnPet = () => {
+
   }
 
   const handleFosterPet = () => {
@@ -41,6 +50,7 @@ const Pet = ({ pet }) => {
   return (
     <>
       <div id={pet.id} className={`pet-card ${pet.adoptionStatus}`}>
+
         <img src={pet.picture} alt={pet.petName} className="pet-picture pet-picture-half" />
         <div className="pet-info">
           <h2 className="pet-name">{pet.petName}</h2>
@@ -56,7 +66,7 @@ const Pet = ({ pet }) => {
         <div>
           {pet.userName ? (
             <div className="pet-user">
-              Adopted By: {pet.userName}
+              {pet.adoptionStatus} By: {pet.userName}
             </div>
           ) : (
             <div className={`${pet.adoptionStatus}`}>Status: {pet.adoptionStatus}</div>
@@ -65,11 +75,44 @@ const Pet = ({ pet }) => {
         <div className='buttonsDiv'>
           <button className="pet-button show-button" onClick={handleShowPet}>Show</button>
           <button className="pet-button edit-button" onClick={handleEditPet}>Edit</button>
-          <button className="pet-button adopt-button" onClick={handleAdoptPet}>Adopt</button>
-          <button className="pet-button foster-button" onClick={handleFosterPet}>Foster</button>
+
+          {(!pet.userId || pet.userId === userId || pet.adoptionStatus === 'Fostered') &&
+            <button className={
+              pet.adoptionStatus !== "Adopted" ?
+                "pet-button adopt-button" : "pet-button delete-button"
+            }
+              onClick={
+                pet.adoptionStatus !== "Adopted" ?
+                  handleAdoptPet : handleReturnPet
+              }
+            >
+              {
+                pet.adoptionStatus !== "Adopted" ?
+                  "Adopt" : "Return"
+              }
+            </button>
+          }
+
+          {(!pet.userId || pet.userId === userId && pet.adoptionStatus === 'Fostered') &&
+            <button className={
+              pet.adoptionStatus !== "Fostered" ?
+                "pet-button foster-button" : "pet-button delete-button"
+            }
+              onClick={
+                pet.adoptionStatus !== "Fostered" ?
+                  handleFosterPet : handleReturnPet
+              }
+            >
+              {
+                pet.adoptionStatus !== "Fostered" ?
+                  "Foster" : "Return"
+              }
+            </button>
+          }
+
+          {/* <button className="pet-button foster-button" onClick={handleFosterPet}>Foster</button> */}
           <button className="pet-button delete-button" onClick={handleDeletePet}>Delete</button>
         </div>
-
       </div>
     </>
   );

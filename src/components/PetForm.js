@@ -220,12 +220,12 @@ const PetForm = ({ onClose }) => {
             value={formData.petName}
             onChange={handleChange}
           />
-          <Form.Label>Adoption Status</Form.Label>
+          {/* <Form.Label>Adoption Status</Form.Label>
           <Form.Control as="select" name="adoptionStatus" value={formData.adoptionStatus} onChange={handleChange}>
             <option value="Available">Available</option>
             <option value="Adopted">Adopted</option>
             <option value="Fostered">Fostered</option>
-          </Form.Control>
+          </Form.Control> */}
           <Form.Label>Pet Age</Form.Label>
           <Form.Control
             type="text"

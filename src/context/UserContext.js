@@ -57,6 +57,10 @@ export default function UserContextProvider({ children }) {
     const [showPetModal, setShowPetModal] = useState(false);
     const [showPermissionModal, setShowPermissionModal] = useState(false);
 
+    const [showRequestModal, setShowRequestModal] = useState(false);
+    const [requestType, setRequestType] = useState('');
+    const [petId, setPetId] = useState('');
+
     const [initialData, setInitialData] = useState({});
 
     // const [speciesList, setSpeciesList] = useState([]);
@@ -119,7 +123,13 @@ export default function UserContextProvider({ children }) {
             // breedsList,
             token,
             userId,
+            showRequestModal,
+            setShowRequestModal,
+            requestType,
+            setRequestType,
             setUserId,
+            petId,
+            setPetId,
             permissions,
             setToken
         }}>
