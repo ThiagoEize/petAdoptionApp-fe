@@ -63,6 +63,8 @@ export default function UserContextProvider({ children }) {
 
     const [initialData, setInitialData] = useState({});
 
+    const [requestsList, setRequestsList] = useState([]);
+
     // const [speciesList, setSpeciesList] = useState([]);
 
     // const [breedsList, setBreedsList] = useState([]);
@@ -130,6 +132,8 @@ export default function UserContextProvider({ children }) {
             setUserId,
             petId,
             setPetId,
+            requestsList,
+            setRequestsList,
             permissions,
             setToken
         }}>

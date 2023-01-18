@@ -4,6 +4,7 @@ import NavBar from "./components/navBar/NavBar";
 import Profile from "./components/Profile";
 import Home from "./components/Home";
 import PetShow from "./components/petShow/PetShow";
+import AdoptionRequestsList from "./components/requestsList/RequestsList";
 import HomeLogedOut from "./components/HomeLogedOut";
 import { useEffect, useState } from 'react';
 // import Axios from "axios";
@@ -25,6 +26,14 @@ function App() {
           <NavBar />
           <Routes>
             <Route
+              path="/"
+              element={
+                <PrivateRoute>
+                  <Home />
+                </PrivateRoute>
+              }
+            ></Route>
+            <Route
               path="/profile"
               element={
                 <PrivateRoute>
@@ -33,10 +42,10 @@ function App() {
               }
             ></Route>
             <Route
-              path="/"
+              path="/adoptionRequests"
               element={
                 <PrivateRoute>
-                  <Home />
+                  <AdoptionRequestsList />
                 </PrivateRoute>
               }
             ></Route>
