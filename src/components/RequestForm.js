@@ -5,13 +5,14 @@ import Form from 'react-bootstrap/Form';
 import axios from 'axios';
 import { useUserContext } from "../context/UserContext";
 
-const RequestForm = ({ onClose, petId }) => {
-    const { token, userId, requestType } = useUserContext();
+const RequestForm = ({ onClose }) => {
+    const { token, userId, petId, requestType } = useUserContext();
 
     const [formData, setFormData] = useState({
         userId: userId,
         petId: petId,
         requestType: requestType,
+        requestStatus: 'Pending',
         adoptionRequestMessage: ''
     });
 
@@ -19,10 +20,7 @@ const RequestForm = ({ onClose, petId }) => {
         try {
             e.preventDefault();
             let res;
-
-            res = await axios.post('http://localhost:8080/species', formData, { headers: { Authorization: `Bearer ${token}` } });
-
-
+            res = await axios.post('http://localhost:8080/adoptionRequests', formData, { headers: { Authorization: `Bearer ${token}` } });
             if (res.data.success) {
                 onClose();
             }

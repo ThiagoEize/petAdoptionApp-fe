@@ -10,7 +10,7 @@ export function useUserContext() {
 export default function UserContextProvider({ children }) {
     const [token, setToken] = useState(localStorage.getItem('token') || '')
 
-    const [userId, setUserId] = useState(localStorage.getItem('userId') || '')
+    const [userId, setUserId] = useState(parseInt(localStorage.getItem('userId')) || '')
 
     const [permissions, setPermissions] = useState({})
 

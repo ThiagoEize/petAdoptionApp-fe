@@ -2,6 +2,7 @@ import * as moment from 'moment';
 import { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import { useUserContext } from "../../context/UserContext";
+import axios from 'axios';
 import RequestModal from "../RequestModal";
 
 import './Pet.css';
@@ -21,6 +22,59 @@ const Pet = ({ pet }) => {
     token
   } = useUserContext();
 
+  const [didSendAdoptionRequest, setDidSendAdoptionRequest] = useState(false)
+
+  const [didSendFosterRequest, setDidSendFosterRequest] = useState(false)
+
+  const getUserRequests = async () => {
+    try {
+      const resAdopt = await axios.get(`http://localhost:8080/adoptionRequests?users.id=${userId}&petId=${pet.id}&requestType=adopt`, { headers: { Authorization: `Bearer ${token}` } });
+      console.log(resAdopt);
+      if (resAdopt.data.data.length > 0) {
+        setDidSendAdoptionRequest(true)
+      } else {
+        setDidSendAdoptionRequest(false)
+      }
+    } catch (err) {
+      setDidSendFosterRequest(false)
+      console.log(err);
+    }
+
+    try {
+      const resFoster = await axios.get(`http://localhost:8080/adoptionRequests?users.id=${userId}&petId=${pet.id}&requestType=foster`, { headers: { Authorization: `Bearer ${token}` } });
+      console.log(resFoster);
+      if (resFoster.data.data.length > 0) {
+        setDidSendFosterRequest(true)
+      } else {
+        setDidSendFosterRequest(false)
+      }
+      setShowRequestModal(false)
+    } catch (err) {
+      setDidSendFosterRequest(false)
+      console.log(err);
+    }
+
+    try {
+      const resFoster = await axios.get(`http://localhost:8080/adoptionRequests?users.id=${userId}&petId=${pet.id}&requestType=return`, { headers: { Authorization: `Bearer ${token}` } });
+      console.log(resFoster);
+      if (resFoster.data.data.length > 0) {
+        setDidSendFosterRequest(true)
+      } else {
+        setDidSendFosterRequest(false)
+      }
+      setShowRequestModal(false)
+    } catch (err) {
+      setDidSendFosterRequest(false)
+      console.log(err);
+    }
+  }
+
+  useEffect(() => {
+    if (showRequestModal === false) {
+      getUserRequests()
+    }
+  }, [showRequestModal])
+
   const handleShowPet = () => {
     navigate(`petShow/${pet.id}`)
   }
@@ -31,16 +85,29 @@ const Pet = ({ pet }) => {
   }
 
   const handleAdoptPet = () => {
-    setShowRequestModal(true)
-    console.log(showRequestModal);
+    try {
+      setShowRequestModal(true)
+      setPetId(pet.id)
+      setRequestType('adopt')
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   const handleReturnPet = () => {
-
+    try {
+      setShowRequestModal(true)
+      setPetId(pet.id)
+      setRequestType('return')
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   const handleFosterPet = () => {
-    // code to handle deleting the pet would go here
+    setShowRequestModal(true)
+    setPetId(pet.id)
+    setRequestType('foster')
   }
 
   const handleDeletePet = () => {
@@ -72,11 +139,15 @@ const Pet = ({ pet }) => {
             <div className={`${pet.adoptionStatus}`}>Status: {pet.adoptionStatus}</div>
           )}
         </div>
+        <div>
+          {didSendAdoptionRequest && "Your adoption request is waiting for aproval"}
+          {didSendFosterRequest && "Your fostering request is waiting for aproval"}
+        </div>
         <div className='buttonsDiv'>
           <button className="pet-button show-button" onClick={handleShowPet}>Show</button>
           <button className="pet-button edit-button" onClick={handleEditPet}>Edit</button>
 
-          {(!pet.userId || pet.userId === userId || pet.adoptionStatus === 'Fostered') &&
+          {((!pet.userId || pet.userId === userId || pet.adoptionStatus === 'Fostered') && !didSendAdoptionRequest) &&
             <button className={
               pet.adoptionStatus !== "Adopted" ?
                 "pet-button adopt-button" : "pet-button delete-button"
@@ -93,7 +164,7 @@ const Pet = ({ pet }) => {
             </button>
           }
 
-          {(!pet.userId || pet.userId === userId && pet.adoptionStatus === 'Fostered') &&
+          {((!pet.userId || pet.userId === userId && pet.adoptionStatus === 'Fostered') && !didSendFosterRequest) &&
             <button className={
               pet.adoptionStatus !== "Fostered" ?
                 "pet-button foster-button" : "pet-button delete-button"
@@ -104,7 +175,7 @@ const Pet = ({ pet }) => {
               }
             >
               {
-                pet.adoptionStatus !== "Fostered" ?
+                pet.adoptionStatus !== "Adopted" ?
                   "Foster" : "Return"
               }
             </button>
