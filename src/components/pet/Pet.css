@@ -147,3 +147,13 @@
     /* orange */
     color: #fff;
 }
+
+.requestStatus {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.requestMessage {
+    margin: auto 0 auto 0
+}

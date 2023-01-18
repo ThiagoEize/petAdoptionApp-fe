@@ -26,47 +26,52 @@ const Pet = ({ pet }) => {
 
   const [didSendFosterRequest, setDidSendFosterRequest] = useState(false)
 
+  const [adoptionRequestId, setAdoptionRequestId] = useState('')
+
+  const [fosterRequestId, setFosterRequestId] = useState('')
+
   const getUserRequests = async () => {
     try {
       const resAdopt = await axios.get(`http://localhost:8080/adoptionRequests?users.id=${userId}&petId=${pet.id}&requestType=adopt`, { headers: { Authorization: `Bearer ${token}` } });
-      console.log(resAdopt);
       if (resAdopt.data.data.length > 0) {
         setDidSendAdoptionRequest(true)
+        setAdoptionRequestId(resAdopt.data.data[0].id)
       } else {
         setDidSendAdoptionRequest(false)
       }
     } catch (err) {
-      setDidSendFosterRequest(false)
+      setDidSendAdoptionRequest(false)
       console.log(err);
     }
 
     try {
       const resFoster = await axios.get(`http://localhost:8080/adoptionRequests?users.id=${userId}&petId=${pet.id}&requestType=foster`, { headers: { Authorization: `Bearer ${token}` } });
-      console.log(resFoster);
       if (resFoster.data.data.length > 0) {
         setDidSendFosterRequest(true)
+        setFosterRequestId(resFoster.data.data[0].id)
       } else {
         setDidSendFosterRequest(false)
       }
-      setShowRequestModal(false)
     } catch (err) {
       setDidSendFosterRequest(false)
       console.log(err);
     }
 
-    try {
-      const resFoster = await axios.get(`http://localhost:8080/adoptionRequests?users.id=${userId}&petId=${pet.id}&requestType=return`, { headers: { Authorization: `Bearer ${token}` } });
-      console.log(resFoster);
-      if (resFoster.data.data.length > 0) {
-        setDidSendFosterRequest(true)
-      } else {
-        setDidSendFosterRequest(false)
-      }
-      setShowRequestModal(false)
-    } catch (err) {
-      setDidSendFosterRequest(false)
-      console.log(err);
-    }
+    // try {
+    //   const resFoster = await axios.get(`http://localhost:8080/adoptionRequests?users.id=${userId}&petId=${pet.id}&requestType=return`, { headers: { Authorization: `Bearer ${token}` } });
+    //   console.log(resFoster);
+    //   if (resFoster.data.data.length > 0) {
+    //     setDidSendFosterRequest(true)
+    //   } else {
+    //     setDidSendFosterRequest(false)
+    //   }
+    //   setShowRequestModal(false)
+    // } catch (err) {
+    //   setDidSendFosterRequest(false)
+    //   console.log(err);
+    // }
+
+    setShowRequestModal(false)
   }
 
   useEffect(() => {
@@ -110,6 +115,24 @@ const Pet = ({ pet }) => {
     setRequestType('foster')
   }
 
+  const handleDeleteAdoptionRequest = async () => {
+    try {
+      const deleted = await axios.delete(`http://localhost:8080/adoptionRequests/${adoptionRequestId}`, { headers: { Authorization: `Bearer ${token}` } });
+      setDidSendAdoptionRequest(false)
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  const handleDeleteFosterRequest = async () => {
+    try {
+      const deleted = await axios.delete(`http://localhost:8080/adoptionRequests/${fosterRequestId}`, { headers: { Authorization: `Bearer ${token}` } });
+      setDidSendFosterRequest(false)
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   const handleDeletePet = () => {
     // code to handle deleting the pet would go here
   }
@@ -139,10 +162,20 @@ const Pet = ({ pet }) => {
             <div className={`${pet.adoptionStatus}`}>Status: {pet.adoptionStatus}</div>
           )}
         </div>
-        <div>
-          {didSendAdoptionRequest && "Your adoption request is waiting for aproval"}
-          {didSendFosterRequest && "Your fostering request is waiting for aproval"}
-        </div>
+
+        {didSendAdoptionRequest &&
+          <div className='requestStatus'>
+            <p className='requestMessage'>Adoption request waiting aproval</p>
+            <button className="pet-button delete-button" onClick={handleDeleteAdoptionRequest}>Cancel</button>
+          </div>
+        }
+
+        {didSendFosterRequest &&
+          <div className='requestStatus'>
+            <p className='requestMessage'>Fostering request waiting aproval</p>
+            <button className="pet-button delete-button" onClick={handleDeleteFosterRequest}>Cancel</button>
+          </div>
+        }
         <div className='buttonsDiv'>
           <button className="pet-button show-button" onClick={handleShowPet}>Show</button>
           <button className="pet-button edit-button" onClick={handleEditPet}>Edit</button>

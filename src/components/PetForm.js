@@ -22,7 +22,6 @@ const PetForm = ({ onClose }) => {
       const species = [{ id: '', specieName: 'Select a specie...' }, ...res.data.data]
       setSpeciesList(species);
     } catch (err) {
-
       console.log(err);
     }
   };
