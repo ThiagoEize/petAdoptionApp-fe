@@ -26,16 +26,17 @@ const Pet = ({ pet }) => {
 
   const [didSendFosterRequest, setDidSendFosterRequest] = useState(false)
 
-  const [adoptionRequestId, setAdoptionRequestId] = useState('')
+  const [adoptionRequestState, setAdoptionRequestState] = useState('')
 
-  const [fosterRequestId, setFosterRequestId] = useState('')
+  const [fosterRequestState, setFosterRequestState] = useState('')
 
   const getUserRequests = async () => {
     try {
       const resAdopt = await axios.get(`http://localhost:8080/adoptionRequests?users.id=${userId}&petId=${pet.id}&requestType=adopt`, { headers: { Authorization: `Bearer ${token}` } });
       if (resAdopt.data.data.length > 0) {
         setDidSendAdoptionRequest(true)
-        setAdoptionRequestId(resAdopt.data.data[0].id)
+        setAdoptionRequestState(resAdopt.data.data[0])
+        console.log(resAdopt.data.data[0]);
       } else {
         setDidSendAdoptionRequest(false)
       }
@@ -48,7 +49,8 @@ const Pet = ({ pet }) => {
       const resFoster = await axios.get(`http://localhost:8080/adoptionRequests?users.id=${userId}&petId=${pet.id}&requestType=foster`, { headers: { Authorization: `Bearer ${token}` } });
       if (resFoster.data.data.length > 0) {
         setDidSendFosterRequest(true)
-        setFosterRequestId(resFoster.data.data[0].id)
+        setFosterRequestState(resFoster.data.data[0])
+        console.log('adoptionRequestState', adoptionRequestState);
       } else {
         setDidSendFosterRequest(false)
       }
@@ -117,7 +119,7 @@ const Pet = ({ pet }) => {
 
   const handleDeleteAdoptionRequest = async () => {
     try {
-      const deleted = await axios.delete(`http://localhost:8080/adoptionRequests/${adoptionRequestId}`, { headers: { Authorization: `Bearer ${token}` } });
+      const deleted = await axios.delete(`http://localhost:8080/adoptionRequests/${adoptionRequestState.id}`, { headers: { Authorization: `Bearer ${token}` } });
       setDidSendAdoptionRequest(false)
     } catch (err) {
       console.log(err);
@@ -126,7 +128,7 @@ const Pet = ({ pet }) => {
 
   const handleDeleteFosterRequest = async () => {
     try {
-      const deleted = await axios.delete(`http://localhost:8080/adoptionRequests/${fosterRequestId}`, { headers: { Authorization: `Bearer ${token}` } });
+      const deleted = await axios.delete(`http://localhost:8080/adoptionRequests/${fosterRequestState.id}`, { headers: { Authorization: `Bearer ${token}` } });
       setDidSendFosterRequest(false)
     } catch (err) {
       console.log(err);
@@ -154,25 +156,25 @@ const Pet = ({ pet }) => {
           {/* <p className="pet-bio">{pet.petBio}</p> */}
         </div>
         <div>
-          {pet.userName ? (
+          {pet.userName ?
             <div className="pet-user">
               {pet.adoptionStatus} By: {pet.userName}
             </div>
-          ) : (
+            :
             <div className={`${pet.adoptionStatus}`}>Status: {pet.adoptionStatus}</div>
-          )}
+          }
         </div>
 
         {didSendAdoptionRequest &&
           <div className='requestStatus'>
-            <p className='requestMessage'>Adoption request waiting aproval</p>
+            <p className='requestMessage'>Adoption request {adoptionRequestState.requestStatus}</p>
             <button className="pet-button delete-button" onClick={handleDeleteAdoptionRequest}>Cancel</button>
           </div>
         }
 
         {didSendFosterRequest &&
           <div className='requestStatus'>
-            <p className='requestMessage'>Fostering request waiting aproval</p>
+            <p className='requestMessage'>Fostering request {fosterRequestState.requestStatus}</p>
             <button className="pet-button delete-button" onClick={handleDeleteFosterRequest}>Cancel</button>
           </div>
         }

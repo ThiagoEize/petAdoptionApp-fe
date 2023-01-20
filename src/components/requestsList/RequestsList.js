@@ -5,7 +5,7 @@ import axios from 'axios';
 import './RequestsList.css'
 
 const AdoptionRequests = () => {
-    const { token, userId, petId, requestType, requestsList } = useUserContext();
+    const { token, userId, petId, requestType, requestsList, setRequestsList } = useUserContext();
 
     // const [requests, setRequests] = useState([]);
 
@@ -23,12 +23,29 @@ const AdoptionRequests = () => {
     //     getRequests()
     // }, [])
 
-    const handleApprove = (request) => {
-
+    const handleApprove = async (request) => {
+        try {
+            const rejects = await axios.get(`http://localhost:8080/adoptionRequests?petId=${request.petId}`, { headers: { Authorization: `Bearer ${token}` } });
+            for (let i = 0; i < rejects.data.data.length; i++) {
+                await axios.put(`http://localhost:8080/adoptionRequests/${rejects.data.data[i].id}`, { "requestStatus": "Rejected" }, { headers: { Authorization: `Bearer ${token}` } });
+            }
+            const aproved = await axios.put(`http://localhost:8080/adoptionRequests/${request.id}`, { "requestStatus": "Aproved" }, { headers: { Authorization: `Bearer ${token}` } });
+            const pet = await axios.put(`http://localhost:8080/pets/aprove/${request.petId}`, { "userId": userId, "adoptionStatus": request.requestType === "adopt" ? "Adopted" : "Fostered" }, { headers: { Authorization: `Bearer ${token}` } });
+            const filteredRequests = requestsList.filter(item => item.petId !== request.petId)
+            setRequestsList(filteredRequests)
+        } catch (err) {
+            console.log(err);
+        }
     };
 
-    const handleReject = (request) => {
-        // Handle reject logic here
+    const handleReject = async (request) => {
+        try {
+            await axios.put(`http://localhost:8080/adoptionRequests/${request.id}`, { "requestStatus": "Rejected" }, { headers: { Authorization: `Bearer ${token}` } });
+            const filteredRequests = requestsList.filter(item => item.id !== request.id)
+            setRequestsList(filteredRequests)
+        } catch (err) {
+            console.log(err);
+        }
     };
 
     return (
