@@ -34,6 +34,7 @@ const NavBar = () => {
     setShowPetModal,
     setShowRequestModal,
     permissions,
+    setPermissions,
     setInitialData,
     setToken,
     setUserId,
@@ -55,12 +56,11 @@ const NavBar = () => {
 
   const handleLogOut = () => {
 
-    // setUserId(false);
-    // setToken(false);
     localStorage.removeItem('token');
     localStorage.removeItem('userId');
     setToken('');
     setUserId('');
+    setPermissions('');
     setLogedIn(false)
     navigate("/logedOut");
     // setShowLogInModal(false)
@@ -129,18 +129,26 @@ const NavBar = () => {
             </li>
           }
           <div className="align-right">
-            <li>
-              <Button onClick={handleShowSpecieModal}>Add Specie</Button>
-            </li>
-            <li>
-              <Button onClick={handleShowBreedModal}>Add Breed</Button>
-            </li>
-            <li>
-              <Button onClick={handleShowPermissionModal}>Add Permission</Button>
-            </li>
-            <li>
-              <Button onClick={handleShowPetModal}>Add Pet</Button>
-            </li>
+            {permissions.canAcceptAdoptionRequests &&
+              <li>
+                <Button onClick={handleShowSpecieModal}>Add Specie</Button>
+              </li>
+            }
+            {permissions.canAcceptAdoptionRequests &&
+              <li>
+                <Button onClick={handleShowBreedModal}>Add Breed</Button>
+              </li>
+            }
+            {permissions.canEditUserPermissions &&
+              <li>
+                <Button onClick={handleShowPermissionModal}>Add Permission</Button>
+              </li>
+            }
+            {permissions.canAcceptAdoptionRequests &&
+              <li>
+                <Button onClick={handleShowPetModal}>Add Pet</Button>
+              </li>
+            }
             {!logedIn &&
               <li>
                 <Button onClick={setShowSignUpModal}>SignUp</Button>
@@ -149,29 +157,24 @@ const NavBar = () => {
             <li>
               <Button onClick={logedIn ? handleLogOut : handleLogIn}>{logedIn ? 'LogOut' : 'LogIn'}</Button>
             </li>
-
           </div>
         </ul>
       </div>
       <SpecieModal
         visible={showSpecieModal}
         onClose={() => setShowSpecieModal(false)}
-      // initialData={{}}
       />
       <BreedModal
         visible={showBreedModal}
         onClose={() => setShowBreedModal(false)}
-      // initialData={{}}
       />
       <PetModal
         visible={showPetModal}
         onClose={() => setShowPetModal(false)}
-      // initialData={{}}
       />
       <PermissionModal
         visible={showPermissionModal}
         onClose={() => setShowPermissionModal(false)}
-      // initialData={{}}
       />
       <RequestModal
         visible={showRequestModal}

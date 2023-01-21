@@ -80,6 +80,7 @@ const Pet = ({ pet }) => {
     if (adoptionRequestState.requestStatus === "Aproved") {
       pet.adoptionStatus = "Adopted"
       pet.userName = adoptionRequestState.userName
+      pet.userId = adoptionRequestState.userId
     }
   }, [adoptionRequestState])
 
@@ -87,8 +88,17 @@ const Pet = ({ pet }) => {
     if (fosterRequestState.requestStatus === "Aproved") {
       pet.adoptionStatus = "Fostered"
       pet.userName = fosterRequestState.userName
+      pet.userId = fosterRequestState.userId
     }
   }, [fosterRequestState])
+
+  useEffect(() => {
+    if (returnRequestState.requestStatus === "Aproved") {
+      pet.adoptionStatus = "Available"
+      pet.userName = '';
+      pet.userId = ''
+    }
+  }, [returnRequestState])
 
   const handleShowPet = () => {
     navigate(`petShow/${pet.id}`)

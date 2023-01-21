@@ -7,7 +7,7 @@ import { FaBeer } from "@react-icons/all-files/fa/FaBeer";
 import axios from 'axios';
 
 function SearchPets() {
-    const { token } = useUserContext();
+    const { token, userId } = useUserContext();
     const { petsList, setPetsList } = usePetContext();
 
 
@@ -54,7 +54,8 @@ function SearchPets() {
         petAge: '',
         height: '',
         weight: '',
-        color: ''
+        color: '',
+        // doFilter: false
     });
 
     const handleSearch = async () => {
@@ -70,7 +71,9 @@ function SearchPets() {
                     query += `${query === '' ? '?' : '&'}${key}=${filterHeightBy + value}`;
                 } else if (key === 'weight') {
                     query += `${query === '' ? '?' : '&'}${key}=${filterWeightBy + value}`;
-                } else {
+                } else if (key === 'doFilter' && value === true) {
+                    query += `${query === '' ? '?' : '&'}userId=${userId}`;
+                } else if (key !== 'doFilter') {
                     query += `${query === '' ? '?' : '&'}${key}=${value}`
                 }
             }
@@ -89,15 +92,21 @@ function SearchPets() {
     }
 
     const handleChange = (event) => {
-        const { name, value } = event.target;
+        const { name, value, type } = event.target;
 
         let newValue = value;
         if (name === 'specieId') {
             const newBreedList = breedsList.filter(breed => breed.specieId === parseInt(newValue) || !breed.specieId)
             setFilteredBreedsList(newBreedList);
-        } else {
-            setSearchFormData({ ...searchFormData, [name]: newValue });
+        } else if (name === "doFilter") {
+            console.log(event.target.checked);
+            // if (value === 'on') {
+
+            // }
+            newValue = event.target.checked
         }
+        setSearchFormData({ ...searchFormData, [name]: newValue });
+
     };
 
     const handleAgeChange = (event) => {
@@ -217,6 +226,16 @@ function SearchPets() {
                     placeholder="Color"
                     name="color"
                     value={searchFormData.color}
+                    onChange={handleChange}
+                />
+            </div>
+            <div className='color'>
+                <Form.Label>My pets</Form.Label>
+                <Form.Check
+                    type="checkbox"
+                    label="Filter"
+                    name="doFilter"
+                    checked={searchFormData.doFilter}
                     onChange={handleChange}
                 />
             </div>

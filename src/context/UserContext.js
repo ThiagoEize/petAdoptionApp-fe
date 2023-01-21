@@ -135,6 +135,7 @@ export default function UserContextProvider({ children }) {
             requestsList,
             setRequestsList,
             permissions,
+            setPermissions,
             setToken
         }}>
             {/* <SpecieModal

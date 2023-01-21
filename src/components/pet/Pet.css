@@ -76,21 +76,31 @@
     color: gray;
 }
 
-.edit-button {
-    border: 1px solid gray;
-}
-
-.adopt-button {
-    border: 1px solid green;
-    color: green;
-}
-
-.delete-button {
-    border: 1px solid red;
-    background-color: red;
+.show-button {
+    background-color: orange;
     color: #fff;
 }
 
+
+.adopt-button {
+    background-color: green;
+    color: #fff;
+}
+
+.foster-button {
+    background-color: blue;
+    color: #fff;
+}
+
+.edit-button {
+    background-color: #ddd;
+    color: #333;
+}
+
+.delete-button {
+    background-color: red;
+    color: #fff;
+}
 
 .pet-button:hover {
     /* background-color: #3579f6; */
@@ -137,16 +147,6 @@
     /* dark blue */
 }
 
-.show-button,
-.edit-button,
-.adopt-button,
-.foster-button {
-    background-color: #FB8C00;
-    /* orange */
-    border-color: #FB8C00;
-    /* orange */
-    color: #fff;
-}
 
 .requestStatus {
     display: flex;
