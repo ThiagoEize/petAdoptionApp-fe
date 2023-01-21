@@ -24,17 +24,29 @@ const AdoptionRequests = () => {
     // }, [])
 
     const handleApprove = async (request) => {
-        try {
-            const rejects = await axios.get(`http://localhost:8080/adoptionRequests?petId=${request.petId}`, { headers: { Authorization: `Bearer ${token}` } });
-            for (let i = 0; i < rejects.data.data.length; i++) {
-                await axios.put(`http://localhost:8080/adoptionRequests/${rejects.data.data[i].id}`, { "requestStatus": "Rejected" }, { headers: { Authorization: `Bearer ${token}` } });
+        if (request.requestType !== 'return') {
+            try {
+                const rejects = await axios.get(`http://localhost:8080/adoptionRequests?petId=${request.petId}`, { headers: { Authorization: `Bearer ${token}` } });
+                for (let i = 0; i < rejects.data.data.length; i++) {
+                    await axios.put(`http://localhost:8080/adoptionRequests/${rejects.data.data[i].id}`, { "requestStatus": "Rejected" }, { headers: { Authorization: `Bearer ${token}` } });
+                }
+                const aproved = await axios.put(`http://localhost:8080/adoptionRequests/${request.id}`, { "requestStatus": "Aproved" }, { headers: { Authorization: `Bearer ${token}` } });
+                const pet = await axios.put(`http://localhost:8080/pets/aprove/${request.petId}`, { "userId": userId, "adoptionStatus": request.requestType === "adopt" ? "Adopted" : "Fostered" }, { headers: { Authorization: `Bearer ${token}` } });
+
+                const filteredRequests = requestsList.filter(item => item.petId !== request.petId)
+                setRequestsList(filteredRequests)
+            } catch (err) {
+                console.log(err);
             }
-            const aproved = await axios.put(`http://localhost:8080/adoptionRequests/${request.id}`, { "requestStatus": "Aproved" }, { headers: { Authorization: `Bearer ${token}` } });
-            const pet = await axios.put(`http://localhost:8080/pets/aprove/${request.petId}`, { "userId": userId, "adoptionStatus": request.requestType === "adopt" ? "Adopted" : "Fostered" }, { headers: { Authorization: `Bearer ${token}` } });
-            const filteredRequests = requestsList.filter(item => item.petId !== request.petId)
-            setRequestsList(filteredRequests)
-        } catch (err) {
-            console.log(err);
+        } else {
+            try {
+                const aproved = await axios.put(`http://localhost:8080/adoptionRequests/${request.id}`, { "requestStatus": "Aproved" }, { headers: { Authorization: `Bearer ${token}` } });
+                const pet = await axios.put(`http://localhost:8080/pets/aprove/${request.petId}`, { "userId": null, "adoptionStatus": "Available" }, { headers: { Authorization: `Bearer ${token}` } });
+                const filteredRequests = requestsList.filter(item => item.petId !== request.petId)
+                setRequestsList(filteredRequests)
+            } catch (err) {
+                console.log(err);
+            }
         }
     };
 

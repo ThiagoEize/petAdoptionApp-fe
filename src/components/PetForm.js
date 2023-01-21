@@ -225,7 +225,7 @@ const PetForm = ({ onClose }) => {
             <option value="Adopted">Adopted</option>
             <option value="Fostered">Fostered</option>
           </Form.Control> */}
-          <Form.Label>Pet Age</Form.Label>
+          <Form.Label>Pet Age (in years)</Form.Label>
           <Form.Control
             type="text"
             placeholder="Pet age"
@@ -233,7 +233,7 @@ const PetForm = ({ onClose }) => {
             value={formData.petAge}
             onChange={handleChange}
           />
-          <Form.Label>Height</Form.Label>
+          <Form.Label>Height (in meters)</Form.Label>
           <Form.Control
             type="text"
             placeholder="Height"
@@ -241,7 +241,7 @@ const PetForm = ({ onClose }) => {
             value={formData.height}
             onChange={handleChange}
           />
-          <Form.Label>Weight</Form.Label>
+          <Form.Label>Weight (in kilograms)</Form.Label>
           <Form.Control
             type="text"
             placeholder="Weight"

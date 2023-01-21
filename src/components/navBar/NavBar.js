@@ -90,6 +90,11 @@ const NavBar = () => {
     setInitialData({})
   }
 
+  useEffect(() => {
+    console.log(permissions.canAcceptAdoptionRequests);
+    console.log('type of', typeof permissions.canAcceptAdoptionRequests);
+  })
+
   return (
     <>
       <div className="nav-bar">
@@ -112,15 +117,17 @@ const NavBar = () => {
               Profile
             </NavLink>
           </li>
-          <li>
-            <NavLink
-              to="adoptionRequests"
-              style={({ isActive }) =>
-                isActive ? activeStyle : undefined}
-            >
-              Adoption Requests
-            </NavLink>
-          </li>
+          {permissions.canAcceptAdoptionRequests &&
+            <li>
+              <NavLink
+                to="adoptionRequests"
+                style={({ isActive }) =>
+                  isActive ? activeStyle : undefined}
+              >
+                Adoption Requests
+              </NavLink>
+            </li>
+          }
           <div className="align-right">
             <li>
               <Button onClick={handleShowSpecieModal}>Add Specie</Button>
