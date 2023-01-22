@@ -121,7 +121,6 @@ const PetShow = () => {
         }
     }, [returnRequestState])
 
-
     const handleAdoptPet = () => {
         try {
             setShowRequestModal(true)
@@ -206,7 +205,7 @@ const PetShow = () => {
                         </div>
                         <div>
                             <h3>Food restriction</h3>
-                            <p className="pet-show-food-restrictions">Food restrictions: {pet.foodRestrictions}</p>
+                            <p className="pet-show-bio">{pet.foodRestrictions}</p>
                         </div>
                     </div>
                 </div>
@@ -243,8 +242,9 @@ const PetShow = () => {
                     </div>
                 }
                 <div className='buttonsDiv'>
-                    <button className="pet-show-button pet-show-edit-button" onClick={handleEditPet}>Edit</button>
-
+                    {permissions.canAcceptAdoptionRequests &&
+                        <button className="pet-show-button pet-show-edit-button" onClick={handleEditPet}>Edit</button>
+                    }
                     {((!pet.userId || pet.userId === userId || pet.adoptionStatus === 'Fostered') && !adoptionRequestState.id) &&
                         <button className={
                             pet.adoptionStatus !== "Adopted" ?

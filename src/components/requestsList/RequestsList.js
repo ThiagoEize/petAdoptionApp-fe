@@ -31,7 +31,7 @@ const AdoptionRequests = () => {
                     await axios.put(`http://localhost:8080/adoptionRequests/${rejects.data.data[i].id}`, { "requestStatus": "Rejected" }, { headers: { Authorization: `Bearer ${token}` } });
                 }
                 const aproved = await axios.put(`http://localhost:8080/adoptionRequests/${request.id}`, { "requestStatus": "Aproved" }, { headers: { Authorization: `Bearer ${token}` } });
-                const pet = await axios.put(`http://localhost:8080/pets/aprove/${request.petId}`, { "userId": userId, "adoptionStatus": request.requestType === "adopt" ? "Adopted" : "Fostered" }, { headers: { Authorization: `Bearer ${token}` } });
+                const pet = await axios.put(`http://localhost:8080/pets/aprove/${request.petId}`, { "userId": request.userId, "adoptionStatus": request.requestType === "adopt" ? "Adopted" : "Fostered" }, { headers: { Authorization: `Bearer ${token}` } });
 
                 const filteredRequests = requestsList.filter(item => item.petId !== request.petId)
                 setRequestsList(filteredRequests)

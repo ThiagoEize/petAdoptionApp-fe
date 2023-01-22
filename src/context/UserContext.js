@@ -59,6 +59,9 @@ export default function UserContextProvider({ children }) {
 
     const [showRequestModal, setShowRequestModal] = useState(false);
     const [requestType, setRequestType] = useState('');
+
+    const [showSavePetModal, setShowSavePetModal] = useState(false);
+
     const [petId, setPetId] = useState('');
 
     const [initialData, setInitialData] = useState({});
@@ -127,6 +130,8 @@ export default function UserContextProvider({ children }) {
             userId,
             showRequestModal,
             setShowRequestModal,
+            showSavePetModal,
+            setShowSavePetModal,
             requestType,
             setRequestType,
             setUserId,

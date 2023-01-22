@@ -11,6 +11,7 @@ import SpecieModal from "../SpecieModal";
 import PetModal from "../PetModal";
 import PermissionModal from "../PermissionModal";
 import RequestModal from "../RequestModal";
+import SavePetModal from "../SavePetModal";
 import { useNavigate } from 'react-router-dom';
 
 import './NavBar.css';
@@ -26,6 +27,7 @@ const NavBar = () => {
     showBreedModal,
     showPetModal,
     showRequestModal,
+    showSavePetModal,
     setShowSignUpModal,
     setShowLogInModal,
     setShowSpecieModal,
@@ -33,6 +35,7 @@ const NavBar = () => {
     setShowBreedModal,
     setShowPetModal,
     setShowRequestModal,
+    setShowSavePetModal,
     permissions,
     setPermissions,
     setInitialData,
@@ -179,6 +182,10 @@ const NavBar = () => {
       <RequestModal
         visible={showRequestModal}
         onClose={() => setShowRequestModal(false)}
+      />
+      <SavePetModal
+        visible={showSavePetModal}
+        onClose={() => setShowSavePetModal(false)}
       />
       <SignUpModal
         visible={showSignUpModal}

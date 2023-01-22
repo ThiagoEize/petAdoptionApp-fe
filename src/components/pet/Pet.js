@@ -17,6 +17,8 @@ const Pet = ({ pet }) => {
     setInitialData,
     showRequestModal,
     setShowRequestModal,
+    showSavePetModal,
+    setShowSavePetModal,
     setRequestType,
     setPetId,
     userId,
@@ -119,6 +121,16 @@ const Pet = ({ pet }) => {
     }
   }
 
+  const handleSavePet = () => {
+    try {
+      setShowSavePetModal(true)
+      setPetId(pet.id)
+      setRequestType('adopt')
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   const handleReturnPet = () => {
     try {
       setShowRequestModal(true)
@@ -186,6 +198,23 @@ const Pet = ({ pet }) => {
             <div className="pet-weight">Weight: {pet.weight}</div>
             <div className="pet-color">Color: {pet.color}</div>
           </div>
+          {/* {((!pet.userId || pet.userId === userId || pet.adoptionStatus === 'Fostered') && !adoptionRequestState.id) &&
+            <button className={
+              pet.adoptionStatus !== "Adopted" ?
+                "pet-button adopt-button" : "pet-button delete-button"
+            }
+              onClick={
+                pet.adoptionStatus !== "Adopted" ?
+                  handleAdoptPet : handleReturnPet
+              }
+            >
+              {
+                pet.adoptionStatus !== "Adopted" ?
+                  "Adopt" : "Return"
+              }
+            </button>
+          } */}
+
 
           {/* <p className="pet-bio">{pet.petBio}</p> */}
         </div>
@@ -198,31 +227,31 @@ const Pet = ({ pet }) => {
             <div className={`${pet.adoptionStatus}`}>Status: {pet.adoptionStatus}</div>
           }
         </div>
-
+        <button className="pet-button save-button" onClick={handleSavePet}>Save</button>
         {adoptionRequestState.id &&
           <div className='requestStatus'>
             <p className='requestMessage'>Adoption request {adoptionRequestState.requestStatus}</p>
             <button className="pet-button delete-button" onClick={handleDeleteAdoptionRequest}>{adoptionRequestState.requestStatus === 'Pending' ? "Cancel" : "Close"}</button>
           </div>
         }
-
         {fosterRequestState.id &&
           <div className='requestStatus'>
             <p className='requestMessage'>Fostering request {fosterRequestState.requestStatus}</p>
             <button className="pet-button delete-button" onClick={handleDeleteFosterRequest}>{fosterRequestState.requestStatus === 'Pending' ? "Cancel" : "Close"}</button>
           </div>
         }
-
         {returnRequestState.id &&
           <div className='requestStatus'>
             <p className='requestMessage'>Return request {returnRequestState.requestStatus}</p>
             <button className="pet-button delete-button" onClick={handleDeleteReturnRequest}>{returnRequestState.requestStatus === 'Pending' ? "Cancel" : "Close"}</button>
           </div>
         }
+
         <div className='buttonsDiv'>
           <button className="pet-button show-button" onClick={handleShowPet}>Show</button>
-          <button className="pet-button edit-button" onClick={handleEditPet}>Edit</button>
-
+          {permissions.canAcceptAdoptionRequests &&
+            <button className="pet-button edit-button" onClick={handleEditPet}>Edit</button>
+          }
           {((!pet.userId || pet.userId === userId || pet.adoptionStatus === 'Fostered') && !adoptionRequestState.id) &&
             <button className={
               pet.adoptionStatus !== "Adopted" ?

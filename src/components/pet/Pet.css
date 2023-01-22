@@ -87,6 +87,12 @@
     color: #fff;
 }
 
+.save-button {
+    background-color: green;
+    color: #fff;
+    align-self: flex-end;
+}
+
 .foster-button {
     background-color: blue;
     color: #fff;
@@ -156,4 +162,8 @@
 
 .requestMessage {
     margin: auto 0 auto 0
+}
+
+.save-button {
+    margin-left: auto;
 }
