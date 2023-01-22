@@ -31,6 +31,28 @@ const Pet = ({ pet }) => {
   const [fosterRequestState, setFosterRequestState] = useState({})
   const [returnRequestState, setReturnRequestState] = useState({})
 
+  const [savePetState, setSavePetState] = useState({})
+
+  const getSavePets = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8080/savedPets?users.id=${userId}&petId=${pet.id}`, { headers: { Authorization: `Bearer ${token}` } });
+      if (response.data.data.length > 0) {
+        setSavePetState(response.data.data[0])
+      } else {
+        setSavePetState({})
+      }
+    } catch (err) {
+      setSavePetState({})
+      console.log(err);
+    }
+  }
+
+  useEffect(() => {
+    if (showSavePetModal === false) {
+      getSavePets()
+    }
+  }, [showSavePetModal])
+
   const getUserRequests = async () => {
     try {
       const resAdopt = await axios.get(`http://localhost:8080/adoptionRequests?users.id=${userId}&petId=${pet.id}&requestType=adopt`, { headers: { Authorization: `Bearer ${token}` } });
@@ -121,13 +143,21 @@ const Pet = ({ pet }) => {
     }
   }
 
-  const handleSavePet = () => {
-    try {
-      setShowSavePetModal(true)
-      setPetId(pet.id)
-      setRequestType('adopt')
-    } catch (err) {
-      console.log(err);
+  const handleSavePet = async () => {
+    if (!savePetState.id) {
+      try {
+        setShowSavePetModal(true)
+        setPetId(pet.id)
+      } catch (err) {
+        console.log(err);
+      }
+    } else {
+      try {
+        const response = await axios.delete(`http://localhost:8080/savedPets/${savePetState.id}`, { headers: { Authorization: `Bearer ${token}` } });
+        setSavePetState({})
+      } catch (err) {
+        console.log(err);
+      }
     }
   }
 
@@ -197,6 +227,9 @@ const Pet = ({ pet }) => {
             <div className="pet-height">Height: {pet.height}</div>
             <div className="pet-weight">Weight: {pet.weight}</div>
             <div className="pet-color">Color: {pet.color}</div>
+            {savePetState.id &&
+              <div>Pet Saved</div>
+            }
           </div>
           {/* {((!pet.userId || pet.userId === userId || pet.adoptionStatus === 'Fostered') && !adoptionRequestState.id) &&
             <button className={
@@ -227,7 +260,7 @@ const Pet = ({ pet }) => {
             <div className={`${pet.adoptionStatus}`}>Status: {pet.adoptionStatus}</div>
           }
         </div>
-        <button className="pet-button save-button" onClick={handleSavePet}>Save</button>
+        <button className={!savePetState.id ? "pet-button save-button" : "pet-button unsave-button"} onClick={handleSavePet}>{!savePetState.id ? 'Save' : 'Delete'}</button>
         {adoptionRequestState.id &&
           <div className='requestStatus'>
             <p className='requestMessage'>Adoption request {adoptionRequestState.requestStatus}</p>

@@ -108,6 +108,12 @@
     color: #fff;
 }
 
+.unsave-button {
+    background-color: red;
+    color: #fff;
+    margin-left: auto;
+}
+
 .pet-button:hover {
     /* background-color: #3579f6; */
     color: #ffffff;
