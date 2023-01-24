@@ -25,13 +25,17 @@ const Pet = ({ pet }) => {
     token
   } = useUserContext();
 
-  const { petsList, setPetsList } = usePetContext();
+  const { petsList, setPetsList, setReloud, savedPetsList, setSavedPetsList } = usePetContext();
 
   const [adoptionRequestState, setAdoptionRequestState] = useState({})
   const [fosterRequestState, setFosterRequestState] = useState({})
   const [returnRequestState, setReturnRequestState] = useState({})
 
   const [savePetState, setSavePetState] = useState({})
+
+  // useEffect(() => {
+  //   setReloud(true)
+  // }, [savePetState])
 
   const getSavePets = async () => {
     try {
@@ -144,17 +148,18 @@ const Pet = ({ pet }) => {
   }
 
   const handleSavePet = async () => {
-    if (!savePetState.id) {
+    if (savedPetsList.includes(pet.id)) {
       try {
-        setShowSavePetModal(true)
-        setPetId(pet.id)
+        const response = await axios.delete(`http://localhost:8080/savedPets/${savePetState.id}`, { headers: { Authorization: `Bearer ${token}` } });
+        setSavedPetsList(prev => prev.filter(id => id !== pet.id))
+        setSavePetState({})
       } catch (err) {
         console.log(err);
       }
     } else {
       try {
-        const response = await axios.delete(`http://localhost:8080/savedPets/${savePetState.id}`, { headers: { Authorization: `Bearer ${token}` } });
-        setSavePetState({})
+        setShowSavePetModal(true)
+        setPetId(pet.id)
       } catch (err) {
         console.log(err);
       }
@@ -209,7 +214,6 @@ const Pet = ({ pet }) => {
       const deleted = await axios.delete(`http://localhost:8080/pets/${pet.id}`, { headers: { Authorization: `Bearer ${token}` } });
       const newPetList = petsList.filter(deletedPet => deletedPet.id !== pet.id)
       console.log(deleted);
-      setPetsList(newPetList)
     } catch (err) {
       console.log(err);
     }
@@ -217,6 +221,7 @@ const Pet = ({ pet }) => {
 
   return (
     <>
+
       <div id={pet.id} className={`pet-card ${pet.adoptionStatus}`}>
 
         <img src={pet.picture} alt={pet.petName} className="pet-picture pet-picture-half" />
@@ -260,7 +265,7 @@ const Pet = ({ pet }) => {
             <div className={`${pet.adoptionStatus}`}>Status: {pet.adoptionStatus}</div>
           }
         </div>
-        <button className={!savePetState.id ? "pet-button save-button" : "pet-button unsave-button"} onClick={handleSavePet}>{!savePetState.id ? 'Save' : 'Delete'}</button>
+        <button className={savedPetsList.includes(pet.id) ? "pet-button unsave-button" : "pet-button save-button"} onClick={handleSavePet}>{savedPetsList.includes(pet.id) ? 'Unsave' : 'Save'}</button>
         {adoptionRequestState.id &&
           <div className='requestStatus'>
             <p className='requestMessage'>Adoption request {adoptionRequestState.requestStatus}</p>

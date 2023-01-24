@@ -34,6 +34,14 @@ function App() {
               }
             ></Route>
             <Route
+              path="/savedPets/:saved"
+              element={
+                <PrivateRoute>
+                  <Home />
+                </PrivateRoute>
+              }
+            ></Route>
+            <Route
               path="/profile"
               element={
                 <PrivateRoute>

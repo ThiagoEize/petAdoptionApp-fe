@@ -4,9 +4,11 @@ import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import axios from 'axios';
 import { useUserContext } from "../context/UserContext";
+import { usePetContext } from "../context/PetContext";
 
 const SavePetForm = ({ onClose }) => {
     const { token, userId, petId, requestType } = useUserContext();
+    const { setSavedPetsList } = usePetContext();
 
     const [formData, setFormData] = useState({
         userId: userId,
@@ -21,6 +23,7 @@ const SavePetForm = ({ onClose }) => {
             res = await axios.post('http://localhost:8080/savedPets', formData, { headers: { Authorization: `Bearer ${token}` } });
             if (res.data.success) {
                 console.log('arrived here');
+                setSavedPetsList((prev) => [...prev, petId])
                 onClose();
             }
         } catch (err) {

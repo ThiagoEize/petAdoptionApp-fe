@@ -113,6 +113,15 @@ const NavBar = () => {
           </li>
           <li>
             <NavLink
+              to="savedPets/true"
+              style={({ isActive }) =>
+                isActive ? activeStyle : undefined}
+            >
+              Saved pets
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
               to="profile"
               style={({ isActive }) =>
                 isActive ? activeStyle : undefined}

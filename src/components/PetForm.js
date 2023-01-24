@@ -9,7 +9,7 @@ import { usePetContext } from "../context/PetContext";
 
 const PetForm = ({ onClose }) => {
   const { token, errorsFromServer, setErrorsFromServer, initialData, setInitialData } = useUserContext();
-  const { pet, setPet, petsList, setPetsList } = usePetContext();
+  const { pet, setPet, petsList, setPetsList, setReloud } = usePetContext();
 
   const [speciesList, setSpeciesList] = useState([]);
 
@@ -118,7 +118,6 @@ const PetForm = ({ onClose }) => {
         setPet(res.data.data)
 
         setPetsList(currentPets)
-
       } else {
         // Make a post request to your server to add the pet to the database
         const form = new FormData();

@@ -27,6 +27,11 @@ export default function PetContextProvider({ children }) {
     // }, [token])
 
     const [petsList, setPetsList] = useState([]);
+
+    const [savedPetsList, setSavedPetsList] = useState([]);
+
+    const [reloud, setReloud] = useState(false);
+
     const [isLoading, setIsLoading] = useState(false);
     const [pet, setPet] = useState({});
 
@@ -54,7 +59,11 @@ export default function PetContextProvider({ children }) {
             pet,
             setPet,
             petsList,
-            setPetsList
+            setPetsList,
+            reloud,
+            setReloud,
+            savedPetsList,
+            setSavedPetsList
         }}>
             {children}
         </PetContext.Provider>

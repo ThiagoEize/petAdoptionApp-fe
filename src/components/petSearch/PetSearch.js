@@ -8,7 +8,8 @@ import axios from 'axios';
 
 function SearchPets() {
     const { token, userId } = useUserContext();
-    const { petsList, setPetsList } = usePetContext();
+    // const { petsList, setPetsList, setReloud } = usePetContext();
+    const { petsList, setPetsList, setReloud, setSavedPetsList } = usePetContext();
 
 
     const [speciesList, setSpeciesList] = useState([]);
@@ -78,12 +79,14 @@ function SearchPets() {
                 }
             }
         }
-
         console.log('this is the query', query);
         try {
             const res = await axios.get(`http://localhost:8080/pets${query}`, { headers: { Authorization: `Bearer ${token}` } });
-            console.log(res.data.data);
             setPetsList(res.data.data);
+
+            const resSaved = await axios.get(`http://localhost:8080/pets/myPets`, { headers: { Authorization: `Bearer ${token}` } });
+            console.log('resSaved', resSaved.data.data);
+            setSavedPetsList(resSaved.data.data)
         } catch (err) {
             console.log(err);
         }
