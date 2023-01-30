@@ -39,18 +39,6 @@ export default function PetContextProvider({ children }) {
     // const serverUrl = 'https://micro-blogging-dot-full-stack-course-services.ew.r.appspot.com/pet';
     const serverUrl = 'http://localhost:8080/pets';
 
-    // const handleSubmit = async (pet) => {
-    //     setIsLoading(true);
-    //     try {
-    //         await Axios.post(serverUrl, pet)
-    //         setPetsList((prevPetList) => [pet, ...prevPetList])
-    //     } catch (err) {
-    //         setErrorsFromServer(err.response.data);
-    //     } finally {
-    //         setIsLoading(false)
-    //     }
-    // }
-
     return (
         <PetContext.Provider value={{
             isLoading,

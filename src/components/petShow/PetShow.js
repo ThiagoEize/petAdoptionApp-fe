@@ -20,12 +20,16 @@ const PetShow = () => {
         setPetId,
         userId,
         showRequestModal,
+        showSavePetModal,
+        setShowSavePetModal,
         token
     } = useUserContext();
 
     const {
         pet,
-        setPet
+        setPet,
+        savedPetsList,
+        setSavedPetsList
     } = usePetContext();
 
     const { petId } = useParams();
@@ -49,6 +53,36 @@ const PetShow = () => {
     const [adoptionRequestState, setAdoptionRequestState] = useState({})
     const [fosterRequestState, setFosterRequestState] = useState({})
     const [returnRequestState, setReturnRequestState] = useState({})
+
+    const [savePetState, setSavePetState] = useState({})
+
+    // useEffect(() => {
+    //   setReloud(true)
+    // }, [savePetState])
+
+    const getSavePets = async () => {
+        try {
+            const response = await axios.get(`http://localhost:8080/savedPets?users.id=${userId}&petId=${pet.id}`, { headers: { Authorization: `Bearer ${token}` } });
+            if (response.data.data.length > 0) {
+                setSavePetState(response.data.data[0])
+            } else {
+                setSavePetState({})
+            }
+        } catch (err) {
+            setSavePetState({})
+            console.log(err);
+        }
+    }
+
+    useEffect(() => {
+        getSavePets()
+    }, [])
+
+    useEffect(() => {
+        if (showSavePetModal === false) {
+            getSavePets()
+        }
+    }, [showSavePetModal])
 
     const getUserRequests = async () => {
         try {
@@ -174,6 +208,25 @@ const PetShow = () => {
         }
     }
 
+    const handleSavePet = async () => {
+        if (savedPetsList.includes(pet.id)) {
+            try {
+                const response = await axios.delete(`http://localhost:8080/savedPets/${savePetState.id}`, { headers: { Authorization: `Bearer ${token}` } });
+                setSavedPetsList(prev => prev.filter(id => id !== pet.id))
+                setSavePetState({})
+            } catch (err) {
+                console.log(err);
+            }
+        } else {
+            try {
+                setShowSavePetModal(true)
+                setPetId(pet.id)
+            } catch (err) {
+                console.log(err);
+            }
+        }
+    }
+
     // const handleDeletePet = async () => {
     //     try {
     //         const deleted = await axios.delete(`http://localhost:8080/pets/${pet.id}`, { headers: { Authorization: `Bearer ${token}` } });
@@ -217,8 +270,9 @@ const PetShow = () => {
                     ) : (
                         <div className={`${pet.adoptionStatus}`}>Status: {pet.adoptionStatus}</div>
                     )}
-
-
+                </div>
+                <div className="pet-show-comentary">
+                    {savePetState.personalComentary && 'Personal comentary: ' + savePetState.personalComentary}
                 </div>
 
                 {adoptionRequestState.id &&
@@ -278,6 +332,7 @@ const PetShow = () => {
                             }
                         </button>
                     }
+                    <button className={savedPetsList.includes(pet.id) ? "pet-button unsave-button" : "pet-button save-button"} onClick={handleSavePet}>{savedPetsList.includes(pet.id) ? 'Unsave' : 'Save'}</button>
                     {/* <button className="pet-show-button delete-button" onClick={handleDeletePet}>Delete</button> */}
                 </div>
 
