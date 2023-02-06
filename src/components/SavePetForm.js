@@ -22,7 +22,6 @@ const SavePetForm = ({ onClose }) => {
             let res;
             res = await axios.post('http://localhost:8080/savedPets', formData, { headers: { Authorization: `Bearer ${token}` } });
             if (res.data.success) {
-                console.log('arrived here');
                 setSavedPetsList((prev) => [...prev, petId])
                 onClose();
             }

@@ -68,7 +68,6 @@ const PetForm = ({ onClose }) => {
     } else if (typeof initialData.picture === 'string') {
       setPictureUrl(initialData.picture);
     }
-    console.log(pictureUrl);
   }, [initialData])
 
   const handleSubmit = async (e) => {
@@ -77,11 +76,6 @@ const PetForm = ({ onClose }) => {
       let res;
       if (initialData.id) {
         const form = new FormData();
-
-        // form.append('picture', picture);
-        console.log('picture', picture);
-        console.log('pictureUrl', pictureUrl);
-
         if (picture) {
           form.append('picture', picture);
           form.append('breedId', formData.breedId);
@@ -111,8 +105,6 @@ const PetForm = ({ onClose }) => {
 
         const currentPets = petsList
 
-        console.log(res.data.data);
-
         currentPets[updatedPetIndex] = res.data.data;
 
         setPet(res.data.data)
@@ -121,7 +113,6 @@ const PetForm = ({ onClose }) => {
       } else {
         // Make a post request to your server to add the pet to the database
         const form = new FormData();
-        // console.log(picture);
         form.append('picture', picture);
         form.append('breedId', formData.breedId);
         form.append('petName', formData.petName);
@@ -158,7 +149,6 @@ const PetForm = ({ onClose }) => {
     const { name, value } = event.target;
     let newValue = value;
     if (name === 'specieId') {
-      console.log(name, value, newValue);
       const newBreedList = breedsList.filter(breed => breed.specieId === parseInt(newValue) || !breed.specieId)
       setFilteredBreedsList(newBreedList);
     }

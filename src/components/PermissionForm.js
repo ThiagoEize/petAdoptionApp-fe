@@ -25,8 +25,6 @@ const PermissionsForm = ({ onClose, initialData = {} }) => {
                 // Make a put request to your server to update the permission in the database
                 res = await axios.put(`http://localhost:8080/permissions/${initialData.id}`, formData, { headers: { Authorization: `Bearer ${token}` } });
             } else {
-                // Make a post request to your server to add the permission to the database
-                console.log(formData)
                 res = await axios.post('http://localhost:8080/permissions', formData, { headers: { Authorization: `Bearer ${token}` } });
             }
 

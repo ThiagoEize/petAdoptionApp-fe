@@ -29,7 +29,6 @@ const LogInForm = ({ onClose, setToken, setUserId }) => {
                 onClose();
             }
         } catch (err) {
-            console.log('This is the error message', err);
             if (err.response.data) {
                 setErrorsFromServer(err.response.data)
             }

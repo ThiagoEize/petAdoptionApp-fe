@@ -10,9 +10,6 @@ const SignUpForm = ({ onClose }) => {
     const handleSignUp = async (e) => {
         // e.preventDefault();
         try {
-            // setFormData({ ...formData, permissionId: null });
-            // console.log(formData);
-
             const res = await axios.post('http://localhost:8080/users/signup', formData)
             if (res.data.success) {
                 console.log(res)

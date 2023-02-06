@@ -62,7 +62,6 @@ const Pet = ({ pet }) => {
       const resAdopt = await axios.get(`http://localhost:8080/adoptionRequests?users.id=${userId}&petId=${pet.id}&requestType=adopt`, { headers: { Authorization: `Bearer ${token}` } });
       if (resAdopt.data.data.length > 0) {
         setAdoptionRequestState(resAdopt.data.data[0])
-        console.log(resAdopt.data.data[0]);
       } else {
         setAdoptionRequestState({})
       }
@@ -75,7 +74,6 @@ const Pet = ({ pet }) => {
       const resFoster = await axios.get(`http://localhost:8080/adoptionRequests?users.id=${userId}&petId=${pet.id}&requestType=foster`, { headers: { Authorization: `Bearer ${token}` } });
       if (resFoster.data.data.length > 0) {
         setFosterRequestState(resFoster.data.data[0])
-        console.log('adoptionRequestState', adoptionRequestState);
       } else {
         setFosterRequestState({})
       }
@@ -213,7 +211,6 @@ const Pet = ({ pet }) => {
     try {
       const deleted = await axios.delete(`http://localhost:8080/pets/${pet.id}`, { headers: { Authorization: `Bearer ${token}` } });
       const newPetList = petsList.filter(deletedPet => deletedPet.id !== pet.id)
-      console.log(deleted);
     } catch (err) {
       console.log(err);
     }
@@ -233,7 +230,7 @@ const Pet = ({ pet }) => {
             <div className="pet-weight">Weight: {pet.weight}</div>
             <div className="pet-color">Color: {pet.color}</div>
             {savePetState.id &&
-              <div>Pet Saved</div>
+              <div className="pet-saved">Pet Saved</div>
             }
           </div>
           {/* {((!pet.userId || pet.userId === userId || pet.adoptionStatus === 'Fostered') && !adoptionRequestState.id) &&

@@ -142,6 +142,10 @@ li {
   flex-direction: column;
 }
 
+.profile-container>p {
+  margin: 1rem 0 0 0;
+}
+
 .profile-title-section {
   display: flex;
   flex-direction: row;
@@ -186,7 +190,7 @@ li {
 }
 
 .save-profile-button:hover {
-  background-color: #3579f6;
+  background-color: green;
   color: #ffffff;
   border: none;
   border-radius: 5px;

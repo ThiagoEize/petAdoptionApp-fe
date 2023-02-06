@@ -173,3 +173,7 @@
 .save-button {
     margin-left: auto;
 }
+
+.pet-saved {
+    color: green
+}

@@ -79,13 +79,11 @@ function SearchPets() {
                 }
             }
         }
-        console.log('this is the query', query);
         try {
             const res = await axios.get(`http://localhost:8080/pets${query}`, { headers: { Authorization: `Bearer ${token}` } });
             setPetsList(res.data.data);
 
             const resSaved = await axios.get(`http://localhost:8080/pets/myPets`, { headers: { Authorization: `Bearer ${token}` } });
-            console.log('resSaved', resSaved.data.data);
             setSavedPetsList(resSaved.data.data)
         } catch (err) {
             console.log(err);
@@ -102,10 +100,6 @@ function SearchPets() {
             const newBreedList = breedsList.filter(breed => breed.specieId === parseInt(newValue) || !breed.specieId)
             setFilteredBreedsList(newBreedList);
         } else if (name === "doFilter") {
-            console.log(event.target.checked);
-            // if (value === 'on') {
-
-            // }
             newValue = event.target.checked
         }
         setSearchFormData({ ...searchFormData, [name]: newValue });

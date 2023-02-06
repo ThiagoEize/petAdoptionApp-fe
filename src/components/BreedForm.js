@@ -35,7 +35,6 @@ const BreedForm = ({ onClose, initialData = {} }) => {
             e.preventDefault();
             let res;
             formData.specieId = parseInt(formData.specieId);
-            console.log(formData);
             if (initialData.id) {
                 // Make a put request to your server to update the breed in the database
                 res = await axios.put(`http://localhost:8080/breeds/${initialData.id}`, formData, { headers: { Authorization: `Bearer ${token}` } });

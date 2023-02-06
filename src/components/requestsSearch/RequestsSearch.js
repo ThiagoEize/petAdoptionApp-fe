@@ -32,7 +32,6 @@ function RequestSearch() {
 
         try {
             const res = await axios.get(`http://localhost:8080/adoptionRequests${query}`, { headers: { Authorization: `Bearer ${token}` } });
-            console.log(res.data.data);
             setRequestsList(res.data.data);
         } catch (err) {
             console.log(err);

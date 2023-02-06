@@ -7,22 +7,6 @@ import './RequestsList.css'
 const AdoptionRequests = () => {
     const { token, userId, petId, requestType, requestsList, setRequestsList } = useUserContext();
 
-    // const [requests, setRequests] = useState([]);
-
-    // const getRequests = async () => {
-    //     try {
-    //         const res = await axios.get('http://localhost:8080/adoptionRequests', { headers: { Authorization: `Bearer ${token}` } });
-    //         // setRequests(res.data.data)
-    //         console.log(res.data.data);
-    //     } catch (err) {
-    //         console.log(err);
-    //     }
-    // }
-
-    // useEffect(() => {
-    //     getRequests()
-    // }, [])
-
     const handleApprove = async (request) => {
         if (request.requestType !== 'return') {
             try {

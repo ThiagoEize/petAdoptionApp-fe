@@ -38,7 +38,6 @@ const PetShow = () => {
         const res = await axios.get(`http://localhost:8080/pets/${petId}`, { headers: { Authorization: `Bearer ${token}` } });
         setPet(res.data.data)
         console.log(res);
-        console.log('this is the pet', pet);
     }
 
     useEffect(() => {
@@ -89,7 +88,6 @@ const PetShow = () => {
             const resAdopt = await axios.get(`http://localhost:8080/adoptionRequests?users.id=${userId}&petId=${pet.id}&requestType=adopt`, { headers: { Authorization: `Bearer ${token}` } });
             if (resAdopt.data.data.length > 0) {
                 setAdoptionRequestState(resAdopt.data.data[0])
-                console.log(resAdopt.data.data[0]);
             } else {
                 setAdoptionRequestState({})
             }
@@ -102,7 +100,6 @@ const PetShow = () => {
             const resFoster = await axios.get(`http://localhost:8080/adoptionRequests?users.id=${userId}&petId=${pet.id}&requestType=foster`, { headers: { Authorization: `Bearer ${token}` } });
             if (resFoster.data.data.length > 0) {
                 setFosterRequestState(resFoster.data.data[0])
-                console.log('adoptionRequestState', adoptionRequestState);
             } else {
                 setFosterRequestState({})
             }
@@ -226,17 +223,6 @@ const PetShow = () => {
             }
         }
     }
-
-    // const handleDeletePet = async () => {
-    //     try {
-    //         const deleted = await axios.delete(`http://localhost:8080/pets/${pet.id}`, { headers: { Authorization: `Bearer ${token}` } });
-    //         const newPetList = petsList.filter(deletedPet => deletedPet.id !== pet.id)
-    //         console.log(deleted);
-    //         setPetsList(newPetList)
-    //     } catch (err) {
-    //         console.log(err);
-    //     }
-    // }
 
     return (
         <>

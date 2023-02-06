@@ -40,12 +40,10 @@ export default function UserContextProvider({ children }) {
         if (token !== '') {
             getUserPermissions()
         }
-        // console.log('permissions:', permissions);
     }, [token])
 
     useEffect(() => {
         setTimeout(() => {
-            console.log('iteration');
             setErrorsFromServer('')
         }, 2000)
     }, [errorsFromServer])
@@ -67,42 +65,6 @@ export default function UserContextProvider({ children }) {
     const [initialData, setInitialData] = useState({});
 
     const [requestsList, setRequestsList] = useState([]);
-
-    // const [speciesList, setSpeciesList] = useState([]);
-
-    // const [breedsList, setBreedsList] = useState([]);
-
-    // const getSpeciesList = async () => {
-    //     try {
-    //         const res = await axios.get('http://localhost:8080/species', { headers: { Authorization: `Bearer ${token}` } });
-    //         const species = [{ id: '', specieName: 'Select a specie...' }, ...res.data.data]
-    //         setSpeciesList(species);
-    //     } catch (err) {
-    //         console.log(err);
-    //     }
-    // };
-
-    // const getBreedsList = async () => {
-    //     try {
-    //         const res = await axios.get('http://localhost:8080/breeds', { headers: { Authorization: `Bearer ${token}` } });
-    //         const breeds = [{ id: '', breedName: 'Select a breed...' }, ...res.data.data]
-    //         setBreedsList(breeds);
-    //     } catch (err) {
-    //         console.log(err);
-    //     }
-    // };
-
-    // useEffect(() => {
-    //     if (showBreedModal || showPetModal) {
-    //         getSpeciesList()
-    //     }
-    // }, [showBreedModal, showPetModal])
-
-    // useEffect(() => {
-    //     if (showBreedModal) {
-    //         getBreedsList()
-    //     }
-    // }, [showPetModal])
 
     return (
         <UserContext.Provider value={{

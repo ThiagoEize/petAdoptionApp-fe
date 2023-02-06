@@ -93,11 +93,6 @@ const NavBar = () => {
     setInitialData({})
   }
 
-  useEffect(() => {
-    console.log(permissions.canAcceptAdoptionRequests);
-    console.log('type of', typeof permissions.canAcceptAdoptionRequests);
-  })
-
   return (
     <>
       <div className="nav-bar">
