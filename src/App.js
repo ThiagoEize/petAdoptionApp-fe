@@ -4,6 +4,7 @@ import NavBar from "./components/navBar/NavBar";
 import Profile from "./components/Profile";
 import Home from "./components/Home";
 import PetShow from "./components/petShow/PetShow";
+import UsersList from "./components/usersList/UsersList";
 import AdoptionRequestsList from "./components/requestsList/RequestsList";
 import HomeLogedOut from "./components/HomeLogedOut";
 import { useEffect, useState } from 'react';
@@ -54,6 +55,14 @@ function App() {
               element={
                 <PrivateRoute>
                   <AdoptionRequestsList />
+                </PrivateRoute>
+              }
+            ></Route>
+            <Route
+              path="/users"
+              element={
+                <PrivateRoute>
+                  <UsersList />
                 </PrivateRoute>
               }
             ></Route>

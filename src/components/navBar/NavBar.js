@@ -135,6 +135,17 @@ const NavBar = () => {
               </NavLink>
             </li>
           }
+          {permissions.canEditUsersPermissions &&
+            <li>
+              <NavLink
+                to="users"
+                style={({ isActive }) =>
+                  isActive ? activeStyle : undefined}
+              >
+                Users
+              </NavLink>
+            </li>
+          }
           <div className="align-right">
             {permissions.canAcceptAdoptionRequests &&
               <li>

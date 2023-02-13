@@ -66,6 +66,8 @@ export default function UserContextProvider({ children }) {
 
     const [requestsList, setRequestsList] = useState([]);
 
+    const [usersList, setUsersList] = useState([]);
+
     return (
         <UserContext.Provider value={{
             currentUserName,
@@ -101,6 +103,8 @@ export default function UserContextProvider({ children }) {
             setPetId,
             requestsList,
             setRequestsList,
+            usersList,
+            setUsersList,
             permissions,
             setPermissions,
             setToken
