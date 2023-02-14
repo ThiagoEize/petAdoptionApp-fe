@@ -6,40 +6,7 @@ import axios from 'axios';
 import './UsersList.css'
 
 const UsersList = () => {
-    const { token, userId, petId, userType, usersList, setUsersList } = useUserContext();
-
-    const [permissionsList, setPermissionsList] = useState([]);
-
-    const getPermissionsList = async () => {
-        try {
-            const res = await axios.get('http://localhost:8080/permissions', { headers: { Authorization: `Bearer ${token}` } });
-            if (res.data.data.length > 0) {
-                // const permissions = [{ id: '', permissionName: 'Select a permission...' }, ...res.data.data]
-                setPermissionsList(res.data.data);
-            } else {
-                console.log('No permission');
-            }
-        } catch (err) {
-            console.log(err);
-        }
-    }
-
-    useEffect(() => {
-        getPermissionsList()
-    }, [])
-
-    const handleChange = async (e) => {
-        e.preventDefault();
-        const { thisUser, name, value, type } = e.target;
-
-        const updatedUserIndex = usersList.findIndex(user => user.id === thisUser)
-
-        const currentUsers = usersList
-    };
-
-    const handleSave = async (user) => {
-
-    };
+    const { usersList } = useUserContext();
 
     return (
         <div className='userList'>

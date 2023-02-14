@@ -32,6 +32,10 @@ const PetShow = () => {
         setSavedPetsList
     } = usePetContext();
 
+    useEffect(() => {
+        console.log('teste');
+    })
+
     const { petId } = useParams();
 
     const getPetData = async () => {
@@ -75,7 +79,7 @@ const PetShow = () => {
 
     useEffect(() => {
         getSavePets()
-    }, [])
+    }, [showSavePetModal])
 
     useEffect(() => {
         if (showSavePetModal === false) {
@@ -208,6 +212,7 @@ const PetShow = () => {
     const handleSavePet = async () => {
         if (savedPetsList.includes(pet.id)) {
             try {
+                console.log("savePetState", savePetState.id);
                 const response = await axios.delete(`http://localhost:8080/savedPets/${savePetState.id}`, { headers: { Authorization: `Bearer ${token}` } });
                 setSavedPetsList(prev => prev.filter(id => id !== pet.id))
                 setSavePetState({})

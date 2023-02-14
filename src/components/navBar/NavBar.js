@@ -148,32 +148,32 @@ const NavBar = () => {
           }
           <div className="align-right">
             {permissions.canAcceptAdoptionRequests &&
-              <li>
-                <Button onClick={handleShowSpecieModal}>Add Specie</Button>
+              <li className="nav-list">
+                <button onClick={handleShowSpecieModal}>Add Specie</button>
               </li>
             }
             {permissions.canAcceptAdoptionRequests &&
-              <li>
-                <Button onClick={handleShowBreedModal}>Add Breed</Button>
+              <li className="nav-list">
+                <button onClick={handleShowBreedModal}>Add Breed</button>
               </li>
             }
             {permissions.canEditUserPermissions &&
-              <li>
-                <Button onClick={handleShowPermissionModal}>Add Permission</Button>
+              <li className="nav-list">
+                <button onClick={handleShowPermissionModal}>Add Permission</button>
               </li>
             }
             {permissions.canAcceptAdoptionRequests &&
-              <li>
-                <Button onClick={handleShowPetModal}>Add Pet</Button>
+              <li className="nav-list">
+                <button onClick={handleShowPetModal}>Add Pet</button>
               </li>
             }
             {!logedIn &&
-              <li>
-                <Button onClick={setShowSignUpModal}>SignUp</Button>
+              <li className="nav-list">
+                <button onClick={setShowSignUpModal}>SignUp</button>
               </li>
             }
-            <li>
-              <Button onClick={logedIn ? handleLogOut : handleLogIn}>{logedIn ? 'LogOut' : 'LogIn'}</Button>
+            <li className="nav-list">
+              <button onClick={logedIn ? handleLogOut : handleLogIn}>{logedIn ? 'LogOut' : 'LogIn'}</button>
             </li>
           </div>
         </ul>

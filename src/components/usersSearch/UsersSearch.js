@@ -5,7 +5,7 @@ import { usePetContext } from "../../context/PetContext";
 import { FaBeer } from "@react-icons/all-files/fa/FaBeer";
 import axios from 'axios';
 
-import '../petSearch/PetSearch.css';
+import './UsersSearch.css';
 
 function UserSearch() {
     const { token, usersList, setUsersList } = useUserContext();
@@ -59,7 +59,7 @@ function UserSearch() {
     };
 
     return (
-        <div className="search-pets-container">
+        <div className="search-users-container">
             <div className='name'>
                 <Form.Label>Name</Form.Label>
                 <Form.Control

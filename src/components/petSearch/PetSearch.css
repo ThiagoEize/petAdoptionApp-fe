@@ -1,13 +1,13 @@
 .search-pets-container {
     display: flex;
     flex-direction: row;
-    padding: 20px;
+    padding: 10px;
     background-color: orange;
-    border-radius: 10px;
-    margin: 1rem;
+    border-radius: 6px;
     align-items: baseline;
     align-self: baseline;
     width: 100%;
+    margin-bottom: 1rem;
 }
 
 .iconsInputs {

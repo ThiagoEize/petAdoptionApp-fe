@@ -5,6 +5,7 @@ import { useUserContext } from "../../context/UserContext";
 import { usePetContext } from "../../context/PetContext";
 import axios from 'axios';
 import RequestModal from "../RequestModal";
+import { Col, Row, Container } from 'react-bootstrap';
 
 import './Pet.css';
 
@@ -127,7 +128,7 @@ const Pet = ({ pet }) => {
   }, [returnRequestState])
 
   const handleShowPet = () => {
-    navigate(`petShow/${pet.id}`)
+    navigate(`/petShow/${pet.id}`)
   }
 
   const handleEditPet = () => {
@@ -218,41 +219,26 @@ const Pet = ({ pet }) => {
 
   return (
     <>
-
-      <div id={pet.id} className={`pet-card ${pet.adoptionStatus}`}>
-
-        <img src={pet.picture} alt={pet.petName} className="pet-picture pet-picture-half" />
-        <div className="pet-info">
-          <h2 className="pet-name">{pet.petName}</h2>
-          <div className="pet-details">
-            <div className="pet-age">Age: {pet.petAge}</div>
-            <div className="pet-height">Height: {pet.height}</div>
-            <div className="pet-weight">Weight: {pet.weight}</div>
-            <div className="pet-color">Color: {pet.color}</div>
-            {savePetState.id &&
-              <div className="pet-saved">Pet Saved</div>
-            }
-          </div>
-          {/* {((!pet.userId || pet.userId === userId || pet.adoptionStatus === 'Fostered') && !adoptionRequestState.id) &&
-            <button className={
-              pet.adoptionStatus !== "Adopted" ?
-                "pet-button adopt-button" : "pet-button delete-button"
-            }
-              onClick={
-                pet.adoptionStatus !== "Adopted" ?
-                  handleAdoptPet : handleReturnPet
-              }
-            >
-              {
-                pet.adoptionStatus !== "Adopted" ?
-                  "Adopt" : "Return"
-              }
-            </button>
-          } */}
-
-
-          {/* <p className="pet-bio">{pet.petBio}</p> */}
-        </div>
+      <Container id={pet.id} className={`pet-card ${pet.adoptionStatus}`}>
+        <Row>
+          <Col>
+            <img col={2} src={pet.picture} alt={pet.petName} className="pet-picture pet-picture-half" />
+          </Col>
+          <Col>
+            <div col={10} className="pet-info">
+              <h2 className="pet-name">{pet.petName}</h2>
+              <div className="pet-details">
+                <div className="pet-age">Age: {pet.petAge}</div>
+                <div className="pet-height">Height: {pet.height}</div>
+                <div className="pet-weight">Weight: {pet.weight}</div>
+                <div className="pet-color">Color: {pet.color}</div>
+                {savePetState.id &&
+                  <div className="pet-saved">Pet Saved</div>
+                }
+              </div>
+            </div>
+          </Col>
+        </Row>
         <div>
           {pet.userName ?
             <div className="pet-user">
@@ -324,7 +310,7 @@ const Pet = ({ pet }) => {
           {/* <button className="pet-button foster-button" onClick={handleFosterPet}>Foster</button> */}
           <button className="pet-button delete-button" onClick={handleDeletePet}>Delete</button>
         </div>
-      </div>
+      </Container>
     </>
   );
 };

@@ -14,46 +14,8 @@ const PetList = () => {
   const { userId, token } = useUserContext();
 
   const { saved } = useParams();
-  // console.log('petsListComponent', petsList);
-
-  // const handleIsSaved = async (petId) => {
-  //   try {
-  //     const response = await axios.get(`http://localhost:8080/savedPets?users.id=${userId}&petId=${petId}`, { headers: { Authorization: `Bearer ${token}` } });
-  //     if (response.data.data.length > 0) {
-  //       return true
-  //     } else {
-  //       return false
-  //     }
-  //   } catch (err) {
-  //     console.log(err);
-  //     return false
-  //   }
-  // }
-
-  // const setListAgain = async () => {
-  //   let newPetList = []
-  //   if (petsList.length > 0) {
-  //     console.log('test');
-  //     for (let i = 0; i < petsList.length; i++) {
-  //       newPetList[i] = { ...petsList[i], 'isSaved': await handleIsSaved(petsList[i].id) }
-  //     }
-  //     setPetsList(newPetList)
-  //     // console.log('newPetList', newPetList);
-  //   } else {
-  //     newPetList = petsList
-  //   }
-  // }
-
-  // useEffect(() => {
-  //   if (reloud === true) {
-  //     console.log('is reloading?');
-  //     setListAgain()
-  //     setReloud(false)
-  //   }
-  // }, [reloud])
 
   return (
-
     <div>
       {!saved ?
         <Row>
