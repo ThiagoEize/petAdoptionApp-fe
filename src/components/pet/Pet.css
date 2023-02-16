@@ -172,3 +172,8 @@
 .pet-saved {
     color: green
 }
+
+.side-by-side {
+    width: 100%;
+    display: flex;
+}

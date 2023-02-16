@@ -220,7 +220,7 @@ const Pet = ({ pet }) => {
   return (
     <>
       <Container id={pet.id} className={`pet-card ${pet.adoptionStatus}`}>
-        <Row>
+        <Row col={12}>
           <Col>
             <img col={2} src={pet.picture} alt={pet.petName} className="pet-picture pet-picture-half" />
           </Col>
@@ -239,77 +239,88 @@ const Pet = ({ pet }) => {
             </div>
           </Col>
         </Row>
-        <div>
-          {pet.userName ?
-            <div className="pet-user">
-              {pet.adoptionStatus} By: {pet.userName}
+        {/* <div col={12}> */}
+        {/* <Col col={8}> */}
+        <div className='side-by-side'>
+          <div>
+            {pet.userName ?
+              <div className="pet-user">
+                {pet.adoptionStatus} By: {pet.userName}
+              </div>
+              :
+              <div className={`${pet.adoptionStatus}`}>Status: {pet.adoptionStatus}</div>
+            }
+          </div>
+          {/* </Col> */}
+          {/* <Col col={2}> */}
+          <button className={savedPetsList.includes(pet.id) ? "pet-button unsave-button" : "pet-button save-button"} onClick={handleSavePet}>{savedPetsList.includes(pet.id) ? 'Unsave' : 'Save'}</button>
+          {/* </Col> */}
+          {/* </div> */}
+        </div>
+
+        <Row col={12}>
+          {adoptionRequestState.id &&
+            <div className='requestStatus'>
+              <p className='requestMessage'>Adoption request {adoptionRequestState.requestStatus}</p>
+              <button className="pet-button delete-button" onClick={handleDeleteAdoptionRequest}>{adoptionRequestState.requestStatus === 'Pending' ? "Cancel" : "Close"}</button>
             </div>
-            :
-            <div className={`${pet.adoptionStatus}`}>Status: {pet.adoptionStatus}</div>
           }
-        </div>
-        <button className={savedPetsList.includes(pet.id) ? "pet-button unsave-button" : "pet-button save-button"} onClick={handleSavePet}>{savedPetsList.includes(pet.id) ? 'Unsave' : 'Save'}</button>
-        {adoptionRequestState.id &&
-          <div className='requestStatus'>
-            <p className='requestMessage'>Adoption request {adoptionRequestState.requestStatus}</p>
-            <button className="pet-button delete-button" onClick={handleDeleteAdoptionRequest}>{adoptionRequestState.requestStatus === 'Pending' ? "Cancel" : "Close"}</button>
-          </div>
-        }
-        {fosterRequestState.id &&
-          <div className='requestStatus'>
-            <p className='requestMessage'>Fostering request {fosterRequestState.requestStatus}</p>
-            <button className="pet-button delete-button" onClick={handleDeleteFosterRequest}>{fosterRequestState.requestStatus === 'Pending' ? "Cancel" : "Close"}</button>
-          </div>
-        }
-        {returnRequestState.id &&
-          <div className='requestStatus'>
-            <p className='requestMessage'>Return request {returnRequestState.requestStatus}</p>
-            <button className="pet-button delete-button" onClick={handleDeleteReturnRequest}>{returnRequestState.requestStatus === 'Pending' ? "Cancel" : "Close"}</button>
-          </div>
-        }
+          {fosterRequestState.id &&
+            <div className='requestStatus'>
+              <p className='requestMessage'>Fostering request {fosterRequestState.requestStatus}</p>
+              <button className="pet-button delete-button" onClick={handleDeleteFosterRequest}>{fosterRequestState.requestStatus === 'Pending' ? "Cancel" : "Close"}</button>
+            </div>
+          }
+          {returnRequestState.id &&
+            <div className='requestStatus'>
+              <p className='requestMessage'>Return request {returnRequestState.requestStatus}</p>
+              <button className="pet-button delete-button" onClick={handleDeleteReturnRequest}>{returnRequestState.requestStatus === 'Pending' ? "Cancel" : "Close"}</button>
+            </div>
+          }
 
-        <div className='buttonsDiv'>
-          <button className="pet-button show-button" onClick={handleShowPet}>Show</button>
-          {permissions.canAcceptAdoptionRequests &&
-            <button className="pet-button edit-button" onClick={handleEditPet}>Edit</button>
-          }
-          {((!pet.userId || pet.userId === userId || pet.adoptionStatus === 'Fostered') && !adoptionRequestState.id) &&
-            <button className={
-              pet.adoptionStatus !== "Adopted" ?
-                "pet-button adopt-button" : "pet-button delete-button"
+          <div className='buttonsDiv'>
+            <button className="pet-button show-button" onClick={handleShowPet}>Show</button>
+            {permissions.canAcceptAdoptionRequests &&
+              <button className="pet-button edit-button" onClick={handleEditPet}>Edit</button>
             }
-              onClick={
+            {((!pet.userId || pet.userId === userId || pet.adoptionStatus === 'Fostered') && !adoptionRequestState.id) &&
+              <button className={
                 pet.adoptionStatus !== "Adopted" ?
-                  handleAdoptPet : handleReturnPet
+                  "pet-button adopt-button" : "pet-button delete-button"
               }
-            >
-              {
-                pet.adoptionStatus !== "Adopted" ?
-                  "Adopt" : "Return"
-              }
-            </button>
-          }
-
-          {((!pet.userId || (pet.userId === userId && pet.adoptionStatus === 'Fostered')) && !fosterRequestState.id) &&
-            <button className={
-              pet.adoptionStatus !== "Fostered" ?
-                "pet-button foster-button" : "pet-button delete-button"
+                onClick={
+                  pet.adoptionStatus !== "Adopted" ?
+                    handleAdoptPet : handleReturnPet
+                }
+              >
+                {
+                  pet.adoptionStatus !== "Adopted" ?
+                    "Adopt" : "Return"
+                }
+              </button>
             }
-              onClick={
-                pet.adoptionStatus !== "Fostered" ?
-                  handleFosterPet : handleReturnPet
-              }
-            >
-              {
-                pet.adoptionStatus !== "Fostered" ?
-                  "Foster" : "Return"
-              }
-            </button>
-          }
 
-          {/* <button className="pet-button foster-button" onClick={handleFosterPet}>Foster</button> */}
-          <button className="pet-button delete-button" onClick={handleDeletePet}>Delete</button>
-        </div>
+            {((!pet.userId || (pet.userId === userId && pet.adoptionStatus === 'Fostered')) && !fosterRequestState.id) &&
+              <button className={
+                pet.adoptionStatus !== "Fostered" ?
+                  "pet-button foster-button" : "pet-button delete-button"
+              }
+                onClick={
+                  pet.adoptionStatus !== "Fostered" ?
+                    handleFosterPet : handleReturnPet
+                }
+              >
+                {
+                  pet.adoptionStatus !== "Fostered" ?
+                    "Foster" : "Return"
+                }
+              </button>
+            }
+
+            {/* <button className="pet-button foster-button" onClick={handleFosterPet}>Foster</button> */}
+            <button className="pet-button delete-button" onClick={handleDeletePet}>Delete</button>
+          </div>
+        </Row>
       </Container>
     </>
   );

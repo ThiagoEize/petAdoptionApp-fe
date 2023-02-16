@@ -82,6 +82,10 @@ const PetShow = () => {
     }, [showSavePetModal])
 
     useEffect(() => {
+        getSavePets()
+    }, [pet])
+
+    useEffect(() => {
         if (showSavePetModal === false) {
             getSavePets()
         }
@@ -323,7 +327,7 @@ const PetShow = () => {
                             }
                         </button>
                     }
-                    <button className={savedPetsList.includes(pet.id) ? "pet-button unsave-button" : "pet-button save-button"} onClick={handleSavePet}>{savedPetsList.includes(pet.id) ? 'Unsave' : 'Save'}</button>
+                    <button className={savePetState ? "pet-button unsave-button" : "pet-button save-button"} onClick={handleSavePet}>{savePetState ? 'Unsave' : 'Save'}</button>
                     {/* <button className="pet-show-button delete-button" onClick={handleDeletePet}>Delete</button> */}
                 </div>
 
