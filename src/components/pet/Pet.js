@@ -34,10 +34,6 @@ const Pet = ({ pet }) => {
 
   const [savePetState, setSavePetState] = useState({})
 
-  // useEffect(() => {
-  //   setReloud(true)
-  // }, [savePetState])
-
   const getSavePets = async () => {
     try {
       const response = await axios.get(`http://localhost:8080/savedPets?users.id=${userId}&petId=${pet.id}`, { headers: { Authorization: `Bearer ${token}` } });
@@ -228,10 +224,13 @@ const Pet = ({ pet }) => {
             <div col={10} className="pet-info">
               <h2 className="pet-name">{pet.petName}</h2>
               <div className="pet-details">
+                <div className="pet-color">Specie: {pet.specieName}</div>
+                <div className="pet-color">Breed: {pet.breedName}</div>
                 <div className="pet-age">Age: {pet.petAge}</div>
                 <div className="pet-height">Height: {pet.height}</div>
                 <div className="pet-weight">Weight: {pet.weight}</div>
                 <div className="pet-color">Color: {pet.color}</div>
+
                 {savePetState.id &&
                   <div className="pet-saved">Pet Saved</div>
                 }

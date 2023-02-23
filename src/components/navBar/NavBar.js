@@ -157,7 +157,7 @@ const NavBar = () => {
                 <button onClick={handleShowBreedModal}>Add Breed</button>
               </li>
             }
-            {permissions.canEditUserPermissions &&
+            {permissions.canEditCreateAdmins &&
               <li className="nav-list">
                 <button onClick={handleShowPermissionModal}>Add Permission</button>
               </li>

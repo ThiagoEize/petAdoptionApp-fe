@@ -165,10 +165,6 @@ const PetForm = ({ onClose }) => {
     onClose();
   }
 
-
-
-
-
   return (
     <div className="pet-form-container">
       <form>

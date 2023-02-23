@@ -241,6 +241,8 @@ const PetShow = () => {
                     <div className="pet-show-info">
                         <h2 className="pet-show-name">{pet.petName}</h2>
                         <div className="pet-show-details">
+                            <div className="pet-show-age">Specie: {pet.specieName}</div>
+                            <div className="pet-show-age">Breed: {pet.breedName}</div>
                             <div className="pet-show-age">Age: {pet.petAge}</div>
                             <div className="pet-show-height">Height: {pet.height}</div>
                             <div className="pet-show-weight">Weight: {pet.weight}</div>
