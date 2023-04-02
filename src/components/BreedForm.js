@@ -55,7 +55,6 @@ const BreedForm = ({ onClose, initialData = {} }) => {
     const handleChange = (event) => {
         const { name, value, type } = event.target;
         let newValue = value;
-        // let specieId = value
         if (type === "checkbox") {
             newValue = event.target.checked
         }

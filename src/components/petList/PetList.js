@@ -7,6 +7,9 @@ import { useUserContext } from "../../context/UserContext";
 import axios from 'axios';
 import './PetList.css';
 
+import Test from "./Test"
+
+
 const PetList = () => {
   const { petsList, setPetsList, reloud, setReloud, savedPetsList } = usePetContext();
   // const { petsList, setPetsList, reloud, setReloud } = usePetContext();
@@ -35,6 +38,7 @@ const PetList = () => {
           ))}
         </Row>
       }
+      <Test />
     </div>
   );
 };
