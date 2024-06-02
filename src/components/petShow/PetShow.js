@@ -237,7 +237,7 @@ const PetShow = () => {
         <>
             <div id={pet.id} className='pet-show-card'>
                 <div className='pet-show-general-information'>
-                    <img src={pet.picture} alt={pet.petName} className="pet-show-picture" />
+                    <img src={pet.picture ? pet.picture : "https://thumbs.dreamstime.com/z/grupo-de-animais-de-estima%C3%A7%C3%A3o-junto-15228977.jpg"} alt={pet.petName} className="pet-show-picture" />
                     <div className="pet-show-info">
                         <h2 className="pet-show-name">{pet.petName}</h2>
                         <div className="pet-show-details">

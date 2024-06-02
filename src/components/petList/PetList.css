@@ -1,0 +1,43 @@
+/* Centralize the pagination container */
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  /* Custom styles for pagination buttons and numbers */
+  .pagination-button,
+  .pagination-number {
+    font-weight: bold;
+    color: #007bff; /* Primary color */
+    background-color: white; /* Background color for non-active pages */
+    border: 1px solid #007bff;
+    border-radius: 5px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
+  }
+  
+  .pagination-button.disabled,
+  .pagination-button:disabled {
+    background-color: grey; /* Disabled button color */
+    cursor: not-allowed;
+  }
+  
+  .pagination-number.active {
+    background-color: #007bff; /* Active page color */
+    color: white;
+  }
+  
+  .pagination-button:hover:not(.disabled),
+  .pagination-number:hover:not(.active) {
+    background-color: #0056b3;
+    color: white;
+  }
+  

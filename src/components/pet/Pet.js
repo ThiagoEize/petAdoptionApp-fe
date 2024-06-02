@@ -218,7 +218,7 @@ const Pet = ({ pet }) => {
       <Container id={pet.id} className={`pet-card ${pet.adoptionStatus}`}>
         <Row col={12}>
           <Col>
-            <img col={2} src={pet.picture} alt={pet.petName} className="pet-picture pet-picture-half" />
+            <img col={2} src={pet.picture ? pet.picture : "https://thumbs.dreamstime.com/z/grupo-de-animais-de-estima%C3%A7%C3%A3o-junto-15228977.jpg"} alt={pet.petName} className="pet-picture pet-picture-half" />
           </Col>
           <Col>
             <div col={10} className="pet-info">
