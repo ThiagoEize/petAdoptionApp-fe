@@ -293,7 +293,7 @@ const PetShow = () => {
                     </div>
                 }
                 <div className='buttonsDiv'>
-                    {permissions.canAcceptAdoptionRequests &&
+                    {((permissions.canEditCreatePets && pet.userId === null) || (userId === pet.userId)) &&
                         <button className="pet-show-button pet-show-edit-button" onClick={handleEditPet}>Edit</button>
                     }
                     {((!pet.userId || pet.userId === userId || pet.adoptionStatus === 'Fostered') && !adoptionRequestState.id) &&

@@ -147,12 +147,12 @@ const NavBar = () => {
             </li>
           }
           <div className="align-right">
-            {permissions.canAcceptAdoptionRequests &&
+            {permissions.canEditCreatePets &&
               <li className="nav-list">
                 <button onClick={handleShowSpecieModal}>Add Specie</button>
               </li>
             }
-            {permissions.canAcceptAdoptionRequests &&
+            {permissions.canEditCreatePets &&
               <li className="nav-list">
                 <button onClick={handleShowBreedModal}>Add Breed</button>
               </li>
@@ -162,7 +162,7 @@ const NavBar = () => {
                 <button onClick={handleShowPermissionModal}>Add Permission</button>
               </li>
             }
-            {permissions.canAcceptAdoptionRequests &&
+            {permissions.canEditCreatePets &&
               <li className="nav-list">
                 <button onClick={handleShowPetModal}>Add Pet</button>
               </li>

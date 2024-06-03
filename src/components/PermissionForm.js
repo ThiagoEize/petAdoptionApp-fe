@@ -14,7 +14,8 @@ const PermissionsForm = ({ onClose, initialData = {} }) => {
         canEditUsersPermissions: initialData.canEditUsersPermissions || false,
         canAcceptAdoptionRequests: initialData.canAcceptAdoptionRequests || false,
         canAdoptFosterPets: initialData.canAdoptFosterPets || false,
-        canAdoptPets: initialData.canAdoptPets || false
+        canAdoptPets: initialData.canAdoptPets || false,
+        canEditCreatePets: initialData.canEditUsersPets || false
     });
 
     const handleSubmit = async (e) => {
@@ -80,6 +81,13 @@ const PermissionsForm = ({ onClose, initialData = {} }) => {
                         label="Can Accept Adoption Requests"
                         name="canAcceptAdoptionRequests"
                         checked={formData.canAcceptAdoptionRequests}
+                        onChange={handleChange}
+                    />
+                    <Form.Check
+                        type="checkbox"
+                        label="Can Edit/Create Pets"
+                        name="canEditCreatePets"
+                        checked={formData.canEditCreatePets}
                         onChange={handleChange}
                     />
                     <Form.Check
