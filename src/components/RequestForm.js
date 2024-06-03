@@ -16,6 +16,16 @@ const RequestForm = ({ onClose }) => {
         adoptionRequestMessage: ''
     });
 
+    const title = () => {
+        if (requestType === 'adopt') {
+            return 'Adopt Pet';
+        } else if (requestType === 'foster') {
+            return 'Foster Pet';
+        } else if (requestType === 'return') {
+            return 'Return Pet';
+        }
+    }
+
     const handleSubmit = async (e) => {
         try {
             e.preventDefault();
@@ -38,7 +48,7 @@ const RequestForm = ({ onClose }) => {
         <div className="species-form-container">
             <form>
                 <Modal.Header>
-                    <h3>{true ? 'Adopt Pet' : 'Return Pet'}</h3>
+                    <h3>{title()}</h3>
                 </Modal.Header>
                 <Modal.Body>
                     <Form.Label>Message</Form.Label>

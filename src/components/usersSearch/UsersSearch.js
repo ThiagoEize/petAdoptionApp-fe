@@ -38,7 +38,7 @@ function UserSearch() {
         for (const [key, value] of Object.entries(searchFormData)) {
             if (value !== '') {
                 if (key === 'userName' || key === 'userLastName') {
-                    query += `${query === '' ? '?' : '&'}${key}=%${value}%`;
+                    query += `${query === '' ? '?' : '&'}${key}=${value}`;
                 } else {
                     query += `${query === '' ? '?' : '&'}${key}=${value}`
                 }

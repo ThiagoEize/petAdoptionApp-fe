@@ -7,7 +7,6 @@ import PetShow from "./components/petShow/PetShow";
 import UsersList from "./components/usersList/UsersList";
 import AdoptionRequestsList from "./components/requestsList/RequestsList";
 import HomeLogedOut from "./components/HomeLogedOut";
-import { useEffect, useState } from 'react';
 // import Axios from "axios";
 import {
   Route,
@@ -29,9 +28,9 @@ function App() {
             <Route
               path="/"
               element={
-                <PrivateRoute>
-                  <Home />
-                </PrivateRoute>
+                // <PrivateRoute>
+                <Home />
+                // </PrivateRoute>
               }
             ></Route>
             <Route
@@ -69,9 +68,8 @@ function App() {
             <Route
               path="/petShow/:petId"
               element={
-                <PrivateRoute>
-                  <PetShow />
-                </PrivateRoute>
+
+                <PetShow />
               }
             ></Route>
             <Route

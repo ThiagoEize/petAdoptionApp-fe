@@ -58,15 +58,15 @@ const NavBar = () => {
 
 
   const handleLogOut = () => {
-
-    localStorage.removeItem('token');
-    localStorage.removeItem('userId');
-    setToken('');
-    setUserId('');
-    setPermissions('');
-    setLogedIn(false)
-    navigate("/logedOut");
-    // setShowLogInModal(false)
+    if (window.confirm("Are you sure you want to logout?")) {
+      localStorage.removeItem('token');
+      localStorage.removeItem('userId');
+      setToken('');
+      setUserId('');
+      setPermissions('');
+      setLogedIn(false);
+      navigate("/");
+    }
   }
 
   const handleLogIn = () => {

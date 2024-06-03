@@ -1,14 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { Form, Button, Dropdown } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Form, Button } from 'react-bootstrap';
 import { useUserContext } from "../../context/UserContext";
-import { usePetContext } from "../../context/PetContext";
-import { FaBeer } from "@react-icons/all-files/fa/FaBeer";
 import axios from 'axios';
 
 import './RequestsSearch.css';
 
 function RequestSearch() {
-    const { token, requestsList, setRequestsList } = useUserContext();
+    const { token, setRequestsList } = useUserContext();
 
     const [searchFormData, setSearchFormData] = useState({
         userName: '',
@@ -23,7 +21,7 @@ function RequestSearch() {
         for (const [key, value] of Object.entries(searchFormData)) {
             if (value !== '') {
                 if (key === 'petName' || key === 'userName') {
-                    query += `${query === '' ? '?' : '&'}${key}=%${value}%`;
+                    query += `${query === '' ? '?' : '&'}${key}=${value}`;
                 } else {
                     query += `${query === '' ? '?' : '&'}${key}=${value}`
                 }

@@ -1,9 +1,13 @@
 import { Navigate } from 'react-router-dom'
 
-// const PrivateRoute = ({ currentUser, children }) => {
 const PrivateRoute = ({ children }) => {
-    return localStorage.getItem('token') ? children : <Navigate to='/logedOut'></Navigate>;
-    return children;
+    //creatte a alert to login to see the page
+    if (!localStorage.getItem('token')) {
+        alert('Please login to access this page');
+        return <Navigate to='/'></Navigate>;
+    } else {
+        return children;
+    }
 };
 
 

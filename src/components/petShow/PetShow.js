@@ -39,7 +39,7 @@ const PetShow = () => {
     const { petId } = useParams();
 
     const getPetData = async () => {
-        const res = await axios.get(`http://localhost:8080/pets/${petId}`, { headers: { Authorization: `Bearer ${token}` } });
+        const res = await axios.get(`http://localhost:8080/pets/${petId}`);
         setPet(res.data.data)
         console.log(res);
     }
@@ -329,7 +329,7 @@ const PetShow = () => {
                             }
                         </button>
                     }
-                    <button className={savePetState ? "pet-button unsave-button" : "pet-button save-button"} onClick={handleSavePet}>{savePetState ? 'Unsave' : 'Save'}</button>
+                    <button className={!savePetState ? "pet-button unsave-button" : "pet-button save-button"} onClick={handleSavePet}>{!savePetState ? 'Unsave' : 'Save'}</button>
                     {/* <button className="pet-show-button delete-button" onClick={handleDeletePet}>Delete</button> */}
                 </div>
 

@@ -1,9 +1,8 @@
 import Pet from "../pet/Pet";
 import { usePetContext } from "../../context/PetContext";
-import { Col, Row } from 'react-bootstrap';
+import { Col, Row, Container } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import { useState } from "react";
-import { useUserContext } from "../../context/UserContext";
 import './PetList.css';
 
 const PetList = () => {
@@ -30,7 +29,7 @@ const PetList = () => {
   };
 
   return (
-    <div>
+    <Container fluid>
       <Row>
         {currentItems.filter(pet => !saved || savedPetsList.includes(pet.id)).map(pet => (
           <Col xs={12} md={6} lg={4} key={pet.id} className="pet-row">
@@ -63,7 +62,7 @@ const PetList = () => {
           &gt;
         </button>
       </div>
-    </div>
+    </Container>
   );
 };
 

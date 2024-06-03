@@ -1,10 +1,8 @@
-import * as moment from 'moment';
 import { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import { useUserContext } from "../../context/UserContext";
 import { usePetContext } from "../../context/PetContext";
 import axios from 'axios';
-import RequestModal from "../RequestModal";
 import { Col, Row, Container } from 'react-bootstrap';
 
 import './Pet.css';
@@ -179,17 +177,35 @@ const Pet = ({ pet }) => {
 
   const handleDeleteAdoptionRequest = async () => {
     try {
-      const deleted = await axios.delete(`http://localhost:8080/adoptionRequests/${adoptionRequestState.id}`, { headers: { Authorization: `Bearer ${token}` } });
-      setAdoptionRequestState({})
+      if (adoptionRequestState.requestStatus !== "Pending") {
+        const deleted = await axios.delete(`http://localhost:8080/adoptionRequests/${adoptionRequestState.id}`, { headers: { Authorization: `Bearer ${token}` } });
+        setAdoptionRequestState({});
+      } else {
+        const confirmed = window.confirm("Are you sure you want to cancel your adoption request?");
+        if (confirmed) {
+          const deleted = await axios.delete(`http://localhost:8080/adoptionRequests/${adoptionRequestState.id}`, { headers: { Authorization: `Bearer ${token}` } });
+          setAdoptionRequestState({});
+        }
+      }
+
     } catch (err) {
       console.log(err);
     }
   }
 
+
   const handleDeleteFosterRequest = async () => {
     try {
-      const deleted = await axios.delete(`http://localhost:8080/adoptionRequests/${fosterRequestState.id}`, { headers: { Authorization: `Bearer ${token}` } });
-      setFosterRequestState({})
+      if (fosterRequestState.requestStatus !== "Pending") {
+        const deleted = await axios.delete(`http://localhost:8080/adoptionRequests/${fosterRequestState.id}`, { headers: { Authorization: `Bearer ${token}` } });
+        setFosterRequestState({})
+      } else {
+        const confirmed = window.confirm("Are you sure you want to cancel your foster request?");
+        if (confirmed) {
+          const deleted = await axios.delete(`http://localhost:8080/adoptionRequests/${fosterRequestState.id}`, { headers: { Authorization: `Bearer ${token}` } });
+          setFosterRequestState({})
+        }
+      }
     } catch (err) {
       console.log(err);
     }
@@ -197,8 +213,16 @@ const Pet = ({ pet }) => {
 
   const handleDeleteReturnRequest = async () => {
     try {
-      const deleted = await axios.delete(`http://localhost:8080/adoptionRequests/${returnRequestState.id}`, { headers: { Authorization: `Bearer ${token}` } });
-      setReturnRequestState({})
+      if (returnRequestState.requestStatus !== "Pending") {
+        const deleted = await axios.delete(`http://localhost:8080/adoptionRequests/${returnRequestState.id}`, { headers: { Authorization: `Bearer ${token}` } });
+        setReturnRequestState({});
+      } else {
+        const confirmed = window.confirm("Are you sure you want to cancel this return request?");
+        if (confirmed) {
+          const deleted = await axios.delete(`http://localhost:8080/adoptionRequests/${returnRequestState.id}`, { headers: { Authorization: `Bearer ${token}` } });
+          setReturnRequestState({});
+        }
+      }
     } catch (err) {
       console.log(err);
     }
@@ -206,8 +230,12 @@ const Pet = ({ pet }) => {
 
   const handleDeletePet = async () => {
     try {
-      const deleted = await axios.delete(`http://localhost:8080/pets/${pet.id}`, { headers: { Authorization: `Bearer ${token}` } });
-      const newPetList = petsList.filter(deletedPet => deletedPet.id !== pet.id)
+      const confirmed = window.confirm("Are you sure you want to delete this pet?");
+      if (confirmed) {
+        const deleted = await axios.delete(`http://localhost:8080/pets/${pet.id}`, { headers: { Authorization: `Bearer ${token}` } });
+        const newPetList = petsList.filter(deletedPet => deletedPet.id !== pet.id);
+        setPetsList(newPetList);
+      }
     } catch (err) {
       console.log(err);
     }

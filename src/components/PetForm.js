@@ -9,7 +9,7 @@ import { usePetContext } from "../context/PetContext";
 
 const PetForm = ({ onClose }) => {
   const { token, errorsFromServer, setErrorsFromServer, initialData, setInitialData } = useUserContext();
-  const { pet, setPet, petsList, setPetsList, setReloud } = usePetContext();
+  const { setPet, petsList, setPetsList } = usePetContext();
 
   const [speciesList, setSpeciesList] = useState([]);
 
@@ -21,6 +21,7 @@ const PetForm = ({ onClose }) => {
       const res = await axios.get('http://localhost:8080/species', { headers: { Authorization: `Bearer ${token}` } });
       const species = [{ id: '', specieName: 'Select a specie...' }, ...res.data.data]
       setSpeciesList(species);
+
     } catch (err) {
       console.log(err);
     }
@@ -32,15 +33,19 @@ const PetForm = ({ onClose }) => {
       const breeds = [{ id: '', breedName: 'Select a breed...' }, ...res.data.data]
       setBreedsList(breeds);
       setFilteredBreedsList(breeds);
+
+      const specie = breeds.find(breed => breed.id === initialData.breedId);
+
+      setFormData({ ...formData, specieId: specie.specieId })
     } catch (err) {
       console.log(err);
     }
   };
 
   useEffect(() => {
-    getSpeciesList()
-    getBreedsList()
-  }, [])
+    getSpeciesList();
+    getBreedsList();
+  }, []);
 
   const [formData, setFormData] = useState({
     breedId: initialData.breedId || '',
@@ -74,6 +79,7 @@ const PetForm = ({ onClose }) => {
     try {
       e.preventDefault();
       let res;
+      console.log('formData', formData)
       if (initialData.id) {
         const form = new FormData();
         if (picture) {

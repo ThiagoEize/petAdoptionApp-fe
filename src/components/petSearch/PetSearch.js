@@ -44,8 +44,9 @@ function SearchPets() {
     };
 
     useEffect(() => {
-        getSpeciesList()
-        getBreedsList()
+        getSpeciesList();
+        getBreedsList();
+        handleSearch();
     }, [])
 
     const [searchFormData, setSearchFormData] = useState({
@@ -65,7 +66,7 @@ function SearchPets() {
         for (const [key, value] of Object.entries(searchFormData)) {
             if (value !== '') {
                 if (key === 'petName' || key === 'color') {
-                    query += `${query === '' ? '?' : '&'}${key}=%${value}%`;
+                    query += `${query === '' ? '?' : '&'}${key}=${value}`;
                 } else if (key === 'petAge') {
                     query += `${query === '' ? '?' : '&'}${key}=${filterAgeBy + value}`;
                 } else if (key === 'height') {
@@ -80,7 +81,7 @@ function SearchPets() {
             }
         }
         try {
-            const res = await axios.get(`http://localhost:8080/pets${query}`, { headers: { Authorization: `Bearer ${token}` } });
+            const res = await axios.get(`http://localhost:8080/pets${query}`);
             setPetsList(res.data.data);
 
             const resSaved = await axios.get(`http://localhost:8080/pets/myPets`, { headers: { Authorization: `Bearer ${token}` } });
@@ -127,7 +128,7 @@ function SearchPets() {
             <div className='specie'>
                 <Form.Label>Specie</Form.Label>
                 <Form.Control as="select" name="specieId" value={searchFormData.specieId} onChange={handleChange}>
-                    <option value="">Select a specie</option>
+                    <option value="">Filter by specie...</option>
                     {speciesList.map((specie) => (
                         <option key={specie.id} value={specie.id}>
                             {specie.specieName}
@@ -138,7 +139,7 @@ function SearchPets() {
             <div className='breed'>
                 <Form.Label>Breed</Form.Label>
                 <Form.Control as="select" name="breedId" value={searchFormData.breedId} onChange={handleChange}>
-                    <option value="">Select a breed</option>
+                    <option value="">Filter by breed...</option>
                     {filteredBreedsList.map((breed) => (
                         <option key={breed.id} value={breed.id}>
                             {breed.breedName}
@@ -150,7 +151,7 @@ function SearchPets() {
                 <Form.Label>Name</Form.Label>
                 <Form.Control
                     type="text"
-                    placeholder="Pet Name"
+                    placeholder="Filter by name..."
                     name="petName"
                     value={searchFormData.petName}
                     onChange={handleChange}
@@ -159,7 +160,7 @@ function SearchPets() {
             <div className='status'>
                 <Form.Label>Status</Form.Label>
                 <Form.Control as="select" name="adoptionStatus" value={searchFormData.adoptionStatus} onChange={handleChange}>
-                    <option value="">Select a status</option>
+                    <option value="">Filter by status...</option>
                     <option value="Available">Available</option>
                     <option value="Adopted">Adopted</option>
                     <option value="Fostered">Fostered</option>
