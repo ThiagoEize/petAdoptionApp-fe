@@ -1,134 +1,94 @@
-.nav-bar {
-    display: flex;
-    align-items: center;
-    background-color: #2c3e50;
-    /* You can use any color you prefer */
-    height: 80px;
-    padding: 0 20px;
-    margin-bottom: 1rem;
-    position: sticky;
-    top: 0;
-    border-radius: 5px;
-}
-
-.nav-bar ul {
-    list-style: none;
-    margin: 0;
+/* Reset default styling for list and link elements */
+ul {
+    list-style-type: none;
     padding: 0;
-    display: flex;
-}
-
-.nav-bar li {
-    margin: 0 10px;
-}
-
-.nav-bar a {
-    color: #fff;
-    /* You can use any color you prefer */
+    margin: 0;
+  }
+  
+  li {
+    display: inline;
+    margin-right: 20px;
+  }
+  
+  a {
     text-decoration: none;
-    font-size: 18px;
-    font-weight: 500;
-}
-
-.nav-bar a:hover {
     color: #fff;
-    /* same color as the normal state to not have a change */
-}
-
-.nav-bar a.active {
-    color: #fff;
-    /* same color as the normal state to not have a change */
-    font-weight: 600;
-}
-
-.align-right {
-    margin-left: auto;
-    display: flex;
-}
-
-.nav-bar button.orange-btn {
-    background-color: orange;
-    /* color you want for the buttons */
-    color: white;
-    /* color you want for the text */
-    border: none;
-    /* To remove the default border */
-    font-size: 14px;
-    padding: 8px 20px;
-    margin: 0 10px;
-    text-transform: uppercase;
-    transition: all 0.2s;
-    border-radius: 4px;
-}
-
-/* To prevent the button color change when clicked */
-.nav-bar button.orange-btn:active,
-.nav-bar button.orange-btn:focus {
-    background-color: orange;
-    /* same color as the normal state to not have a change */
-    color: white;
-    /* same color as the normal state to not have a change */
-}
-
-.navbar {
+    font-size: 16px;
+    transition: color 0.3s ease;
+  }
+  
+  a:hover {
+    color: #ddd;
+  }
+  
+  .nav-bar {
+    background: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%);
+    padding: 2px 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .nav-bar ul {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #333333;
-    /* dark background color */
-    padding: 1rem;
-    box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
-}
-
-.navbar-brand {
-    font-weight: bold;
-    font-size: 1.5rem;
-    color: white;
-}
-
-.navbar-nav {
+  }
+  
+  .align-right {
     display: flex;
-}
-
-.nav-link {
-    margin-left: 1rem;
+    align-items: center;
+  }
+  
+  .nav-list {
+    margin-left: 20px;
+  }
+  
+  button {
+    background: #ff6b6b;
+    border: none;
+    padding: 8px 15px;
     color: white;
-}
-
-.nav-item {
-    margin-left: 1rem;
-}
-
-.navbar-nav .nav-item .nav-link:hover {
-    color: #F5A623;
-}
-
-.navbar-nav .nav-item .nav-link.active {
-    color: #F5A623;
-}
-
-.navbar-nav .nav-item .btn {
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  button:hover {
+    background: #ff4d4d;
+  }
+  
+  button:focus {
+    outline: none;
+  }
+  
+  .nav-bar button {
     margin-left: 10px;
-}
-
-.nav-list {
-    align-self: center;
-}
-
-.nav-list>button {
-    border-width: 0;
-    border-radius: .8rem;
-    background-color: brown;
-    color: white;
-    font-weight: bold;
-    align-self: center;
-    padding: 0.2rem 0.6rem 0.2rem 0.6rem
-}
-
-.nav-list>button:hover {
-    border-width: 0;
-    background-color: blue;
-    color: white;
-    font-weight: bold;
-    align-self: center;
-}
+  }
+  
+  /* Additional styles for active links */
+  a[style='font-weight: bold; color: black;'] {
+    color: black;
+  }
+  
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .nav-bar ul {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .align-right {
+      flex-direction: column;
+      align-items: flex-start;
+      margin-top: 10px;
+    }
+  
+    .nav-list {
+      margin: 10px 0;
+    }
+  
+    button {
+      width: 100%;
+    }
+  }
+  

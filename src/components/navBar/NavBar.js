@@ -1,7 +1,5 @@
-// import { useNavigate } from 'react-router-dom';
-import { NavLink } from "react-router-dom";
-import Button from 'react-bootstrap/Button';
-// import { createContext, useContext, useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { useUserContext } from "../../context/UserContext";
 
 import SignUpModal from "../SignUpModal";
@@ -12,10 +10,8 @@ import PetModal from "../PetModal";
 import PermissionModal from "../PermissionModal";
 import RequestModal from "../RequestModal";
 import SavePetModal from "../SavePetModal";
-import { useNavigate } from 'react-router-dom';
 
 import './NavBar.css';
-import { useEffect, useState } from "react";
 
 const NavBar = () => {
   const navigate = useNavigate();
@@ -49,13 +45,11 @@ const NavBar = () => {
     color: 'black'
   };
 
-  const [logedIn, setLogedIn] = useState(token ? true : false)
+  const [logedIn, setLogedIn] = useState(token ? true : false);
 
   useEffect(() => {
-    setLogedIn(token ? true : false)
-    console.log(logedIn);
-  }, [token])
-
+    setLogedIn(!!token);
+  }, [token]);
 
   const handleLogOut = () => {
     if (window.confirm("Are you sure you want to logout?")) {
@@ -67,31 +61,31 @@ const NavBar = () => {
       setLogedIn(false);
       navigate("/");
     }
-  }
+  };
 
   const handleLogIn = () => {
-    setShowLogInModal(true)
-  }
+    setShowLogInModal(true);
+  };
 
   const handleShowSpecieModal = () => {
     setShowSpecieModal(true);
-    setInitialData({})
-  }
+    setInitialData({});
+  };
 
   const handleShowBreedModal = () => {
     setShowBreedModal(true);
-    setInitialData({})
-  }
+    setInitialData({});
+  };
 
   const handleShowPermissionModal = () => {
     setShowPermissionModal(true);
-    setInitialData({})
-  }
+    setInitialData({});
+  };
 
   const handleShowPetModal = () => {
     setShowPetModal(true);
-    setInitialData({})
-  }
+    setInitialData({});
+  };
 
   return (
     <>
@@ -169,7 +163,7 @@ const NavBar = () => {
             }
             {!logedIn &&
               <li className="nav-list">
-                <button onClick={setShowSignUpModal}>SignUp</button>
+                <button onClick={() => setShowSignUpModal(true)}>SignUp</button>
               </li>
             }
             <li className="nav-list">
@@ -214,7 +208,6 @@ const NavBar = () => {
         setUserId={setUserId}
       />
     </>
-
   );
 };
 

@@ -1,13 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
 .search-pets-container {
     display: flex;
     flex-direction: row;
-    padding: 10px;
-    background-color: orange;
+    padding: 10px 25px;
+    background-color: #e0e5ec; /* Light greyish blue background */
     border-radius: 6px;
     align-items: baseline;
-    align-self: baseline;
     width: 100%;
     margin-bottom: 1rem;
+    font-family: 'Roboto', sans-serif;
+    color: black
 }
 
 .iconsInputs {
@@ -15,47 +18,61 @@
     flex-direction: row;
 }
 
-.specie {
-    width: 9rem;
+.specie, .breed, .name, .status, .age, .height, .weight, .color {
     margin-right: .5rem;
 }
 
-.breed {
+.specie, .breed, .name {
     width: 9rem;
-    margin-right: .5rem;
 }
 
-.name {
-    width: 9rem;
-    margin-right: .5rem;
-}
-
-.status {
+.status, .color {
     width: 8rem;
-    margin-right: .5rem;
 }
 
-.age {
+.age, .height, .weight {
     width: 6rem;
-    margin-right: .5rem;
-}
-
-.height {
-    width: 6rem;
-    margin-right: .5rem;
-}
-
-.weight {
-    width: 6rem;
-    margin-right: .5rem;
-}
-
-.color {
-    width: 8rem;
-    margin-right: .5rem;
 }
 
 .searchButton {
+    background-color: #ff6b6b;
+    border: none;
+    padding: 10px 20px;
+    color: white;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
     margin-top: auto;
     align-self: baseline;
+    font-family: 'Roboto', sans-serif;
+}
+
+.searchButton:hover {
+    background-color: #ff4d4d;
+}
+
+.searchButton:focus {
+    outline: none;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .search-pets-container {
+        flex-direction: column;
+    }
+
+    .iconsInputs {
+        flex-direction: column;
+    }
+
+    .specie, .breed, .name, .status, .age, .height, .weight, .color {
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+
+    .searchButton {
+        width: 100%;
+        margin-top: 10px;
+    }
 }

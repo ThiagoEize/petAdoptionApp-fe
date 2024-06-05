@@ -9,7 +9,8 @@ export function usePetContext() {
 }
 
 export default function PetContextProvider({ children }) {
-    const { token, permissions } = useUserContext();
+    const { token, permissions, userId } = useUserContext();
+    console.log('permissions', permissions);
 
     const [petsList, setPetsList] = useState([]);
     const [savedPetsList, setSavedPetsList] = useState([]);
@@ -38,7 +39,6 @@ export default function PetContextProvider({ children }) {
     const handleSearch = async (page = 1, limit = 9, searchForm = searchFormData) => {
         setIsLoading(true);
         let query = `?page=${page}&limit=${limit}`;
-        console.log('searchForm', searchForm);
 
         for (const [key, value] of Object.entries(searchForm)) {
             if (value !== '') {
@@ -51,7 +51,7 @@ export default function PetContextProvider({ children }) {
                 } else if (key === 'weight') {
                     query += `&${key}=${filters.filterWeightBy}${value}`;
                 } else if (key === 'doFilter' && value === true) {
-                    query += `&userId=${permissions.userId}`;
+                    query += `&pets.userId=${userId}`;
                 } else if (key !== 'doFilter') {
                     query += `&${key}=${value}`;
                 }
