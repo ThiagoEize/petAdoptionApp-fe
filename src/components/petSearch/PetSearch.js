@@ -1,31 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Button, Dropdown } from 'react-bootstrap';
+import { Form, Button } from 'react-bootstrap';
 import './PetSearch.css';
 import { useUserContext } from "../../context/UserContext";
 import { usePetContext } from "../../context/PetContext";
-import { FaBeer } from "@react-icons/all-files/fa/FaBeer";
 import axios from 'axios';
 
-function SearchPets() {
-    const { token, userId } = useUserContext();
-    // const { petsList, setPetsList, setReloud } = usePetContext();
-    const { petsList, setPetsList, setReloud, setSavedPetsList } = usePetContext();
-
+function SearchPets({ initialPage }) {
+    const { token } = useUserContext();
+    const { pagination, setPagination, handleSearch, searchFormData, setSearchFormData, filters, setFilters } = usePetContext();
 
     const [speciesList, setSpeciesList] = useState([]);
-
     const [breedsList, setBreedsList] = useState([]);
-
     const [filteredBreedsList, setFilteredBreedsList] = useState([]);
-
-    const [filterAgeBy, setFilterAgeBy] = useState('<');
-    const [filterHeightBy, setFilterHeightBy] = useState('<');
-    const [filterWeightBy, setFilterWeightBy] = useState('<');
 
     const getSpeciesList = async () => {
         try {
             const res = await axios.get('http://localhost:8080/species', { headers: { Authorization: `Bearer ${token}` } });
-            const species = res.data.data
+            const species = res.data.data;
             setSpeciesList(species);
         } catch (err) {
             console.log(err);
@@ -35,7 +26,7 @@ function SearchPets() {
     const getBreedsList = async () => {
         try {
             const res = await axios.get('http://localhost:8080/breeds', { headers: { Authorization: `Bearer ${token}` } });
-            const breeds = res.data.data
+            const breeds = res.data.data;
             setBreedsList(breeds);
             setFilteredBreedsList(breeds);
         } catch (err) {
@@ -46,88 +37,50 @@ function SearchPets() {
     useEffect(() => {
         getSpeciesList();
         getBreedsList();
-        handleSearch();
-    }, [])
+    }, []);
 
-    const [searchFormData, setSearchFormData] = useState({
-        breedId: '',
-        petName: '',
-        adoptionStatus: '',
-        petAge: '',
-        height: '',
-        weight: '',
-        color: '',
-        // doFilter: false
-    });
-
-    const handleSearch = async () => {
-        let query = '';
-
-        for (const [key, value] of Object.entries(searchFormData)) {
-            if (value !== '') {
-                if (key === 'petName' || key === 'color') {
-                    query += `${query === '' ? '?' : '&'}${key}=${value}`;
-                } else if (key === 'petAge') {
-                    query += `${query === '' ? '?' : '&'}${key}=${filterAgeBy + value}`;
-                } else if (key === 'height') {
-                    query += `${query === '' ? '?' : '&'}${key}=${filterHeightBy + value}`;
-                } else if (key === 'weight') {
-                    query += `${query === '' ? '?' : '&'}${key}=${filterWeightBy + value}`;
-                } else if (key === 'doFilter' && value === true) {
-                    query += `${query === '' ? '?' : '&'}userId=${userId}`;
-                } else if (key !== 'doFilter') {
-                    query += `${query === '' ? '?' : '&'}${key}=${value}`
-                }
-            }
-        }
-        try {
-            const res = await axios.get(`http://localhost:8080/pets${query}`);
-            setPetsList(res.data.data);
-
-            const resSaved = await axios.get(`http://localhost:8080/pets/myPets`, { headers: { Authorization: `Bearer ${token}` } });
-            setSavedPetsList(resSaved.data.data)
-        } catch (err) {
-            console.log(err);
-        }
-
-
-    }
+    const handleSearchWithPagination = (page = 1, limit = 9) => {
+        handleSearch(page, limit, searchFormData);
+    };
 
     const handleChange = (event) => {
-        const { name, value, type } = event.target;
+        const { name, value } = event.target;
 
         let newValue = value;
         if (name === 'specieId') {
-            const newBreedList = breedsList.filter(breed => breed.specieId === parseInt(newValue) || !breed.specieId)
+            const newBreedList = breedsList.filter(breed => breed.specieId === parseInt(newValue) || !breed.specieId);
             setFilteredBreedsList(newBreedList);
         } else if (name === "doFilter") {
-            newValue = event.target.checked
+            newValue = event.target.checked;
         }
         setSearchFormData({ ...searchFormData, [name]: newValue });
-
     };
 
     const handleAgeChange = (event) => {
         const { value } = event.target;
-        setFilterAgeBy(value);
+        setFilters({ ...filters, filterAgeBy: value });
     };
 
     const handleHeightChange = (event) => {
         const { value } = event.target;
-        setFilterHeightBy(value);
+        setFilters({ ...filters, filterHeightBy: value });
     };
 
     const handleWeightChange = (event) => {
         const { value } = event.target;
-        setFilterWeightBy(value);
+        setFilters({ ...filters, filterWeightBy: value });
+    };
+
+    const handleSearchButtonClick = () => {
+        setPagination({ ...pagination, currentPage: 1 }); // Reset to first page on new search
+        handleSearchWithPagination(1);
     };
 
     return (
         <div className="search-pets-container">
-
             <div className='specie'>
                 <Form.Label>Specie</Form.Label>
-                <Form.Control as="select" name="specieId" value={searchFormData.specieId} onChange={handleChange}>
+                <Form.Control as="select" name="specieId" value={searchFormData.specieId || ''} onChange={handleChange}>
                     <option value="">Filter by specie...</option>
                     {speciesList.map((specie) => (
                         <option key={specie.id} value={specie.id}>
@@ -138,7 +91,7 @@ function SearchPets() {
             </div>
             <div className='breed'>
                 <Form.Label>Breed</Form.Label>
-                <Form.Control as="select" name="breedId" value={searchFormData.breedId} onChange={handleChange}>
+                <Form.Control as="select" name="breedId" value={searchFormData.breedId || ''} onChange={handleChange}>
                     <option value="">Filter by breed...</option>
                     {filteredBreedsList.map((breed) => (
                         <option key={breed.id} value={breed.id}>
@@ -153,13 +106,13 @@ function SearchPets() {
                     type="text"
                     placeholder="Filter by name..."
                     name="petName"
-                    value={searchFormData.petName}
+                    value={searchFormData.petName || ''}
                     onChange={handleChange}
                 />
             </div>
             <div className='status'>
                 <Form.Label>Status</Form.Label>
-                <Form.Control as="select" name="adoptionStatus" value={searchFormData.adoptionStatus} onChange={handleChange}>
+                <Form.Control as="select" name="adoptionStatus" value={searchFormData.adoptionStatus || ''} onChange={handleChange}>
                     <option value="">Filter by status...</option>
                     <option value="Available">Available</option>
                     <option value="Adopted">Adopted</option>
@@ -169,7 +122,7 @@ function SearchPets() {
             <div className='age'>
                 <Form.Label>Age</Form.Label>
                 <div className='iconsInputs'>
-                    <Form.Control as="select" name="filterByAge" value={filterAgeBy} onChange={handleAgeChange}>
+                    <Form.Control as="select" name="filterByAge" value={filters.filterAgeBy} onChange={handleAgeChange}>
                         <option value="<">{"<="}</option>
                         <option value="">{"="}</option>
                         <option value=">">{">="}</option>
@@ -178,7 +131,7 @@ function SearchPets() {
                         type="text"
                         placeholder="Age"
                         name="petAge"
-                        value={searchFormData.petAge}
+                        value={searchFormData.petAge || ''}
                         onChange={handleChange}
                     />
                 </div>
@@ -186,7 +139,7 @@ function SearchPets() {
             <div className='height'>
                 <Form.Label>Height</Form.Label>
                 <div className='iconsInputs'>
-                    <Form.Control as="select" name="filterByHeight" value={filterHeightBy} onChange={handleHeightChange}>
+                    <Form.Control as="select" name="filterByHeight" value={filters.filterHeightBy} onChange={handleHeightChange}>
                         <option value="<">{"<="}</option>
                         <option value="">{"="}</option>
                         <option value=">">{">="}</option>
@@ -195,7 +148,7 @@ function SearchPets() {
                         type="text"
                         placeholder="Height"
                         name="height"
-                        value={searchFormData.height}
+                        value={searchFormData.height || ''}
                         onChange={handleChange}
                     />
                 </div>
@@ -203,7 +156,7 @@ function SearchPets() {
             <div className='weight'>
                 <Form.Label>Weight</Form.Label>
                 <div className='iconsInputs'>
-                    <Form.Control as="select" name="filterByWeight" value={filterWeightBy} onChange={handleWeightChange}>
+                    <Form.Control as="select" name="filterByWeight" value={filters.filterWeightBy} onChange={handleWeightChange}>
                         <option value="<">{"<="}</option>
                         <option value="">{"="}</option>
                         <option value=">">{">="}</option>
@@ -212,7 +165,7 @@ function SearchPets() {
                         type="text"
                         placeholder="Weight"
                         name="weight"
-                        value={searchFormData.weight}
+                        value={searchFormData.weight || ''}
                         onChange={handleChange}
                     />
                 </div>
@@ -223,7 +176,7 @@ function SearchPets() {
                     type="text"
                     placeholder="Color"
                     name="color"
-                    value={searchFormData.color}
+                    value={searchFormData.color || ''}
                     onChange={handleChange}
                 />
             </div>
@@ -233,17 +186,15 @@ function SearchPets() {
                     type="checkbox"
                     label="Filter"
                     name="doFilter"
-                    checked={searchFormData.doFilter}
+                    checked={searchFormData.doFilter || false}
                     onChange={handleChange}
                 />
             </div>
-            {/* <Button variant="secondary" onClick={handleReset}>
-                    Reset
-                </Button> */}
-            <Button className="searchButton" variant="primary" onClick={handleSearch}>
+            <Button className="searchButton" variant="primary" onClick={handleSearchButtonClick}>
                 Search
             </Button>
         </div>
     );
 }
+
 export default SearchPets;

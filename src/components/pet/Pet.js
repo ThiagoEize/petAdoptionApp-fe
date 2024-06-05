@@ -141,7 +141,7 @@ const Pet = ({ pet }) => {
   }
 
   const handleSavePet = async () => {
-    if (savedPetsList.includes(pet.id)) {
+    if (savedPetsList.includes(pet.id) && window.confirm("Are you sure you want to delete this pet from your list?")) {
       try {
         const response = await axios.delete(`http://localhost:8080/savedPets/${savePetState.id}`, { headers: { Authorization: `Bearer ${token}` } });
         setSavedPetsList(prev => prev.filter(id => id !== pet.id))
@@ -280,7 +280,8 @@ const Pet = ({ pet }) => {
           </div>
           {/* </Col> */}
           {/* <Col col={2}> */}
-          <button className={savedPetsList.includes(pet.id) ? "pet-button unsave-button" : "pet-button save-button"} onClick={handleSavePet}>{savedPetsList.includes(pet.id) ? 'Unsave' : 'Save'}</button>
+
+          <button className={savedPetsList.includes(pet.id) ? "pet-button unsave-button" : "pet-button save-button"} onClick={handleSavePet}>{savedPetsList.includes(pet.id) ? 'Delete from my list' : 'Save'}</button>
           {/* </Col> */}
           {/* </div> */}
         </div>

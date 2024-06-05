@@ -26,7 +26,7 @@ function App() {
           <NavBar />
           <Routes>
             <Route
-              path="/"
+              path="/:page?"
               element={
                 // <PrivateRoute>
                 <Home />
