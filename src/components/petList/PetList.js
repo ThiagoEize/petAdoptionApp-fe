@@ -42,11 +42,31 @@ const PetList = () => {
   const getPaginationNumbers = () => {
     const { totalPages, currentPage } = pagination;
     const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
+
     if (totalPages <= 7) return pageNumbers;
-    if (currentPage <= 4) return pageNumbers.slice(0, 7);
-    if (currentPage + 3 >= totalPages) return pageNumbers.slice(-7);
-    return pageNumbers.slice(currentPage - 4, currentPage + 3);
+
+    let start = currentPage - 2;
+    let end = currentPage + 2;
+
+    if (start <= 1) {
+      start = 2;
+      end = 6;
+    }
+
+    if (end >= totalPages - 1) {
+      start = totalPages - 5;
+      end = totalPages - 1;
+    }
+
+    const middlePages = pageNumbers.slice(start - 1, end);
+
+    return [1, ...middlePages, totalPages];
   };
+
+
+
+
+
 
   return (
     <Container fluid>

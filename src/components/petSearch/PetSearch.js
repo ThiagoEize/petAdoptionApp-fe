@@ -44,12 +44,12 @@ function SearchPets() {
     const handleSearchWithPagination = (page = 1, limit = 9) => {
         // handleSearch(page, limit, searchFormData);
         if (saved) {
-            handleSearch(pagination.currentPage, 9, {
+            handleSearch(1, 9, {
                 ...searchFormData,
                 ['savedPets.userId']: String(userId)
             });
         } else {
-            handleSearch(pagination.currentPage, 9, searchFormData);
+            handleSearch(1, 9, searchFormData);
         }
     };
 
