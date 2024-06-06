@@ -3,7 +3,7 @@
 .search-pets-container {
     display: flex;
     flex-direction: row;
-    padding: 10px 25px;
+    padding: 10px 28px;
     background-color: #e0e5ec; /* Light greyish blue background */
     border-radius: 6px;
     align-items: baseline;

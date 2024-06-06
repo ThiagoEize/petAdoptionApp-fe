@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { useUserContext } from "./UserContext";
+
 import Axios from "axios";
 
 export const PetContext = createContext();
@@ -10,7 +11,7 @@ export function usePetContext() {
 
 export default function PetContextProvider({ children }) {
     const { token, permissions, userId } = useUserContext();
-    console.log('permissions', permissions);
+
 
     const [petsList, setPetsList] = useState([]);
     const [savedPetsList, setSavedPetsList] = useState([]);

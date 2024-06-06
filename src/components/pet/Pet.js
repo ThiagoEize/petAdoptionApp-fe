@@ -281,7 +281,7 @@ const Pet = ({ pet }) => {
           {/* </Col> */}
           {/* <Col col={2}> */}
 
-          <button className={savedPetsList.includes(pet.id) ? "pet-button unsave-button" : "pet-button save-button"} onClick={handleSavePet}>{savedPetsList.includes(pet.id) ? 'Delete from my list' : 'Save'}</button>
+          <button className={savedPetsList.includes(pet.id) ? "pet-button unsave-button" : "pet-button save-button"} onClick={handleSavePet}>{savedPetsList.includes(pet.id) ? 'Delete from my list' : 'Add to my list'}</button>
           {/* </Col> */}
           {/* </div> */}
         </div>

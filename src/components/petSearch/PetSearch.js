@@ -3,11 +3,13 @@ import { Form, Button } from 'react-bootstrap';
 import './PetSearch.css';
 import { useUserContext } from "../../context/UserContext";
 import { usePetContext } from "../../context/PetContext";
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
-function SearchPets({ initialPage }) {
-    const { token } = useUserContext();
+function SearchPets() {
+    const { token, userId } = useUserContext();
     const { pagination, setPagination, handleSearch, searchFormData, setSearchFormData, filters, setFilters } = usePetContext();
+    const { saved } = useParams();
 
     const [speciesList, setSpeciesList] = useState([]);
     const [breedsList, setBreedsList] = useState([]);
@@ -40,7 +42,15 @@ function SearchPets({ initialPage }) {
     }, []);
 
     const handleSearchWithPagination = (page = 1, limit = 9) => {
-        handleSearch(page, limit, searchFormData);
+        // handleSearch(page, limit, searchFormData);
+        if (saved) {
+            handleSearch(pagination.currentPage, 9, {
+                ...searchFormData,
+                ['savedPets.userId']: String(userId)
+            });
+        } else {
+            handleSearch(pagination.currentPage, 9, searchFormData);
+        }
     };
 
     const handleChange = (event) => {
