@@ -12,6 +12,11 @@ function UserSearch() {
 
     const [permissionsList, setPermissionsList] = useState([]);
 
+    useEffect(() => {
+        handleSearch()
+    }, [])
+
+
     const getPermissionsList = async () => {
         try {
             const res = await axios.get('http://localhost:8080/permissions', { headers: { Authorization: `Bearer ${token}` } });

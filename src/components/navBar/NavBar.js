@@ -88,7 +88,7 @@ const NavBar = () => {
   };
 
   return (
-    <>
+    <div className="nav-bar-container">
       <div className="nav-bar">
         <ul>
           <li>
@@ -207,7 +207,7 @@ const NavBar = () => {
         setToken={setToken}
         setUserId={setUserId}
       />
-    </>
+    </div>
   );
 };
 

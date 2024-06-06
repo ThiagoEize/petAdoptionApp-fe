@@ -1,45 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
 .requestList {
-    width: 60%;
-    background-color: black;
-    border-radius: 5px;
-    margin: 2rem;
-    padding: 1rem;
+    width: 80%;
+    /* background-color: #3a3f47; */
+    border-radius: 10px;
+    margin: 1rem auto; /* Smaller external padding */
+    padding: 1.5rem;
+    font-family: 'Roboto', sans-serif;
+    color: #ffffff;
+    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
 }
 
-.requestList>div {
-    /* background-color: lightblue; */
-    margin: 1rem;
-    border-style: solid;
-    border-color: white;
-    padding: 1rem
+.requestList > div {
+    background-color: #50555c;
+    margin: 1rem 0;
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: grid;
+    grid-template-columns: repeat(5, 1fr) 10%;
+    gap: 0.5rem;
+    align-items: start;
 }
 
-.aprove-button {
+.requestList .titles {
+    font-weight: 700;
+    display: contents;
+}
+
+.requestList p {
+    margin: 0.5rem 0;
+}
+
+.request-message {
+    grid-column: 1 / -1;
+    margin-top: .2rem;
+}
+
+.button-container {
+    flex-direction: row;
+    grid-row: span 2;
+    width: 100%;
+}
+
+.approve-button, .reject-button {
     border-radius: 5px;
-    padding: 5px 10px;
-    margin: 5px;
+    padding: 10px 20px;
+    margin: 5px 0;
     font-size: 0.9em;
-    background-color: green;
     color: white;
+    border: none;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    font-family: 'Roboto', sans-serif;
+    width: 100%;
+}
+
+.approve-button {
+    background-color: #4caf50;
 }
 
 .reject-button {
-    border-radius: 5px;
-    padding: 5px 10px;
-    margin: 5px;
-    font-size: 0.9em;
-    background-color: red;
-    color: white;
+    background-color: #f44336;
 }
 
-.aprove-button:hover {
-    color: #ffffff;
-    cursor: pointer;
-    font-weight: bolder;
+.approve-button:hover {
+    background-color: #45a049;
+    transform: translateY(-2px);
 }
 
 .reject-button:hover {
-    color: #ffffff;
-    cursor: pointer;
-    font-weight: bolder;
+    background-color: #e53935;
+    transform: translateY(-2px);
+}
+
+.approve-button:focus, .reject-button:focus {
+    outline: none;
+}
+
+@media (max-width: 768px) {
+    .requestList {
+        width: 90%;
+        padding: 1rem;
+    }
+
+    .requestList > div {
+        padding: 1rem;
+        grid-template-columns: 1fr;
+    }
+
+    .button-container {
+        width: 100%;
+        margin-top: 10px;
+        justify-content: space-between;
+        grid-row: auto;
+    }
+
+    .approve-button, .reject-button {
+        width: 48%;
+        margin: 0;
+    }
 }

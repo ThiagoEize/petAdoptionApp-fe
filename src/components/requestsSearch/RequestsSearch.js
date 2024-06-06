@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { useUserContext } from "../../context/UserContext";
 import axios from 'axios';
+
 
 import './RequestsSearch.css';
 
@@ -14,6 +15,10 @@ function RequestSearch() {
         requestType: '',
         requestStatus: 'Pending'
     });
+
+    useEffect(() => {
+        handleSearch();
+    }, []);
 
     const handleSearch = async () => {
         let query = '';
@@ -64,6 +69,15 @@ function RequestSearch() {
                 />
             </div>
             <div className='status'>
+                <Form.Label>Request status</Form.Label>
+                <Form.Control as="select" name="adoptionStatus" value={searchFormData.adoptionStatus} onChange={handleChange}>
+                    <option value="">Select a request status</option>
+                    <option value="adopt">Pending</option>
+                    <option value="adopt">Aproved</option>
+                    <option value="foster">Rejected</option>
+                </Form.Control>
+            </div>
+            <div className='status'>
                 <Form.Label>Request types</Form.Label>
                 <Form.Control as="select" name="requestType" value={searchFormData.requestType} onChange={handleChange}>
                     <option value="">Select a request type</option>
@@ -72,15 +86,7 @@ function RequestSearch() {
                     <option value="return">Return</option>
                 </Form.Control>
             </div>
-            {/* <div className='status'>
-                <Form.Label>Request status</Form.Label>
-                <Form.Control as="select" name="adoptionStatus" value={searchFormData.adoptionStatus} onChange={handleChange}>
-                    <option value="">Select a request type</option>
-                    <option value="adopt">Adopt</option>
-                    <option value="foster">Foster</option>
-                    <option value="return">Return</option>
-                </Form.Control>
-            </div> */}
+
             {/* <Button variant="secondary" onClick={handleReset}>
                     Reset
                 </Button> */}

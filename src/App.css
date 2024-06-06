@@ -52,7 +52,7 @@ button {
 }
 
 button:hover {
-  background: #ff4d4d;
+  /* background: #ff4d4d; */
 }
 
 button:focus {

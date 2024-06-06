@@ -35,6 +35,7 @@
 }
 
 .searchButton {
+    margin-left: auto;
     background-color: #ff6b6b;
     border: none;
     padding: 10px 20px;

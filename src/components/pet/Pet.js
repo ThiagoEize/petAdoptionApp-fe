@@ -141,7 +141,7 @@ const Pet = ({ pet }) => {
   }
 
   const handleSavePet = async () => {
-    if (savedPetsList.includes(pet.id) && window.confirm("Are you sure you want to delete this pet from your list?")) {
+    if (savedPetsList.includes(pet.id)) {
       try {
         const response = await axios.delete(`http://localhost:8080/savedPets/${savePetState.id}`, { headers: { Authorization: `Bearer ${token}` } });
         setSavedPetsList(prev => prev.filter(id => id !== pet.id))
