@@ -12,7 +12,7 @@ const PetList = () => {
   const { saved } = useParams();
 
   useEffect(() => {
-    if (saved) {
+    if (saved === 'myList') {
       handleSearch(pagination.currentPage, 9, {
         ...searchFormData,
         ['savedPets.userId']: String(userId)
@@ -24,7 +24,7 @@ const PetList = () => {
 
   useEffect(() => {
 
-    if (saved) {
+    if (saved === 'myList') {
       handleSearch(1, 9, {
         ...searchFormData,
         ['savedPets.userId']: String(userId)

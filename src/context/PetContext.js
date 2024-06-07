@@ -40,20 +40,28 @@ export default function PetContextProvider({ children }) {
     const handleSearch = async (page = 1, limit = 9, searchForm = searchFormData) => {
         setIsLoading(true);
         let query = `?page=${page}&limit=${limit}`;
-
+        console.log('searchForm', searchForm);
         for (const [key, value] of Object.entries(searchForm)) {
             if (value !== '') {
                 if (key === 'petName' || key === 'color') {
                     query += `&${key}=${value}`;
-                } else if (key === 'petAge') {
-                    query += `&${key}=${filters.filterAgeBy}${value}`;
-                } else if (key === 'height') {
-                    query += `&${key}=${filters.filterHeightBy}${value}`;
-                } else if (key === 'weight') {
-                    query += `&${key}=${filters.filterWeightBy}${value}`;
                 } else if (key === 'doFilter' && value === true) {
                     query += `&pets.userId=${userId}`;
-                } else if (key !== 'doFilter') {
+                } else if (key === 'doFilter' && value !== true) {
+
+                } else if (key === 'age_greaterThan') {
+                    query += `&petAge>=${value}`;
+                } else if (key === 'age_lessThan') {
+                    query += `&petAge<=${value}`;
+                } else if (key === 'height_greaterThan') {
+                    query += `&height>=${value}`;
+                } else if (key === 'height_lessThan') {
+                    query += `&height<=${value}`;
+                } else if (key === 'weight_greaterThan') {
+                    query += `&weight>=${value}`;
+                } else if (key === 'weight_lessThan') {
+                    query += `&weight<=${value}`;
+                } else {
                     query += `&${key}=${value}`;
                 }
             }
@@ -74,6 +82,9 @@ export default function PetContextProvider({ children }) {
             setIsLoading(false);
         }
     };
+
+
+
 
     useEffect(() => {
         fetchSavedPets();

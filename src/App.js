@@ -26,21 +26,22 @@ function App() {
           <NavBar />
           <Routes>
             <Route
-              path="/:page?"
+              path="/:saved?"
               element={
                 // <PrivateRoute>
                 <Home />
                 // </PrivateRoute>
               }
             ></Route>
-            <Route
+
+            {/* <Route
               path="/savedPets/:saved"
               element={
                 <PrivateRoute>
                   <Home />
                 </PrivateRoute>
               }
-            ></Route>
+            ></Route> */}
             <Route
               path="/profile"
               element={

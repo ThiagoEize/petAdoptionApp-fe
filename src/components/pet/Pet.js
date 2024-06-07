@@ -259,9 +259,9 @@ const Pet = ({ pet }) => {
                 <div className="pet-weight">Weight: {pet.weight}</div>
                 <div className="pet-color">Color: {pet.color}</div>
 
-                {savePetState.id &&
+                {/* {savePetState.id &&
                   <div className="pet-saved">Pet Saved</div>
-                }
+                } */}
               </div>
             </div>
           </Col>

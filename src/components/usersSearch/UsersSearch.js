@@ -13,6 +13,7 @@ function UserSearch() {
     const [permissionsList, setPermissionsList] = useState([]);
 
     useEffect(() => {
+        getPermissionsList()
         handleSearch()
     }, [])
 
@@ -26,10 +27,6 @@ function UserSearch() {
             console.log(err);
         }
     };
-
-    useEffect(() => {
-        getPermissionsList()
-    }, [])
 
     const [searchFormData, setSearchFormData] = useState({
         userName: '',
