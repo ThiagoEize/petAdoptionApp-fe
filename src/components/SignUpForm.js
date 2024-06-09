@@ -1,18 +1,15 @@
 import { useState } from "react";
-// import { Button } from "react-bootstrap"
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import axios from 'axios';
 
-// const SignupForm = ({ show, onHide, onClose, headerText, isSubmitted, handleSubmit }) => {
 const SignUpForm = ({ onClose }) => {
     const handleSignUp = async (e) => {
-        // e.preventDefault();
         try {
-            const res = await axios.post('http://localhost:8080/users/signup', formData)
+            const res = await axios.post('http://localhost:8080/users/signup', formData);
             if (res.data.success) {
-                console.log(res)
+                console.log(res);
             }
             onClose();
         } catch (err) {
@@ -29,6 +26,12 @@ const SignUpForm = ({ onClose }) => {
         userLastName: '',
         phoneNumber: '',
         userBio: '',
+        street: '',
+        number: '',
+        neighborhood: '',
+        postalCode: '',
+        city: '',
+        country: ''
     });
 
     const handleChange = (event) => {
@@ -39,20 +42,10 @@ const SignUpForm = ({ onClose }) => {
     return (
         <div className="note-form-container">
             <form>
-                {/* <Modal show={show} onHide={onHide}> */}
                 <Modal.Header>
-                    {/* <h3>{headerText}</h3> */}
-                    <h3>Test</h3>
+                    <h3>Sign Up</h3>
                 </Modal.Header>
                 <Modal.Body>
-                    {/* <Form.Label>Permission ID</Form.Label>
-                    <Form.Control
-                        type="number"
-                        placeholder="Permission ID"
-                        name="permissionId"
-                        value={formData.permissionId}
-                        onChange={handleChange}
-                    /> */}
                     <Form.Label>Email</Form.Label>
                     <Form.Control
                         type="email"
@@ -77,7 +70,6 @@ const SignUpForm = ({ onClose }) => {
                         value={formData.repassword}
                         onChange={handleChange}
                     />
-                    {/* {(formData.password !== formData.repassword) && <span>Passwords do not match</span>} */}
                     <Form.Label>First Name</Form.Label>
                     <Form.Control
                         type="text"
@@ -111,19 +103,65 @@ const SignUpForm = ({ onClose }) => {
                         value={formData.userBio}
                         onChange={handleChange}
                     />
-                    {/* {(!formData.userBio && isSubmitted) && <span>You must write a bio</span>} */}
+                    <Form.Label>Street</Form.Label>
+                    <Form.Control
+                        type="text"
+                        placeholder="Street"
+                        name="street"
+                        value={formData.street}
+                        onChange={handleChange}
+                    />
+                    <Form.Label>Number</Form.Label>
+                    <Form.Control
+                        type="text"
+                        placeholder="Number"
+                        name="number"
+                        value={formData.number}
+                        onChange={handleChange}
+                    />
+                    <Form.Label>Neighborhood</Form.Label>
+                    <Form.Control
+                        type="text"
+                        placeholder="Neighborhood"
+                        name="neighborhood"
+                        value={formData.neighborhood}
+                        onChange={handleChange}
+                    />
+                    <Form.Label>Postal Code</Form.Label>
+                    <Form.Control
+                        type="text"
+                        placeholder="Postal Code"
+                        name="postalCode"
+                        value={formData.postalCode}
+                        onChange={handleChange}
+                    />
+                    <Form.Label>City</Form.Label>
+                    <Form.Control
+                        type="text"
+                        placeholder="City"
+                        name="city"
+                        value={formData.city}
+                        onChange={handleChange}
+                    />
+                    <Form.Label>Country</Form.Label>
+                    <Form.Control
+                        type="text"
+                        placeholder="Country"
+                        name="country"
+                        value={formData.country}
+                        onChange={handleChange}
+                    />
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={onClose}>
                         Close
                     </Button>
-                    <Button variant="primary" onClick={(e) => handleSignUp(formData)}>
-                        Sign In
+                    <Button variant="primary" onClick={handleSignUp}>
+                        Sign Up
                     </Button>
                 </Modal.Footer>
-            </form >
+            </form>
         </div>
-
     );
 };
 
