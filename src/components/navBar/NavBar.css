@@ -54,9 +54,9 @@ button {
   transition: background 0.3s ease;
 }
 
-button:hover {
+/* button:hover {
   background: #ff4d4d;
-}
+} */
 
 button:focus {
   outline: none;
