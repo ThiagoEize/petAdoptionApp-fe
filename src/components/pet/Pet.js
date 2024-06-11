@@ -280,8 +280,9 @@ const Pet = ({ pet }) => {
           </div>
           {/* </Col> */}
           {/* <Col col={2}> */}
-
-          <button className={savedPetsList.includes(pet.id) ? "pet-button unsave-button" : "pet-button save-button"} onClick={handleSavePet}>{savedPetsList.includes(pet.id) ? 'Delete from my list' : 'Add to my list'}</button>
+          {userId &&
+            <button className={savedPetsList.includes(pet.id) ? "pet-button unsave-button" : "pet-button save-button"} onClick={handleSavePet}>{savedPetsList.includes(pet.id) ? 'Delete from my list' : 'Add to my list'}</button>
+          }
           {/* </Col> */}
           {/* </div> */}
         </div>
