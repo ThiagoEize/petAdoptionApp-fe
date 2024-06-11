@@ -129,14 +129,12 @@ li {
 
 
 .pet-row {
-  /* display: flex; */
   margin-bottom: 1rem;
-  /* margin-bottom: 10px; */
-  /* width: 50%; */
 }
 
 
 .profile-container {
+  margin-top: 1rem;
   display: flex;
   width: 50%;
   flex-direction: column;
@@ -150,6 +148,10 @@ li {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
+}
+
+.profile-title-section>button {
+  margin-left: auto;
 }
 
 .username-text-box {

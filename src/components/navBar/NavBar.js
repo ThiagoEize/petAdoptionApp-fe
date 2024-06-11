@@ -90,10 +90,6 @@ const NavBar = () => {
     setInitialData({});
   };
 
-  const handleShowFosteringHouseModal = () => {
-    setShowFosteringHouseModal(true);
-    setInitialData({});
-  };
 
   return (
     <div className="nav-bar-container">
@@ -150,30 +146,19 @@ const NavBar = () => {
           }
           <div className="align-right">
             {permissions.canEditCreatePets &&
-              <li className="nav-list">
-                <button onClick={handleShowSpecieModal}>Add Specie</button>
+              <li className="nav-list dropdown">
+                <button className="dropbtn">Pets</button>
+                <div className="dropdown-content">
+                  <NavLink to="#" onClick={handleShowPetModal}>Add Pet</NavLink>
+                  <NavLink to="#" onClick={handleShowSpecieModal}>Add Specie</NavLink>
+                  <NavLink to="#" onClick={handleShowBreedModal}>Add Breed</NavLink>
+                  {permissions.canAcceptAdoptionRequests &&
+                    <NavLink to="adoptionRequests">Adoption Requests</NavLink>
+                  }
+                </div>
               </li>
             }
-            {permissions.canEditCreatePets &&
-              <li className="nav-list">
-                <button onClick={handleShowBreedModal}>Add Breed</button>
-              </li>
-            }
-            {permissions.canEditCreateAdmins &&
-              <li className="nav-list">
-                <button onClick={handleShowPermissionModal}>Add Permission</button>
-              </li>
-            }
-            {permissions.canEditCreatePets &&
-              <li className="nav-list">
-                <button onClick={handleShowPetModal}>Add Pet</button>
-              </li>
-            }
-            {logedIn &&
-              <li className="nav-list">
-                <button onClick={handleShowFosteringHouseModal}>Create a Fostering House</button>
-              </li>
-            }
+
             {!logedIn &&
               <li className="nav-list">
                 <button onClick={() => setShowSignUpModal(true)}>SignUp</button>

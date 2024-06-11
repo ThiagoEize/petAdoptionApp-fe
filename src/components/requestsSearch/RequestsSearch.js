@@ -3,7 +3,6 @@ import { Form, Button } from 'react-bootstrap';
 import { useUserContext } from "../../context/UserContext";
 import axios from 'axios';
 
-
 import './RequestsSearch.css';
 
 function RequestSearch() {
@@ -69,16 +68,16 @@ function RequestSearch() {
                 />
             </div>
             <div className='status'>
-                <Form.Label>Request status</Form.Label>
-                <Form.Control as="select" name="adoptionStatus" value={searchFormData.adoptionStatus} onChange={handleChange}>
+                <Form.Label>Request Status</Form.Label>
+                <Form.Control as="select" name="requestStatus" value={searchFormData.requestStatus} onChange={handleChange}>
                     <option value="">Select a request status</option>
-                    <option value="adopt">Pending</option>
-                    <option value="adopt">Aproved</option>
-                    <option value="foster">Rejected</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Approved">Approved</option>
+                    <option value="Rejected">Rejected</option>
                 </Form.Control>
             </div>
             <div className='status'>
-                <Form.Label>Request types</Form.Label>
+                <Form.Label>Request Type</Form.Label>
                 <Form.Control as="select" name="requestType" value={searchFormData.requestType} onChange={handleChange}>
                     <option value="">Select a request type</option>
                     <option value="adopt">Adopt</option>
@@ -86,14 +85,11 @@ function RequestSearch() {
                     <option value="return">Return</option>
                 </Form.Control>
             </div>
-
-            {/* <Button variant="secondary" onClick={handleReset}>
-                    Reset
-                </Button> */}
             <Button className="searchButton" variant="primary" onClick={handleSearch}>
                 Search
             </Button>
         </div>
     );
 }
+
 export default RequestSearch;

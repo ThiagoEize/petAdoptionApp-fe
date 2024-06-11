@@ -36,7 +36,8 @@ const PetList = () => {
   }, [saved]);
 
   const handlePageChange = (pageNumber) => {
-    setPagination({ ...pagination, currentPage: pageNumber });
+    if (pageNumber !== '...')
+      setPagination({ ...pagination, currentPage: pageNumber });
   };
 
   const getPaginationNumbers = () => {
@@ -60,12 +61,22 @@ const PetList = () => {
 
     const middlePages = pageNumbers.slice(start - 1, end);
 
-    return [1, ...middlePages, totalPages];
+    const paginationResult = [1];
+
+    if (start > 2) {
+      paginationResult.push('...');
+    }
+
+    paginationResult.push(...middlePages);
+
+    if (end < totalPages - 1) {
+      paginationResult.push('...');
+    }
+
+    paginationResult.push(totalPages);
+
+    return paginationResult;
   };
-
-
-
-
 
 
   return (

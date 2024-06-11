@@ -3,7 +3,11 @@ import { useEffect, useState } from "react";
 import { useUserContext } from "../context/UserContext";
 
 const Profile = () => {
-  const { userId, token } = useUserContext();
+  const { userId,
+    token,
+    setShowFosteringHouseModal,
+    setInitialData
+  } = useUserContext();
   const [user, setUser] = useState({
     email: '',
     password: '',
@@ -18,6 +22,7 @@ const Profile = () => {
     postalCode: '',
     city: '',
     country: ''
+
   });
 
   const getUser = async () => {
@@ -44,6 +49,11 @@ const Profile = () => {
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const handleShowFosteringHouseModal = () => {
+    setShowFosteringHouseModal(true);
+    setInitialData({});
   };
 
   useEffect(() => {
@@ -83,6 +93,7 @@ const Profile = () => {
     <div className="profile-container">
       <div className="profile-title-section">
         <h1>Profile</h1>
+        <button onClick={handleShowFosteringHouseModal}>Register a fostering house</button>
       </div>
       <p>Email</p>
       <input

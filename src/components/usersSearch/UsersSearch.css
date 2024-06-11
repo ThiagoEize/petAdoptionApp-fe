@@ -11,13 +11,15 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: row;
-    align-items: baseline;
+    align-items: flex-start; /* Align items at the start */
     gap: 1rem;
+    flex-wrap: wrap; /* Allow wrapping for responsiveness */
 }
 
 .search-users-container .name, 
 .search-users-container .permission {
     width: 30%;
+    min-width: 200px; /* Ensure minimum width for inputs */
 }
 
 .search-users-container .searchButton {
@@ -29,7 +31,7 @@
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    align-self: center;
+    align-self: flex-end; /* Align button at the bottom */
 }
 
 .search-users-container .searchButton:hover {
