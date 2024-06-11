@@ -60,6 +60,8 @@ export default function UserContextProvider({ children }) {
 
     const [showSavePetModal, setShowSavePetModal] = useState(false);
 
+    const [showFosteringHouseModal, setShowFosteringHouseModal] = useState(false); // Add state for Fostering House Modal
+
     const [petId, setPetId] = useState('');
 
     const [initialData, setInitialData] = useState({});
@@ -96,6 +98,8 @@ export default function UserContextProvider({ children }) {
             setShowRequestModal,
             showSavePetModal,
             setShowSavePetModal,
+            showFosteringHouseModal, // Add state for Fostering House Modal
+            setShowFosteringHouseModal, // Add setter for Fostering House Modal
             requestType,
             setRequestType,
             setUserId,
@@ -109,37 +113,6 @@ export default function UserContextProvider({ children }) {
             setPermissions,
             setToken
         }}>
-            {/* <SpecieModal
-                visible={showSpecieModal}
-                onClose={() => setShowSpecieModal(false)}
-            // initialData={initialData}
-            />
-            <BreedModal
-                visible={showBreedModal}
-                onClose={() => setShowBreedModal(false)}
-            // setSpeciesList={setSpeciesList}
-            />
-            <PetModal
-                visible={showPetModal}
-                onClose={() => setShowPetModal(false)}
-            // initialData={initialData}
-            />
-            <PermissionModal
-                visible={showPermissionModal}
-                onClose={() => setShowPermissionModal(false)}
-            // initialData={initialData}
-            />
-            <SignUpModal
-                visible={showSignUpModal}
-                onClose={() => setShowSignUpModal(false)}
-            />
-            <LogInModal
-                visible={showLogInModal}
-                onClose={() => setShowLogInModal(false)}
-                token={token}
-                setToken={setToken}
-                setUserId={setUserId}
-            /> */}
             {children}
         </UserContext.Provider>
     );

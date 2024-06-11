@@ -10,6 +10,7 @@ import PetModal from "../PetModal";
 import PermissionModal from "../PermissionModal";
 import RequestModal from "../RequestModal";
 import SavePetModal from "../SavePetModal";
+import FosteringHouseModal from "../FosteringHouseModal"; // Import the new component
 
 import './NavBar.css';
 
@@ -24,6 +25,7 @@ const NavBar = () => {
     showPetModal,
     showRequestModal,
     showSavePetModal,
+    showFosteringHouseModal, // Add state for Fostering House Modal
     setShowSignUpModal,
     setShowLogInModal,
     setShowSpecieModal,
@@ -32,6 +34,7 @@ const NavBar = () => {
     setShowPetModal,
     setShowRequestModal,
     setShowSavePetModal,
+    setShowFosteringHouseModal, // Add setter for Fostering House Modal
     permissions,
     setPermissions,
     setInitialData,
@@ -87,6 +90,11 @@ const NavBar = () => {
     setInitialData({});
   };
 
+  const handleShowFosteringHouseModal = () => {
+    setShowFosteringHouseModal(true);
+    setInitialData({});
+  };
+
   return (
     <div className="nav-bar-container">
       <div className="nav-bar">
@@ -106,7 +114,7 @@ const NavBar = () => {
               style={({ isActive }) =>
                 isActive ? activeStyle : undefined}
             >
-              Saved pets
+              My pets list
             </NavLink>
           </li>
           <li>
@@ -161,6 +169,11 @@ const NavBar = () => {
                 <button onClick={handleShowPetModal}>Add Pet</button>
               </li>
             }
+            {logedIn &&
+              <li className="nav-list">
+                <button onClick={handleShowFosteringHouseModal}>Create a Fostering House</button>
+              </li>
+            }
             {!logedIn &&
               <li className="nav-list">
                 <button onClick={() => setShowSignUpModal(true)}>SignUp</button>
@@ -195,6 +208,10 @@ const NavBar = () => {
       <SavePetModal
         visible={showSavePetModal}
         onClose={() => setShowSavePetModal(false)}
+      />
+      <FosteringHouseModal
+        visible={showFosteringHouseModal} // Add Fostering House Modal
+        onClose={() => setShowFosteringHouseModal(false)}
       />
       <SignUpModal
         visible={showSignUpModal}

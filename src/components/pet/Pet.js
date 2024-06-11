@@ -308,7 +308,7 @@ const Pet = ({ pet }) => {
 
           <div className='buttonsDiv'>
             <button className="pet-button show-button" onClick={handleShowPet}>Show</button>
-            {((permissions.canEditCreatePets && pet.userId === null) || (userId === pet.userId)) &&
+            {((permissions.canEditCreatePets && pet.userId === null && permissions.fosteringHouse !== undefined) || (userId === pet.userId)) &&
               <button className="pet-button edit-button" onClick={handleEditPet}>Edit</button>
             }
             {((!pet.userId || pet.userId === userId || pet.adoptionStatus === 'Fostered') && !adoptionRequestState.id) &&
@@ -344,7 +344,7 @@ const Pet = ({ pet }) => {
                 }
               </button>
             }
-            {((permissions.canEditCreatePets && pet.userId === null) || (userId === pet.userId)) &&
+            {((permissions.canEditCreatePets && pet.userId === null && permissions.fosteringHouse !== undefined) || (userId === pet.userId)) &&
               <button className="pet-button delete-button" onClick={handleDeletePet}>Delete</button>
             }
           </div>

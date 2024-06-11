@@ -15,7 +15,8 @@ const PermissionsForm = ({ onClose, initialData = {} }) => {
         canAcceptAdoptionRequests: initialData.canAcceptAdoptionRequests || false,
         canAdoptFosterPets: initialData.canAdoptFosterPets || false,
         canAdoptPets: initialData.canAdoptPets || false,
-        canEditCreatePets: initialData.canEditUsersPets || false
+        canEditCreatePets: initialData.canEditUsersPets || false,
+        fosteringHouseId: initialData.fosteringHouseId || null
     });
 
     const handleSubmit = async (e) => {

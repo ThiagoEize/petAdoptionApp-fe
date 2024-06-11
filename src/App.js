@@ -1,17 +1,12 @@
 import NavBar from "./components/navBar/NavBar";
-// import PetForm from "./components/PetForm";
-// import PetList from "./components/PetList";
 import Profile from "./components/Profile";
 import Home from "./components/Home";
 import PetShow from "./components/petShow/PetShow";
 import UsersList from "./components/usersList/UsersList";
 import AdoptionRequestsList from "./components/requestsList/RequestsList";
 import HomeLogedOut from "./components/HomeLogedOut";
-// import Axios from "axios";
-import {
-  Route,
-  Routes
-} from "react-router-dom";
+import FosteringHouseModal from "./components/FosteringHouseModal"; // Import the new component
+import { Route, Routes } from "react-router-dom";
 import PetContextProvider from "./context/PetContext";
 import UserContextProvider from "./context/UserContext";
 import PrivateRoute from './components/PrivateRoute';
@@ -28,20 +23,9 @@ function App() {
             <Route
               path="/:saved?"
               element={
-                // <PrivateRoute>
                 <Home />
-                // </PrivateRoute>
               }
             ></Route>
-
-            {/* <Route
-              path="/savedPets/:saved"
-              element={
-                <PrivateRoute>
-                  <Home />
-                </PrivateRoute>
-              }
-            ></Route> */}
             <Route
               path="/profile"
               element={
@@ -69,7 +53,6 @@ function App() {
             <Route
               path="/petShow/:petId"
               element={
-
                 <PetShow />
               }
             ></Route>
@@ -79,11 +62,18 @@ function App() {
                 <HomeLogedOut />
               }
             ></Route>
+            <Route
+              path="/fosteringHouse/:id?"
+              element={
+                <PrivateRoute>
+                  <FosteringHouseModal />
+                </PrivateRoute>
+              }
+            ></Route>
           </Routes>
         </div>
       </PetContextProvider>
     </UserContextProvider>
-
   );
 }
 
